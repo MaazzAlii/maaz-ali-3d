@@ -116,7 +116,7 @@ export const About: React.FC = () => {
                 >
                   <div>
                     <p style={{ fontWeight: 700, fontSize: '0.9375rem', color: '#ffffff' }}>{profile.name}</p>
-                    <p style={{ fontSize: '0.75rem', color: 'var(--accent-light)', fontFamily: 'var(--font-mono)' }}>
+                    <p style={{ fontSize: '0.75rem', color: '#38bdf8', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
                       BS CS · NUML Islamabad
                     </p>
                   </div>
@@ -140,9 +140,10 @@ export const About: React.FC = () => {
                 <p 
                   key={idx} 
                   style={{ 
-                    fontSize: '1rem', 
+                    fontSize: '1.05rem', 
                     color: 'var(--text-secondary)', 
-                    lineHeight: 1.65 
+                    fontWeight: 450,
+                    lineHeight: 1.7 
                   }}
                 >
                   {p}
@@ -159,29 +160,29 @@ export const About: React.FC = () => {
                 marginBottom: '28px'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px', color: 'var(--text-muted)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px', color: 'var(--accent)', fontWeight: 600 }}>
                 <Terminal size={14} />
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>quick_facts.json</span>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.875rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <GraduationCap size={18} color="var(--accent-light)" style={{ flexShrink: 0 }} />
-                  <span style={{ color: 'var(--text-secondary)' }}>
+                  <GraduationCap size={18} color="var(--accent)" style={{ flexShrink: 0 }} />
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 450 }}>
                     <strong style={{ color: 'var(--text-primary)' }}>BS Computer Science</strong>, NUML Islamabad (Graduating Jan 2027)
                   </span>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <Award size={18} color="#f59e0b" style={{ flexShrink: 0 }} />
-                  <span style={{ color: 'var(--text-secondary)' }}>
+                  <Award size={18} color="var(--warning-fg)" style={{ flexShrink: 0 }} />
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 450 }}>
                     <strong style={{ color: 'var(--text-primary)' }}>Microsoft Certified AZ-900</strong>: Azure Fundamentals (Score: 983 / 1000)
                   </span>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <MapPin size={18} color="var(--cyan-primary)" style={{ flexShrink: 0 }} />
-                  <span style={{ color: 'var(--text-secondary)' }}>
+                  <MapPin size={18} color="var(--accent-cyan)" style={{ flexShrink: 0 }} />
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 450 }}>
                     <strong style={{ color: 'var(--text-primary)' }}>Location</strong>: Rawalpindi, Pakistan (Open to Remote &amp; Worldwide Relocation)
                   </span>
                 </div>
@@ -197,7 +198,7 @@ export const About: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-secondary"
-                  style={{ padding: '6px 14px', fontSize: '0.8125rem' }}
+                  style={{ padding: '8px 16px', fontSize: '0.8125rem', fontWeight: 600 }}
                   aria-label={s.label}
                 >
                   {getSocialIcon(s.icon)}
