@@ -12,8 +12,8 @@ export const Footer: React.FC = () => {
     <footer
       style={{
         borderTop: '1px solid var(--border-subtle)',
-        backgroundColor: 'var(--bg-secondary)',
-        padding: '60px 0 30px 0',
+        backgroundColor: 'var(--surface-2)',
+        padding: '60px 0 32px 0',
         position: 'relative'
       }}
     >
@@ -36,7 +36,7 @@ export const Footer: React.FC = () => {
                   width: '32px',
                   height: '32px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, var(--accent-primary), var(--cyan-primary))',
+                  background: 'linear-gradient(135deg, var(--accent), var(--accent-cyan))',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -58,13 +58,13 @@ export const Footer: React.FC = () => {
 
           {/* Quick Nav Links */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-            <a href="#about" style={{ textDecoration: 'none' }}>About</a>
-            <a href="#projects" style={{ textDecoration: 'none' }}>43 Projects</a>
-            <a href="#workflow" style={{ textDecoration: 'none' }}>Agentic Simulator</a>
-            <a href="#skills" style={{ textDecoration: 'none' }}>3D Skills Cosmos</a>
-            <a href="#apps" style={{ textDecoration: 'none' }}>Play Store Apps</a>
-            <a href="#experience" style={{ textDecoration: 'none' }}>Experience</a>
-            <a href="#contact" style={{ textDecoration: 'none' }}>Contact</a>
+            <a href="#about" style={{ textDecoration: 'none', color: 'inherit' }}>About</a>
+            <a href="#projects" style={{ textDecoration: 'none', color: 'inherit' }}>43 Projects</a>
+            <a href="#workflow" style={{ textDecoration: 'none', color: 'inherit' }}>Agentic Simulator</a>
+            <a href="#skills" style={{ textDecoration: 'none', color: 'inherit' }}>3D Skills Cosmos</a>
+            <a href="#apps" style={{ textDecoration: 'none', color: 'inherit' }}>Play Store Apps</a>
+            <a href="#experience" style={{ textDecoration: 'none', color: 'inherit' }}>Experience</a>
+            <a href="#contact" style={{ textDecoration: 'none', color: 'inherit' }}>Contact</a>
           </div>
 
           {/* Back to Top Button */}
@@ -92,24 +92,24 @@ export const Footer: React.FC = () => {
             gap: '16px'
           }}
         >
-          <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+          <p style={{ fontSize: '0.8125rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>
             &copy; {new Date().getFullYear()} Maaz Ali. Built with React &amp; Three.js.
           </p>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)' }} aria-label="LinkedIn">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', display: 'inline-flex' }} aria-label="LinkedIn">
               <LinkedInIcon size={18} />
             </a>
-            <a href={profile.github} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)' }} aria-label="GitHub">
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', display: 'inline-flex' }} aria-label="GitHub">
               <GitHubIcon size={18} />
             </a>
-            <a href="https://www.youtube.com/@Maazali_ai" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)' }} aria-label="YouTube">
+            <a href="https://www.youtube.com/@Maazali_ai" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', display: 'inline-flex' }} aria-label="YouTube">
               <YouTubeIcon size={18} />
             </a>
-            <a href="https://www.instagram.com/maazali.ai/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)' }} aria-label="Instagram">
+            <a href="https://www.instagram.com/maazali.ai/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', display: 'inline-flex' }} aria-label="Instagram">
               <InstagramIcon size={18} />
             </a>
-            <a href="https://t.me/Maazinex" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)' }} aria-label="Telegram">
+            <a href="https://t.me/Maazinex" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', display: 'inline-flex' }} aria-label="Telegram">
               <TelegramIcon size={18} />
             </a>
           </div>
