@@ -50,76 +50,74 @@ export const Contact: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '36px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
           {/* Left Column: Direct Info Card */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {/* Email Copy Card */}
             <div
-              className="glass-card"
+              className="liquid-card"
               style={{
-                padding: '24px',
-                borderRadius: 'var(--radius-lg)',
-                backgroundColor: 'var(--bg-glass-card)',
-                border: '1px solid var(--border-subtle)'
+                padding: '28px 24px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-light)', marginBottom: '8px' }}>
-                <Mail size={18} />
-                <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>
-                  DIRECT EMAIL
-                </span>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent)', marginBottom: '10px' }}>
+                  <Mail size={18} />
+                  <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+                    Direct Email
+                  </span>
+                </div>
+                <p style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px', letterSpacing: '-0.015em' }}>
+                  {profile.email}
+                </p>
               </div>
-              <p style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '14px' }}>
-                {profile.email}
-              </p>
               <button
                 onClick={handleCopyEmail}
                 className="btn btn-secondary"
-                style={{ padding: '8px 16px', fontSize: '0.8125rem', width: 'fit-content' }}
+                style={{ padding: '8px 18px', fontSize: '0.8125rem', width: 'fit-content' }}
               >
-                {copied ? <Check size={14} color="#10b981" /> : <Copy size={14} />}
+                {copied ? <Check size={14} color="var(--success)" /> : <Copy size={14} />}
                 <span>{copied ? 'Copied to Clipboard!' : 'Copy Email Address'}</span>
               </button>
             </div>
 
             {/* Location & Availability Card */}
             <div
-              className="glass-card"
+              className="liquid-card"
               style={{
-                padding: '24px',
-                borderRadius: 'var(--radius-lg)',
-                backgroundColor: 'var(--bg-glass-card)',
-                border: '1px solid var(--border-subtle)'
+                padding: '28px 24px'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--cyan-primary)', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-cyan)', marginBottom: '10px' }}>
                 <MapPin size={18} />
-                <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>
-                  LOCATION &amp; RELOCATION
+                <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+                  Location &amp; Relocation
                 </span>
               </div>
-              <p style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '6px' }}>
+              <p style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '6px', letterSpacing: '-0.01em' }}>
                 Rawalpindi, Pakistan
               </p>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
                 Open to remote roles worldwide, on-site positions in Pakistan, and international relocation.
               </p>
             </div>
 
             {/* Quick response note */}
             <div
+              className="liquid-card"
               style={{
-                padding: '16px 20px',
-                borderRadius: 'var(--radius-md)',
-                background: 'rgba(99, 102, 241, 0.08)',
-                border: '1px solid var(--border-glow)',
+                padding: '18px 22px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px'
+                gap: '14px',
+                backgroundColor: 'var(--surface-2)'
               }}
             >
-              <Sparkles size={20} color="var(--accent-light)" style={{ flexShrink: 0 }} />
-              <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
+              <Sparkles size={20} color="var(--accent)" style={{ flexShrink: 0 }} />
+              <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
                 Typically responding within 24 hours. Feel free to connect directly via LinkedIn or Telegram as well.
               </p>
             </div>
@@ -127,22 +125,20 @@ export const Contact: React.FC = () => {
 
           {/* Right Column: Contact Message Form */}
           <div
-            className="glass-panel"
+            className="liquid-card"
             style={{
-              padding: '32px',
-              borderRadius: 'var(--radius-xl)',
-              backgroundColor: 'var(--bg-surface)'
+              padding: '36px 32px'
             }}
           >
             {formSubmitted ? (
               <div style={{ textAlign: 'center', padding: '40px 20px' }}>
                 <div
                   style={{
-                    width: '60px',
-                    height: '60px',
+                    width: '64px',
+                    height: '64px',
                     borderRadius: '50%',
-                    backgroundColor: 'rgba(16, 185, 129, 0.15)',
-                    color: 'var(--emerald-primary)',
+                    backgroundColor: 'var(--success-bg)',
+                    color: 'var(--success)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -151,10 +147,10 @@ export const Contact: React.FC = () => {
                 >
                   <Check size={32} />
                 </div>
-                <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '8px' }}>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '8px', color: 'var(--text-primary)' }}>
                   Message Ready!
                 </h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', marginBottom: '20px' }}>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', marginBottom: '24px', lineHeight: 1.6 }}>
                   Thank you, {formData.name}. Your email client was triggered to send the message. I will get back to you shortly.
                 </p>
                 <button
@@ -166,16 +162,13 @@ export const Contact: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '4px' }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '4px', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
                   Send a Direct Message
                 </h3>
 
                 <div>
-                  <label 
-                    htmlFor="contact-name"
-                    style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}
-                  >
+                  <label htmlFor="contact-name" className="form-label">
                     Your Name
                   </label>
                   <input
@@ -185,23 +178,12 @@ export const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Alex Henderson"
-                    style={{
-                      width: '100%',
-                      padding: '10px 14px',
-                      borderRadius: 'var(--radius-md)',
-                      backgroundColor: 'var(--bg-raised)',
-                      border: '1px solid var(--border-medium)',
-                      color: 'var(--text-primary)',
-                      fontSize: '0.875rem'
-                    }}
+                    className="form-input"
                   />
                 </div>
 
                 <div>
-                  <label 
-                    htmlFor="contact-email"
-                    style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}
-                  >
+                  <label htmlFor="contact-email" className="form-label">
                     Your Email
                   </label>
                   <input
@@ -211,38 +193,19 @@ export const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="alex@company.com"
-                    style={{
-                      width: '100%',
-                      padding: '10px 14px',
-                      borderRadius: 'var(--radius-md)',
-                      backgroundColor: 'var(--bg-raised)',
-                      border: '1px solid var(--border-medium)',
-                      color: 'var(--text-primary)',
-                      fontSize: '0.875rem'
-                    }}
+                    className="form-input"
                   />
                 </div>
 
                 <div>
-                  <label 
-                    htmlFor="contact-service"
-                    style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}
-                  >
+                  <label htmlFor="contact-service" className="form-label">
                     Area of Collaboration
                   </label>
                   <select
                     id="contact-service"
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    style={{
-                      width: '100%',
-                      padding: '10px 14px',
-                      borderRadius: 'var(--radius-md)',
-                      backgroundColor: 'var(--bg-raised)',
-                      border: '1px solid var(--border-medium)',
-                      color: 'var(--text-primary)',
-                      fontSize: '0.875rem'
-                    }}
+                    className="form-select"
                   >
                     <option value="AI & LLM Systems">AI &amp; LLM Systems (LangGraph, RAG, Swarms)</option>
                     <option value="Business Automation">Business Automation (n8n, GoHighLevel, Bots)</option>
@@ -253,10 +216,7 @@ export const Contact: React.FC = () => {
                 </div>
 
                 <div>
-                  <label 
-                    htmlFor="contact-message"
-                    style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}
-                  >
+                  <label htmlFor="contact-message" className="form-label">
                     Project Details &amp; Message
                   </label>
                   <textarea
@@ -266,23 +226,14 @@ export const Contact: React.FC = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Tell me about your project, timeline, or engineering opportunity..."
-                    style={{
-                      width: '100%',
-                      padding: '10px 14px',
-                      borderRadius: 'var(--radius-md)',
-                      backgroundColor: 'var(--bg-raised)',
-                      border: '1px solid var(--border-medium)',
-                      color: 'var(--text-primary)',
-                      fontSize: '0.875rem',
-                      resize: 'vertical'
-                    }}
+                    className="form-textarea"
                   />
                 </div>
 
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  style={{ width: '100%', padding: '12px', fontSize: '0.9375rem', marginTop: '6px' }}
+                  style={{ width: '100%', padding: '14px', fontSize: '0.9375rem', marginTop: '6px' }}
                 >
                   <Send size={16} />
                   <span>Send Message &amp; Connect</span>
