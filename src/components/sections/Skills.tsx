@@ -41,11 +41,10 @@ export const Skills: React.FC = () => {
           {skillGroups.map((group) => (
             <div
               key={group.label}
-              className="glass-card"
+              className="liquid-card"
               style={{
                 padding: '24px',
-                borderRadius: 'var(--radius-lg)',
-                backgroundColor: 'var(--bg-glass-card)'
+                borderRadius: 'var(--radius-lg)'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
