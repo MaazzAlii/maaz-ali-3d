@@ -60,7 +60,8 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
               style={{
                 fontSize: '1.125rem',
                 color: 'var(--text-secondary)',
-                lineHeight: 1.6,
+                fontWeight: 450,
+                lineHeight: 1.65,
                 marginBottom: '28px'
               }}
             >
@@ -97,37 +98,37 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
               }}
             >
               <div>
-                <p style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>
+                <p style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>
                   43
                 </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px', fontFamily: 'var(--font-mono)' }}>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '5px', fontFamily: 'var(--font-mono)' }}>
                   Shipped Projects
                 </p>
               </div>
 
               <div>
-                <p style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--accent-light)', lineHeight: 1 }}>
+                <p style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--accent)', lineHeight: 1 }}>
                   10+
                 </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px', fontFamily: 'var(--font-mono)' }}>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '5px', fontFamily: 'var(--font-mono)' }}>
                   Client Works
                 </p>
               </div>
 
               <div>
-                <p style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--cyan-primary)', lineHeight: 1 }}>
+                <p style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--accent-cyan)', lineHeight: 1 }}>
                   2
                 </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px', fontFamily: 'var(--font-mono)' }}>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '5px', fontFamily: 'var(--font-mono)' }}>
                   Play Store Apps
                 </p>
               </div>
 
               <div>
-                <p style={{ fontSize: '1.6rem', fontWeight: 800, color: '#f59e0b', lineHeight: 1 }}>
+                <p style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--warning-fg)', lineHeight: 1 }}>
                   983
                 </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px', fontFamily: 'var(--font-mono)' }}>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '5px', fontFamily: 'var(--font-mono)' }}>
                   AZ-900 / 1000
                 </p>
               </div>
