@@ -54,3 +54,41 @@ This project is the official 3D interactive portfolio for **Maaz Ali** — AI En
 - **Prohibited Destructive Actions**:
   - Never fabricate fake user testimonials or client stats.
   - Never remove or overwrite Maaz Ali's real project metadata, certifications, or links.
+
+---
+
+### 4. Next Session Execution Plan (Trigger: "resume")
+> [!IMPORTANT]
+> When the user sends **"resume"** (or indicates they are ready to proceed), immediately execute the two major 3D visual and interactive enhancements detailed below without delay.
+
+#### Feature A: Structured Orbit & Path Following in Hero 3D Scene (`src/components/3d/HeroScene3D.tsx`)
+- **User Request & Objective**: Replace any random floating/scrolling behavior of the top 3D dots with structured orbital paths. Keep the central neural core aesthetic ("something cute"), while having all side circles/nodes strictly follow visible, elegant orbital lines/paths in clean parametric rotation rather than drifting unpredictably.
+- **Implementation Tasks**:
+  1. **Strict Parametric Orbit Mechanics**:
+     - Remove unconstrained drifting/noise vectors from orbiting nodes.
+     - Define distinct 3D orbital rings (inclined along X, Y, and Z planes: e.g., Orbit Alpha at 15° inclination, Orbit Beta at 45° inclination, Orbit Gamma at -30° inclination).
+     - Calculate node positions along their respective orbital splines: `x = r * cos(t)`, `z = r * sin(t)`, rotated through each orbit's orientation matrix.
+  2. **Visible Orbital Paths & Geometry**:
+     - Render smooth orbital guide lines/paths (`THREE.LineLoop` with `THREE.BufferGeometry` or custom shader line with subtle opacity) matching the exact path of each orbiting node.
+     - Add glowing orbital beads/pulses that travel along the lines in sync with the nodes.
+  3. **High-Contrast Projected Badges**:
+     - Ensure all orbit node labels (`FastAPI Backend`, `LangGraph Swarm`, `ChromaDB RAG`, `n8n Automations`) remain anchored to the orbiting nodes with crisp visibility in both Light Mode (`#0a0d14` text on glass pill) and Dark Mode (`#ffffff` text on dark glass pill).
+
+#### Feature B: Contextual & Interactive 3D Tech Graph in Skills Section (`src/components/3d/TechCosmos3D.tsx` & `src/components/sections/Skills.tsx`)
+- **User Request & Objective**: The 3D graph below currently feels like an abstract graph that doesn't convey practical meaning. Transform it into an interactive technology architecture graph where clicking specific stacks (such as **GHL / GoHighLevel**, **n8n**, **Agentic AI / LangGraph**, **Full-Stack / Backend**) dynamically morphs the 3D animation, rotates the selected technology cluster into focus, and displays the authentic sub-technologies and tools written directly on the nodes.
+- **Implementation Tasks**:
+  1. **Curated Technology Clusters & Tool Nodes**:
+     - **GHL (GoHighLevel)**: Lead Ingestion & Webhooks, Pipeline Automations, AI Voice/Chat Agents, Twilio SMS/Calling, CRM Custom Workflows, Calendar Booking Engines.
+     - **n8n Automations**: Complex Multi-Branch Workflows, API Webhooks, Custom Python/JS Code Nodes, LangChain/LangGraph Connectors, Telegram/Slack Swarms, Postman/REST Polling.
+     - **AI & Agentic Systems**: LangGraph Stateful Graphs, ChromaDB Dense Vector Search, Multi-Agent Supervisors, Ollama / Claude / OpenAI API integrations, Automated Validation & Fallbacks.
+     - **Full-Stack & Backend**: FastAPI Async Microservices, Python Core, TypeScript / React, Supabase & PostgreSQL, Docker / Cloud Deployments.
+  2. **Dynamic 3D Camera & Cluster Transition**:
+     - When a category or stack button is clicked (e.g., GHL, n8n, AI Agentics):
+       - Smoothly animate the Three.js camera / focal group to re-center on that cluster.
+       - Fade in connective relationship lines between tools in that ecosystem.
+       - Highlight active node labels with 3D billboarded text or high-contrast 2D projected badges.
+  3. **Interactive Node Inspection & Controls**:
+     - Allow clicking any node in the 3D scene or selecting the corresponding button from the right sidebar to highlight its capabilities, production use-cases, and connected tools.
+     - Keep rotation smooth, interactive, and fully paused when out of viewport.
+     - Validate flawless rendering in both Light and Dark modes.
+
