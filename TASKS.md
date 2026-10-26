@@ -44,6 +44,7 @@
 - [x] Verified zero-regression production build (`npm run build`) in 4.5s
 
 ### Next Session Execution (Trigger: "resume")
+- [ ] **Feature A (`HeroScene3D.tsx`)**: Maintain the solid outer shell as the permanent default for the central neural core (confirm `isWireframe = false` default).
 - [ ] **Feature A (`HeroScene3D.tsx`)**: Constrain orbiting nodes to defined mathematical 3D orbit lines (elliptical/circular splines) around the central core instead of random motion.
 - [ ] **Feature A (`HeroScene3D.tsx`)**: Render luminous orbital guide lines and traveling pulse beads tracing exact node paths.
 - [ ] **Feature B (`TechCosmos3D.tsx` & `Skills.tsx`)**: Replace abstract graph with meaningful tech clusters (GHL, n8n, Agentic AI / LangGraph, Full-Stack / Backend).
