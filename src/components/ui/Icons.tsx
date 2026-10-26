@@ -47,3 +47,9 @@ export const TikTokIcon: React.FC<IconProps> = ({ size = 20, color = 'currentCol
     <path d="M16.6 5.82a4.8 4.8 0 0 1-1-2.82h-3.4v13.6a2.8 2.8 0 1 1-2-2.68v-3.5a6.3 6.3 0 1 0 5.4 6.24V9.4a8.2 8.2 0 0 0 4.8 1.54v-3.4a4.8 4.8 0 0 1-3.8-1.72Z" />
   </svg>
 );
+
+export const FacebookIcon: React.FC<IconProps> = ({ size = 20, color = 'currentColor', ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
