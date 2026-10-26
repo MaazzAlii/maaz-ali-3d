@@ -41,7 +41,7 @@ export const Projects: React.FC = () => {
           <h2 className="display-2" style={{ marginBottom: '12px' }}>
             43 Shipped Projects &amp; Engagements
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 450, lineHeight: 1.65 }}>
             Explore client systems, autonomous agentic RAG architectures, n8n automations, published mobile apps, and enterprise full-stack platforms.
           </p>
         </div>
@@ -57,7 +57,7 @@ export const Projects: React.FC = () => {
                 left: '14px',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                color: 'var(--text-muted)'
+                color: 'var(--text-secondary)'
               }}
             />
             <input
@@ -69,9 +69,10 @@ export const Projects: React.FC = () => {
                 width: '100%',
                 padding: '12px 14px 12px 42px',
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--bg-surface)',
-                border: '1px solid var(--border-medium)',
+                backgroundColor: 'var(--surface-1)',
+                border: '1px solid var(--border-default)',
                 color: 'var(--text-primary)',
+                fontWeight: 500,
                 fontSize: '0.875rem'
               }}
             />
@@ -83,7 +84,8 @@ export const Projects: React.FC = () => {
                   right: '14px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  color: 'var(--text-muted)',
+                  color: 'var(--text-secondary)',
+                  fontWeight: 600,
                   fontSize: '0.8125rem'
                 }}
               >
@@ -106,35 +108,44 @@ export const Projects: React.FC = () => {
               className={`badge ${selectedCategory === 'All' ? 'badge-primary' : ''}`}
               style={{
                 cursor: 'pointer',
-                padding: '7px 14px',
+                padding: '8px 16px',
                 fontSize: '0.8125rem',
-                border: selectedCategory === 'All' ? '1px solid var(--accent-light)' : '1px solid var(--border-subtle)'
+                fontWeight: selectedCategory === 'All' ? 700 : 600,
+                border: '1px solid var(--border-default)',
+                backgroundColor: selectedCategory === 'All' ? 'var(--accent-muted)' : 'var(--surface-1)',
+                color: selectedCategory === 'All' ? 'var(--accent)' : 'var(--text-primary)'
               }}
             >
               All Projects ({categoryCounts['All']})
             </button>
 
-            {categories.map((cat) => (
-              <button
-                key={cat.key}
-                onClick={() => setSelectedCategory(cat.key)}
-                className={`badge ${selectedCategory === cat.key ? 'badge-primary' : ''}`}
-                style={{
-                  cursor: 'pointer',
-                  padding: '7px 14px',
-                  fontSize: '0.8125rem',
-                  border: selectedCategory === cat.key ? '1px solid var(--accent-light)' : '1px solid var(--border-subtle)'
-                }}
-              >
-                {cat.key} ({categoryCounts[cat.key] || 0})
-              </button>
-            ))}
+            {categories.map((cat) => {
+              const isSelected = selectedCategory === cat.key;
+              return (
+                <button
+                  key={cat.key}
+                  onClick={() => setSelectedCategory(cat.key)}
+                  className={`badge ${isSelected ? 'badge-primary' : ''}`}
+                  style={{
+                    cursor: 'pointer',
+                    padding: '8px 16px',
+                    fontSize: '0.8125rem',
+                    fontWeight: isSelected ? 700 : 600,
+                    border: '1px solid var(--border-default)',
+                    backgroundColor: isSelected ? 'var(--accent-muted)' : 'var(--surface-1)',
+                    color: isSelected ? 'var(--accent)' : 'var(--text-primary)'
+                  }}
+                >
+                  {cat.key} ({categoryCounts[cat.key] || 0})
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Results summary */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-          <p style={{ fontSize: '0.8125rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '0.8125rem', fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-secondary)' }}>
             Showing {filteredProjects.length} of {projects.length} projects
           </p>
         </div>
@@ -172,23 +183,23 @@ export const Projects: React.FC = () => {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span className="badge" style={{ fontSize: '0.7rem' }}>
+                  <span className="badge" style={{ fontSize: '0.72rem', fontWeight: 600 }}>
                     {project.category}
                   </span>
                   {project.visibility === 'private' ? (
-                    <span className="badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', fontSize: '0.7rem' }}>
+                    <span className="badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', fontSize: '0.72rem', fontWeight: 600 }}>
                       <Lock size={10} /> Private
                     </span>
                   ) : (
-                    <span className="badge badge-emerald" style={{ fontSize: '0.7rem' }}>
+                    <span className="badge badge-emerald" style={{ fontSize: '0.72rem', fontWeight: 600 }}>
                       Public
                     </span>
                   )}
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Code size={16} color="var(--accent-light)" />
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                  <Code size={16} color="var(--accent)" />
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                     {project.tech[0]} {project.tech[1] ? `· ${project.tech[1]}` : ''}
                   </span>
                 </div>
@@ -205,7 +216,7 @@ export const Projects: React.FC = () => {
                     cursor: 'pointer',
                     transition: 'color var(--transition-fast)'
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-light)')}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
                 >
                   {project.title}
@@ -213,9 +224,10 @@ export const Projects: React.FC = () => {
 
                 <p
                   style={{
-                    fontSize: '0.875rem',
+                    fontSize: '0.9rem',
                     color: 'var(--text-secondary)',
-                    lineHeight: 1.6,
+                    fontWeight: 450,
+                    lineHeight: 1.65,
                     marginBottom: '16px',
                     flex: 1
                   }}
@@ -229,20 +241,21 @@ export const Projects: React.FC = () => {
                     <span
                       key={t}
                       style={{
-                        fontSize: '0.7rem',
+                        fontSize: '0.72rem',
                         fontFamily: 'var(--font-mono)',
-                        padding: '2px 8px',
+                        fontWeight: 600,
+                        padding: '3px 8px',
                         borderRadius: 'var(--radius-sm)',
-                        backgroundColor: 'var(--bg-raised)',
-                        color: 'var(--text-muted)',
-                        border: '1px solid var(--border-subtle)'
+                        backgroundColor: 'var(--surface-2)',
+                        color: 'var(--text-primary)',
+                        border: '1px solid var(--border-default)'
                       }}
                     >
                       {t}
                     </span>
                   ))}
                   {project.tech.length > 4 && (
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', alignSelf: 'center' }}>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-secondary)', alignSelf: 'center' }}>
                       +{project.tech.length - 4} more
                     </span>
                   )}
@@ -266,7 +279,7 @@ export const Projects: React.FC = () => {
                       gap: '4px',
                       fontSize: '0.8125rem',
                       fontWeight: 600,
-                      color: 'var(--accent-light)'
+                      color: 'var(--accent)'
                     }}
                   >
                     <span>View Architecture</span>
