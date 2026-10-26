@@ -42,25 +42,23 @@ export const Channels: React.FC = () => {
               href={channel.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="glass-card"
+              className="liquid-card"
               style={{
-                padding: '24px',
-                borderRadius: 'var(--radius-lg)',
+                padding: '28px 24px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                border: '1px solid var(--border-subtle)',
-                backgroundColor: 'var(--bg-glass-card)'
+                textDecoration: 'none'
               }}
             >
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
                   <div
                     style={{
-                      width: '44px',
-                      height: '44px',
+                      width: '46px',
+                      height: '46px',
                       borderRadius: 'var(--radius-md)',
-                      backgroundColor: 'var(--bg-surface)',
+                      backgroundColor: 'var(--surface-2)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -69,10 +67,10 @@ export const Channels: React.FC = () => {
                   >
                     {getIcon(channel.icon)}
                   </div>
-                  <ExternalLink size={16} color="var(--text-muted)" />
+                  <ExternalLink size={16} color="var(--text-tertiary)" />
                 </div>
 
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', letterSpacing: '-0.015em' }}>
                   {channel.label}
                 </h3>
 
@@ -81,7 +79,7 @@ export const Channels: React.FC = () => {
                 </p>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-light)', fontSize: '0.8125rem', fontWeight: 600 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent)', fontSize: '0.8125rem', fontWeight: 600 }}>
                 <span>Join Channel / Watch</span>
                 <ExternalLink size={13} />
               </div>
