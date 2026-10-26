@@ -25,7 +25,7 @@ export const Experience: React.FC = () => {
             </h3>
 
             <div
-              className="glass-card"
+              className="liquid-card"
               style={{
                 padding: '28px',
                 borderRadius: 'var(--radius-xl)',
@@ -77,7 +77,7 @@ export const Experience: React.FC = () => {
               {certifications.map((cert) => (
                 <div
                   key={cert.title}
-                  className="glass-card"
+                  className="liquid-card"
                   style={{
                     padding: '20px',
                     borderRadius: 'var(--radius-lg)',
@@ -133,7 +133,7 @@ export const Experience: React.FC = () => {
 
               {/* Degree verification banner */}
               <div
-                className="glass-card"
+                className="liquid-card"
                 style={{
                   padding: '20px',
                   borderRadius: 'var(--radius-lg)',
