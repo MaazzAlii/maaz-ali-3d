@@ -51,20 +51,20 @@ export const Footer: React.FC = () => {
                 {profile.name}
               </span>
             </div>
-            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 450, lineHeight: 1.65 }}>
               {profile.tagline}
             </p>
           </div>
 
           {/* Quick Nav Links */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-            <a href="#about" style={{ textDecoration: 'none', color: 'inherit' }}>About</a>
-            <a href="#projects" style={{ textDecoration: 'none', color: 'inherit' }}>43 Projects</a>
-            <a href="#workflow" style={{ textDecoration: 'none', color: 'inherit' }}>Agentic Simulator</a>
-            <a href="#skills" style={{ textDecoration: 'none', color: 'inherit' }}>3D Skills Cosmos</a>
-            <a href="#apps" style={{ textDecoration: 'none', color: 'inherit' }}>Play Store Apps</a>
-            <a href="#experience" style={{ textDecoration: 'none', color: 'inherit' }}>Experience</a>
-            <a href="#contact" style={{ textDecoration: 'none', color: 'inherit' }}>Contact</a>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
+            <a href="#about" style={{ textDecoration: 'none', color: 'inherit', transition: 'color var(--duration-fast)' }}>About</a>
+            <a href="#projects" style={{ textDecoration: 'none', color: 'inherit', transition: 'color var(--duration-fast)' }}>43 Projects</a>
+            <a href="#workflow" style={{ textDecoration: 'none', color: 'inherit', transition: 'color var(--duration-fast)' }}>Agentic Simulator</a>
+            <a href="#skills" style={{ textDecoration: 'none', color: 'inherit', transition: 'color var(--duration-fast)' }}>3D Skills Cosmos</a>
+            <a href="#apps" style={{ textDecoration: 'none', color: 'inherit', transition: 'color var(--duration-fast)' }}>Play Store Apps</a>
+            <a href="#experience" style={{ textDecoration: 'none', color: 'inherit', transition: 'color var(--duration-fast)' }}>Experience</a>
+            <a href="#contact" style={{ textDecoration: 'none', color: 'inherit', transition: 'color var(--duration-fast)' }}>Contact</a>
           </div>
 
           {/* Back to Top Button */}
@@ -92,7 +92,7 @@ export const Footer: React.FC = () => {
             gap: '16px'
           }}
         >
-          <p style={{ fontSize: '0.8125rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>
+          <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500, fontFamily: 'var(--font-mono)' }}>
             &copy; {new Date().getFullYear()} Maaz Ali. Built with React &amp; Three.js.
           </p>
 
