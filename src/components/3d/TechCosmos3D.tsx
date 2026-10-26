@@ -227,29 +227,35 @@ export const TechCosmos3D: React.FC = () => {
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '20px' }}>
         <div>
           <span className="section-eyebrow">Interactive 3D Skill Cosmos</span>
-          <h3 style={{ fontSize: '1.4rem', fontWeight: 700 }}>Technology Constellation</h3>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+          <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-primary)' }}>Technology Constellation</h3>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 450, marginTop: '4px' }}>
             Click any node or drag to rotate the 3D tech cosmos
           </p>
         </div>
 
         {/* Filter Pills */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilterCategory(cat)}
-              className={`badge ${filterCategory === cat ? 'badge-primary' : ''}`}
-              style={{
-                cursor: 'pointer',
-                padding: '5px 12px',
-                fontSize: '0.75rem',
-                border: filterCategory === cat ? '1px solid var(--accent-light)' : '1px solid var(--border-subtle)'
-              }}
-            >
-              {cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const isSelected = filterCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setFilterCategory(cat)}
+                className={`badge ${isSelected ? 'badge-primary' : ''}`}
+                style={{
+                  cursor: 'pointer',
+                  padding: '6px 14px',
+                  fontSize: '0.78rem',
+                  fontWeight: isSelected ? 700 : 600,
+                  border: '1px solid var(--border-default)',
+                  backgroundColor: isSelected ? 'var(--accent-muted)' : 'var(--surface-1)',
+                  color: isSelected ? 'var(--accent)' : 'var(--text-primary)'
+                }}
+              >
+                {cat}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -284,14 +290,15 @@ export const TechCosmos3D: React.FC = () => {
               style={{ 
                 backgroundColor: `${selectedTech.color}20`, 
                 color: selectedTech.color,
-                borderColor: `${selectedTech.color}50`
+                borderColor: `${selectedTech.color}50`,
+                fontWeight: 700
               }}
             >
               {selectedTech.category}
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: selectedTech.color }} />
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>Interactive Node</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Interactive Node</span>
             </div>
           </div>
 
@@ -299,13 +306,13 @@ export const TechCosmos3D: React.FC = () => {
             {selectedTech.name}
           </h4>
 
-          <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '20px' }}>
+          <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', fontWeight: 450, lineHeight: 1.65, marginBottom: '20px' }}>
             {selectedTech.desc}
           </p>
 
           {/* Quick Skill Selector Grid */}
           <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '14px' }}>
-            <p style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', marginBottom: '10px' }}>
+            <p style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '10px' }}>
               DIRECT SELECTOR:
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', maxHeight: '110px', overflowY: 'auto' }}>
@@ -314,13 +321,15 @@ export const TechCosmos3D: React.FC = () => {
                   key={t.name}
                   onClick={() => setSelectedTech(t)}
                   style={{
-                    padding: '4px 10px',
+                    padding: '5px 11px',
                     fontSize: '0.75rem',
                     fontFamily: 'var(--font-mono)',
+                    fontWeight: selectedTech.name === t.name ? 700 : 600,
                     borderRadius: 'var(--radius-sm)',
-                    backgroundColor: selectedTech.name === t.name ? t.color : 'var(--bg-raised)',
-                    color: selectedTech.name === t.name ? '#ffffff' : 'var(--text-secondary)',
-                    border: '1px solid var(--border-subtle)'
+                    backgroundColor: selectedTech.name === t.name ? t.color : 'var(--surface-2)',
+                    color: selectedTech.name === t.name ? '#ffffff' : 'var(--text-primary)',
+                    border: '1px solid var(--border-default)',
+                    cursor: 'pointer'
                   }}
                 >
                   {t.name}
