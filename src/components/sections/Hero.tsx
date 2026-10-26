@@ -87,12 +87,12 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
 
             {/* Metric Counters Bar */}
             <div 
-              className="glass-card"
+              className="liquid-card"
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(4, 1fr)',
                 gap: '12px',
-                padding: '16px 20px',
+                padding: '18px 24px',
                 borderRadius: 'var(--radius-lg)'
               }}
             >
