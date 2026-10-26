@@ -94,7 +94,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             style={{
               padding: '12px 16px',
               fontSize: '0.875rem',
-              fontWeight: 600,
+              fontWeight: activeTab === 'overview' ? 700 : 600,
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
@@ -115,7 +115,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             style={{
               padding: '12px 16px',
               fontSize: '0.875rem',
-              fontWeight: 600,
+              fontWeight: activeTab === 'architecture' ? 700 : 600,
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
@@ -136,7 +136,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             style={{
               padding: '12px 16px',
               fontSize: '0.875rem',
-              fontWeight: 600,
+              fontWeight: activeTab === 'results' ? 700 : 600,
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
@@ -160,12 +160,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '10px', color: 'var(--text-primary)' }}>
                 Problem Statement &amp; Objective
               </h4>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.7, marginBottom: '20px' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', fontWeight: 450, lineHeight: 1.7, marginBottom: '20px' }}>
                 {project.overview || project.description}
               </p>
               {project.metrics && project.metrics.length > 0 && (
                 <div style={{ marginTop: '16px' }}>
-                  <h5 style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
+                  <h5 style={{ fontSize: '0.8125rem', fontWeight: 650, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
                     Key Performance Metrics:
                   </h5>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -183,16 +183,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '10px', color: 'var(--text-primary)' }}>
                 System Architecture &amp; Technical Decisions
               </h4>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.7, marginBottom: '20px' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', fontWeight: 450, lineHeight: 1.7, marginBottom: '20px' }}>
                 {project.architecture || 'Built following clean architecture principles, leveraging modular components, type-safe API schemas, and optimized data workflows.'}
               </p>
 
-              <h5 style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
+              <h5 style={{ fontSize: '0.8125rem', fontWeight: 650, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
                 Technologies Utilized:
               </h5>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {project.tech.map((t) => (
-                  <span key={t} className="badge" style={{ backgroundColor: 'var(--surface-2)', color: 'var(--text-primary)' }}>
+                  <span key={t} className="badge" style={{ backgroundColor: 'var(--surface-2)', color: 'var(--text-primary)', border: '1px solid var(--border-default)', fontWeight: 600 }}>
                     {t}
                   </span>
                 ))}
@@ -205,7 +205,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '10px', color: 'var(--text-primary)' }}>
                 Deliverables &amp; Outcomes
               </h4>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.7 }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', fontWeight: 450, lineHeight: 1.7 }}>
                 {project.results || 'Successfully implemented, verified, and shipped to meet production standards and operational requirements.'}
               </p>
             </div>
