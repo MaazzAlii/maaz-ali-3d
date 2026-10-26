@@ -6,37 +6,37 @@
 - [x] Inspect existing workspace and analyze `maazzalii.vercel.app`
 - [x] Copy authentic assets (`maaz-ali-photo.png`, `Maaz_Ali_Resume.pdf`, app and project screenshots)
 - [x] Install Vite, React 18, TypeScript, Three.js, Lucide React, Canvas Confetti
-- [x] Create project documentation (REQUIREMENTS, AGENTS, ARCHITECTURE, PLAN, TASKS, TESTING, README)
+- [x] Create project documentation (REQUIREMENTS, AGENTS, ARCHITECTURE, PLAN, TASKS, TESTING, README, DESIGN_SYSTEM_PROMPT, SESSION_HANDOFF)
+- [x] Save Master UI/UX Specification to `DESIGN_SYSTEM_PROMPT.md`
+- [x] Push all individual file commits to GitHub: [https://github.com/MaazzAlii/maaz-ali-3d](https://github.com/MaazzAlii/maaz-ali-3d)
 
-### Design System & Theming
-- [x] Create `src/styles/tokens.css` with CSS custom properties for Cyber Dark & Pure Light themes
-- [x] Create global resets, typography scales (Outfit, Inter, Fira Code), and glassmorphism helpers
-- [x] Build `useTheme` hook with persistence in `localStorage` and default Cyber Dark theme
+### Apple HIG & Liquid Glass Theme System (Phase 1)
+- [x] Create `src/styles/tokens.css` with full Apple HIG tokens (`--bg-base`, `--surface-1`, `--surface-glass`, `--glass-blur`, `--glass-specular`, `--focus-ring`)
+- [x] Support Light Mode default base with seamless Dark Mode (`[data-theme="dark"]`, `.dark`)
+- [x] Implement `useTheme.ts` with `localStorage` key `"theme"` and `prefers-color-scheme` listener
+- [x] Add zero-flash pre-paint script to `<head>` in `index.html`
 
-### Data Architecture
-- [x] Create `src/data/portfolioData.ts` with authentic profile, 43 projects, 7 categories, certifications, skills, and stats
+### Surface Hierarchy & Materials (Phase 2 & 3)
+- [x] Implement Level 1 Elevated Surface (`.liquid-card`) for high-contrast data readability in `global.css`
+- [x] Implement Level 4 Chrome Surface (`.liquid-glass-chrome`) for navigation in `global.css`
+- [x] Calibrate typography to Apple SF Pro system stack with accurate letter-spacing and WCAG AA contrast
+- [x] Update `Navbar.tsx` with liquid glass chrome and Apple capsule buttons
+- [x] Update `Hero.tsx` with liquid card metrics and Apple typography
+- [x] Update `About.tsx` with liquid card quick facts and 3D depth frame
+- [x] Update `Projects.tsx` with liquid card project items and Apple HIG search
+- [x] Update `AppsShowcase.tsx` with liquid card Google Play cards
+- [x] Update `Skills.tsx` with liquid card skill groups
+- [x] Update `Experience.tsx` with liquid card career timeline and credentials
 
-### 3D Creative Engineering
-- [x] Build `src/components/3d/HeroScene3D.tsx` (Agentic AI Hologram Core, orbital rings, agent nodes, particle cloud)
-- [x] Build `src/components/3d/TechCosmos3D.tsx` (Spherical interactive tech constellation)
-- [x] Implement camera damping, mouse/touch reactive physics, color switching, wireframe toggle, and performance off-screen throttling
+### 3D Creative Development
+- [x] `HeroScene3D.tsx`: Central **Agentic Neural Core** with 3 orbital rings
+- [x] `HeroScene3D.tsx`: Real-time 3D projected technology labels (`LangGraph`, `ChromaDB RAG`, `n8n Automations`, `FastAPI Backend`)
+- [x] `HeroScene3D.tsx`: Interactive wireframe shell toggle, orbit rotation toggle, and telemetry status
+- [x] `TechCosmos3D.tsx`: 3D spherical Fibonacci constellation with interactive node click and category filtering
+- [x] `WorkflowSimulator.tsx`: Interactive LangGraph & Automation state machine simulator with real-time logs
 
-### UI Components & Sections
-- [x] Build `src/components/layout/Navbar.tsx` (Glassmorphic bar, mobile nav drawer, theme toggle)
-- [x] Build `src/components/sections/Hero.tsx` (3D scene, dynamic badges, stats row, CTAs)
-- [x] Build `src/components/sections/About.tsx` (Photo with 3D depth, NUML facts, social pills)
-- [x] Build `src/components/sections/WorkflowSimulator.tsx` (Visual LangGraph interactive pipeline)
-- [x] Build `src/components/sections/Projects.tsx` (Category pills, search filter, project grid, details modal)
-- [x] Build `src/components/sections/AppsShowcase.tsx` (Google Play published Flutter apps)
-- [x] Build `src/components/sections/Skills.tsx` (Grouped tech pills + 3D cosmos view)
-- [x] Build `src/components/sections/Experience.tsx` (Career trajectory, certifications verification)
-- [x] Build `src/components/sections/Channels.tsx` (YouTube, Instagram, TikTok, Telegram community hub)
-- [x] Build `src/components/sections/Contact.tsx` (Interactive form, copy email, mailto, confetti feedback)
-- [x] Build `src/components/layout/Footer.tsx` (Semantic footer, quick links, back to top)
-
-### Verification & Testing
-- [x] TypeScript typecheck (`tsc --noEmit` - passed with 0 errors)
-- [x] Production build (`npm run build` - passed with optimized chunks in 3.97s)
-- [x] Start development server (`npm run dev` running smoothly at http://127.0.0.1:3000/)
-- [x] Browser visual and responsive inspection (Screenshots captured and verified for Hero, About, Projects, Modals, Simulator, Skills)
-- [x] Accessibility & WCAG contrast audit (Semantic tags, contrast ratios, and keyboard traps verified)
+### Queued Next Steps (On System Restart)
+- [ ] Refine `Channels.tsx` cards with `.liquid-card`
+- [ ] Refine `Contact.tsx` inputs and form card with Apple HIG styling
+- [ ] Refine `ProjectModal.tsx` with Level 3 liquid glass overlay
+- [ ] Run full browser QA and responsive inspection at 360px, 768px, 1280px
