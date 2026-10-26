@@ -26,14 +26,12 @@ export const AppsShowcase: React.FC = () => {
           {androidApps.map((app: AndroidApp) => (
             <div
               key={app.name}
-              className="glass-card"
+              className="liquid-card"
               style={{
                 borderRadius: 'var(--radius-xl)',
                 overflow: 'hidden',
                 display: 'flex',
-                flexDirection: 'column',
-                border: '1px solid var(--border-subtle)',
-                backgroundColor: 'var(--bg-glass-card)'
+                flexDirection: 'column'
               }}
             >
               {/* Image Preview Banner */}
