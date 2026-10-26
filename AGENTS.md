@@ -73,6 +73,8 @@ This project is the official 3D interactive portfolio for **Maaz Ali** — AI En
      - Add glowing orbital beads/pulses that travel along the lines in sync with the nodes.
   3. **High-Contrast Projected Badges**:
      - Ensure all orbit node labels (`FastAPI Backend`, `LangGraph Swarm`, `ChromaDB RAG`, `n8n Automations`) remain anchored to the orbiting nodes with crisp visibility in both Light Mode (`#0a0d14` text on glass pill) and Dark Mode (`#ffffff` text on dark glass pill).
+  4. **Solid Shell as Permanent Default**:
+     - The solid outer shell of the central neural core is confirmed by the user as good. Keep this solid shell as the default appearance (`isWireframe = false` as default), with its smooth reflective surface and glowing inner crystal. Avoid wireframe as the default state.
 
 #### Feature B: Contextual & Interactive 3D Tech Graph in Skills Section (`src/components/3d/TechCosmos3D.tsx` & `src/components/sections/Skills.tsx`)
 - **User Request & Objective**: The 3D graph below currently feels like an abstract graph that doesn't convey practical meaning. Transform it into an interactive technology architecture graph where clicking specific stacks (such as **GHL / GoHighLevel**, **n8n**, **Agentic AI / LangGraph**, **Full-Stack / Backend**) dynamically morphs the 3D animation, rotates the selected technology cluster into focus, and displays the authentic sub-technologies and tools written directly on the nodes.
