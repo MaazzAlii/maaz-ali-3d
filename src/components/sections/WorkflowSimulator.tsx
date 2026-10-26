@@ -96,29 +96,35 @@ export const WorkflowSimulator: React.FC = () => {
         <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 40px auto' }}>
           <span className="section-eyebrow">Production Agentic Architecture</span>
           <h2 className="display-2" style={{ marginBottom: '12px' }}>
-            LangGraph & Automation Simulator
+            LangGraph &amp; Automation Simulator
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 450, lineHeight: 1.65 }}>
             Experience how Maaz Ali designs resilient, autonomous agent graphs with self-correction and enterprise webhook workflows.
           </p>
 
           {/* Scenario Tabs */}
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginTop: '20px' }}>
-            {SCENARIOS.map(sc => (
-              <button
-                key={sc.id}
-                onClick={() => selectScenario(sc)}
-                className={`badge ${activeScenario.id === sc.id ? 'badge-primary' : ''}`}
-                style={{
-                  cursor: 'pointer',
-                  padding: '8px 16px',
-                  fontSize: '0.8125rem',
-                  border: activeScenario.id === sc.id ? '1px solid var(--accent-light)' : '1px solid var(--border-subtle)'
-                }}
-              >
-                {sc.title}
-              </button>
-            ))}
+            {SCENARIOS.map(sc => {
+              const isActive = activeScenario.id === sc.id;
+              return (
+                <button
+                  key={sc.id}
+                  onClick={() => selectScenario(sc)}
+                  className={`badge ${isActive ? 'badge-primary' : ''}`}
+                  style={{
+                    cursor: 'pointer',
+                    padding: '8px 18px',
+                    fontSize: '0.8125rem',
+                    fontWeight: isActive ? 700 : 600,
+                    border: '1px solid var(--border-default)',
+                    backgroundColor: isActive ? 'var(--accent-muted)' : 'var(--surface-1)',
+                    color: isActive ? 'var(--accent)' : 'var(--text-primary)'
+                  }}
+                >
+                  {sc.title}
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -127,8 +133,8 @@ export const WorkflowSimulator: React.FC = () => {
           {/* Controls Bar */}
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '32px' }}>
             <div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>{activeScenario.title}</h3>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>{activeScenario.description}</p>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)' }}>{activeScenario.title}</h3>
+              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 450 }}>{activeScenario.description}</p>
             </div>
 
             <div style={{ display: 'flex', gap: '10px' }}>
@@ -170,18 +176,18 @@ export const WorkflowSimulator: React.FC = () => {
               const isPast = currentStepIndex > idx;
               const isCurrent = currentStepIndex === idx;
 
-              let borderColor = 'var(--border-subtle)';
-              let bg = 'var(--bg-glass-card)';
-              let iconColor = 'var(--text-muted)';
+              let borderColor = 'var(--border-default)';
+              let bg = 'var(--surface-1)';
+              let iconColor = 'var(--text-secondary)';
 
               if (isCurrent) {
-                borderColor = 'var(--accent-primary)';
-                bg = 'rgba(99, 102, 241, 0.15)';
-                iconColor = 'var(--accent-light)';
+                borderColor = 'var(--accent)';
+                bg = 'var(--accent-muted)';
+                iconColor = 'var(--accent)';
               } else if (isPast) {
-                borderColor = 'var(--emerald-primary)';
-                bg = 'rgba(16, 185, 129, 0.1)';
-                iconColor = 'var(--emerald-primary)';
+                borderColor = 'var(--success)';
+                bg = 'var(--success-bg)';
+                iconColor = 'var(--success-fg)';
               }
 
               return (
@@ -202,7 +208,7 @@ export const WorkflowSimulator: React.FC = () => {
                     width: '40px',
                     height: '40px',
                     borderRadius: '50%',
-                    backgroundColor: 'var(--bg-surface)',
+                    backgroundColor: 'var(--surface-2)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -219,29 +225,30 @@ export const WorkflowSimulator: React.FC = () => {
 
                   <span style={{ 
                     fontFamily: 'var(--font-mono)', 
-                    fontSize: '0.7rem', 
-                    color: 'var(--text-muted)',
+                    fontSize: '0.72rem', 
+                    color: 'var(--accent)',
+                    fontWeight: 700,
                     textTransform: 'uppercase'
                   }}>
                     Step 0{idx + 1}
                   </span>
-                  <h4 style={{ fontSize: '0.9375rem', fontWeight: 600, marginTop: '4px' }}>
+                  <h4 style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
                     {step.label}
                   </h4>
 
                   <div style={{ marginTop: '10px' }}>
                     {isCurrent && (
-                      <span className="badge badge-primary" style={{ fontSize: '0.65rem' }}>
+                      <span className="badge badge-primary" style={{ fontSize: '0.68rem', fontWeight: 700 }}>
                         Active Node
                       </span>
                     )}
                     {isPast && (
-                      <span className="badge badge-emerald" style={{ fontSize: '0.65rem' }}>
+                      <span className="badge badge-emerald" style={{ fontSize: '0.68rem', fontWeight: 700 }}>
                         Completed
                       </span>
                     )}
                     {!isCurrent && !isPast && (
-                      <span className="badge" style={{ fontSize: '0.65rem' }}>
+                      <span className="badge" style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--text-secondary)', backgroundColor: 'var(--surface-2)' }}>
                         Pending
                       </span>
                     )}
@@ -253,33 +260,35 @@ export const WorkflowSimulator: React.FC = () => {
 
           {/* Execution Telemetry Terminal */}
           <div style={{
-            backgroundColor: 'var(--bg-primary)',
+            backgroundColor: '#0d1117',
             borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--border-subtle)',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
             padding: '16px',
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.8125rem'
+            fontSize: '0.8125rem',
+            color: '#e6edf3',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25)'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', color: 'var(--text-muted)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ef4444', display: 'inline-block' }} />
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#eab308', display: 'inline-block' }} />
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#22c55e', display: 'inline-block' }} />
-                <span style={{ marginLeft: '8px', fontSize: '0.75rem' }}>langgraph_telemetry.log</span>
+                <span style={{ marginLeft: '8px', fontSize: '0.75rem', color: '#8b949e', fontWeight: 600 }}>langgraph_telemetry.log</span>
               </div>
-              <span>{logs.length} events logged</span>
+              <span style={{ color: '#8b949e', fontSize: '0.75rem' }}>{logs.length} events logged</span>
             </div>
 
             <div style={{ minHeight: '80px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
               {logs.length === 0 ? (
-                <span style={{ color: 'var(--text-faint)' }}>
+                <span style={{ color: '#8b949e' }}>
                   $ Ready. Click &quot;Run Simulation&quot; to inspect state graph traversal.
                 </span>
               ) : (
                 logs.map((log, i) => (
                   <div key={i} style={{ display: 'flex', gap: '10px' }}>
-                    <span style={{ color: 'var(--accent-light)' }}>&gt;</span>
-                    <span style={{ color: 'var(--text-primary)' }}>{log}</span>
+                    <span style={{ color: '#58a6ff', fontWeight: 700 }}>&gt;</span>
+                    <span style={{ color: '#f0f6fc' }}>{log}</span>
                   </div>
                 ))
               )}
