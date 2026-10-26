@@ -150,14 +150,12 @@ export const Projects: React.FC = () => {
           {filteredProjects.map((project) => (
             <div
               key={project.slug}
-              className="glass-card"
+              className="liquid-card"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 borderRadius: 'var(--radius-lg)',
-                overflow: 'hidden',
-                backgroundColor: 'var(--bg-glass-card)',
-                border: '1px solid var(--border-subtle)'
+                overflow: 'hidden'
               }}
             >
               {/* Card Banner / Thumbnail */}
