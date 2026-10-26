@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExternalLink, Share2 } from 'lucide-react';
-import { GitHubIcon, LinkedInIcon, YouTubeIcon, InstagramIcon, TelegramIcon, TikTokIcon } from '../ui/Icons';
+import { GitHubIcon, LinkedInIcon, YouTubeIcon, InstagramIcon, TelegramIcon, TikTokIcon, FacebookIcon } from '../ui/Icons';
 import { socials } from '../../data/portfolioData';
 
 export const Channels: React.FC = () => {
@@ -8,11 +8,12 @@ export const Channels: React.FC = () => {
     switch (icon) {
       case 'youtube': return <YouTubeIcon size={24} color="#ef4444" />;
       case 'instagram': return <InstagramIcon size={24} color="#ec4899" />;
-      case 'telegram': return <TelegramIcon size={24} color="#06b6d4" />;
+      case 'telegram': return <TelegramIcon size={24} color="#0284c7" />;
       case 'github': return <GitHubIcon size={24} color="var(--text-primary)" />;
-      case 'linkedin': return <LinkedInIcon size={24} color="#0284c7" />;
-      case 'tiktok': return <TikTokIcon size={24} color="var(--accent-light)" />;
-      default: return <Share2 size={24} color="var(--accent-light)" />;
+      case 'linkedin': return <LinkedInIcon size={24} color="#0077b5" />;
+      case 'tiktok': return <TikTokIcon size={24} color="var(--text-primary)" />;
+      case 'facebook': return <FacebookIcon size={24} color="#1877f2" />;
+      default: return <Share2 size={24} color="var(--accent)" />;
     }
   };
 
@@ -24,7 +25,7 @@ export const Channels: React.FC = () => {
           <h2 className="display-2" style={{ marginBottom: '12px' }}>
             Content &amp; Community Channels
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 450, lineHeight: 1.65 }}>
             I document real-world AI agent builds, automation breakdowns, and system architectures across YouTube, Instagram, and Telegram.
           </p>
         </div>
@@ -62,7 +63,7 @@ export const Channels: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      border: '1px solid var(--border-subtle)'
+                      border: '1px solid var(--border-default)'
                     }}
                   >
                     {getIcon(channel.icon)}
@@ -74,7 +75,7 @@ export const Channels: React.FC = () => {
                   {channel.label}
                 </h3>
 
-                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '20px' }}>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 450, lineHeight: 1.65, marginBottom: '20px' }}>
                   {channel.blurb}
                 </p>
               </div>
