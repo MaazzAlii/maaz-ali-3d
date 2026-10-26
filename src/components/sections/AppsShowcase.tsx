@@ -11,7 +11,7 @@ export const AppsShowcase: React.FC = () => {
           <h2 className="display-2" style={{ marginBottom: '12px' }}>
             Published Mobile Applications
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 450, lineHeight: 1.65 }}>
             Production-grade Flutter applications engineered, monetized, and published directly to global Android users on the Google Play Store.
           </p>
         </div>
@@ -40,7 +40,7 @@ export const AppsShowcase: React.FC = () => {
                   position: 'relative',
                   width: '100%',
                   height: '220px',
-                  backgroundColor: 'var(--bg-surface)',
+                  backgroundColor: 'var(--surface-2)',
                   overflow: 'hidden',
                   display: 'flex',
                   alignItems: 'center',
@@ -73,7 +73,7 @@ export const AppsShowcase: React.FC = () => {
                     gap: '6px'
                   }}
                 >
-                  <span className="badge badge-emerald" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <span className="badge badge-emerald" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontWeight: 700 }}>
                     <CheckCircle size={12} /> Live on Play Store
                   </span>
                 </div>
@@ -82,25 +82,35 @@ export const AppsShowcase: React.FC = () => {
               {/* App Content */}
               <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                  <Smartphone size={18} color="var(--accent-light)" />
+                  <Smartphone size={18} color="var(--accent)" />
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                     {app.name}
                   </h3>
                 </div>
 
-                <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '20px', flex: 1 }}>
+                <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', fontWeight: 450, lineHeight: 1.65, marginBottom: '20px', flex: 1 }}>
                   {app.description}
                 </p>
 
                 {/* Key feature tags */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
                   {app.metrics?.map((m: string) => (
-                    <span key={m} className="badge badge-cyan" style={{ fontSize: '0.75rem' }}>
+                    <span key={m} className="badge badge-cyan" style={{ fontSize: '0.75rem', fontWeight: 600 }}>
                       {m}
                     </span>
                   ))}
                   {app.tags.map((t: string) => (
-                    <span key={t} className="badge" style={{ fontSize: '0.75rem' }}>
+                    <span 
+                      key={t} 
+                      className="badge" 
+                      style={{ 
+                        fontSize: '0.75rem', 
+                        fontWeight: 600, 
+                        backgroundColor: 'var(--surface-2)', 
+                        color: 'var(--text-primary)', 
+                        border: '1px solid var(--border-default)' 
+                      }}
+                    >
                       {t}
                     </span>
                   ))}
