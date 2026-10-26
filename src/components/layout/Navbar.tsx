@@ -41,10 +41,11 @@ export const Navbar: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         transition: 'all var(--transition-normal)',
-        backgroundColor: isScrolled ? 'var(--bg-glass)' : 'transparent',
-        backdropFilter: isScrolled ? 'blur(16px)' : 'none',
-        WebkitBackdropFilter: isScrolled ? 'blur(16px)' : 'none',
-        borderBottom: isScrolled ? '1px solid var(--border-subtle)' : '1px solid transparent'
+        backgroundColor: isScrolled ? 'var(--glass-bg)' : 'transparent',
+        backdropFilter: isScrolled ? 'blur(var(--glass-blur)) saturate(180%)' : 'none',
+        WebkitBackdropFilter: isScrolled ? 'blur(var(--glass-blur)) saturate(180%)' : 'none',
+        borderBottom: isScrolled ? '1px solid var(--border-subtle)' : '1px solid transparent',
+        boxShadow: isScrolled ? 'var(--shadow-sm)' : 'none'
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
