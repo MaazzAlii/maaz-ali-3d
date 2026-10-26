@@ -29,29 +29,23 @@
 
 ---
 
-### 3. Immediate Next Steps (To Resume When Returning)
-When the user returns and turns the PC back on:
-1. **Batch 5 & 6 Final Polish**:
-   - Refine `Channels.tsx` cards to `.liquid-card`.
-   - Refine `Contact.tsx` inputs and message card to Apple HIG form controls.
-   - Refine `ProjectModal.tsx` to Level 3 liquid glass overlay with spring modal entrance.
-2. **Additional 3D Touches**:
-   - Apply subtle 3D card tilt or interactive particle effects on project card hover.
-3. **Commit Rule**:
-   - Continue strictly committing each file individually with its own focused commit message.
-4. **Verification**:
-   - Run `npm run build` and `npm run dev` to verify everything in the browser.
+### 3. Apple HIG / Liquid Glass Polish Status (All Complete)
+- **Channels**: Upgraded to `.liquid-card` containers with Apple system typography and contrast-checked links.
+- **Contact**: Upgraded to `.liquid-card`, Apple HIG form controls (`.form-input`, `.form-select`, `.form-textarea`, `.form-label`), and interactive copy feedback.
+- **ProjectModal**: Upgraded to Level 3 liquid glass overlay (`.liquid-modal-backdrop` and `.liquid-modal-card`) with spring scale entrance and tab transitions.
+- **Footer**: Upgraded with standardized Apple design tokens and authentic social links.
+- **Quality Assurance**: Automated browser testing executed via browser subagent covering theme toggle (Light / Dark mode), 3D canvas interaction, project filtering, modal tabs, and responsive layout. Recording saved to `portfolio_qa_recording_*.webp`.
 
 ---
 
-### 4. Quick Resume Commands
+### 4. Verification & Dev Commands
 ```bash
-# Start local development server
+# Start local development server (Active on http://localhost:3000)
 npm run dev
 
-# Run type check
+# Run strict type checking
 npm run typecheck
 
-# Build for production
+# Build optimized production bundle
 npm run build
 ```
