@@ -5,11 +5,11 @@
 
 :root {
   /* --------------------------------------------------------------------------
-     Typography: Apple System Font Stack (SF Pro Display & Text)
+     Typography: Outfit (Headings) + Inter (Body) + Fira Code (Mono)
      -------------------------------------------------------------------------- */
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Fira Code', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   /* Type Scale */
   --text-xs: 0.75rem;     /* 12px */
@@ -52,82 +52,100 @@
   --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.12);
 
+  /* Transitions */
+  --transition-fast: 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+
   /* Layout */
   --max-width: 1220px;
   --nav-height: 68px;
 
   /* --------------------------------------------------------------------------
-     LIGHT MODE (Default) - Apple Liquid Glass & Aluminum Refinement
+     LIGHT MODE (Default) - Crisp High-Contrast Editorial & Liquid Glass
      -------------------------------------------------------------------------- */
-  --bg-base: #f5f6f9;
+  --bg-base: #f6f8fa;
   --bg-elevated: #ffffff;
-  --bg-sunken: #ebedf2;
-  --bg-overlay: rgba(15, 23, 42, 0.45);
+  --bg-sunken: #edf1f5;
+  --bg-overlay: rgba(15, 23, 42, 0.5);
 
   /* Surface Hierarchy */
   --surface-1: #ffffff;
-  --surface-2: #f8fafc;
-  --surface-3: #f1f5f9;
-  --surface-glass: rgba(255, 255, 255, 0.72);
-  --surface-glass-card: rgba(255, 255, 255, 0.85);
+  --surface-2: #f1f4f8;
+  --surface-3: #e6ebf2;
+  --surface-glass: rgba(255, 255, 255, 0.85);
+  --surface-glass-card: rgba(255, 255, 255, 0.92);
+
+  /* Surface Aliases for Compatibility */
+  --bg-surface: var(--surface-1);
+  --bg-raised: var(--surface-2);
+  --bg-glass-card: var(--surface-glass-card);
+  --bg-primary: var(--surface-2);
 
   /* Liquid Glass Material Tokens */
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.6);
-  --glass-highlight: rgba(255, 255, 255, 0.85);
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(15, 23, 42, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.95);
   --glass-blur: 24px;
-  --glass-specular: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.1) 100%);
+  --glass-specular: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.2) 100%);
 
-  /* Text & Contrast */
-  --text-primary: #1d1d1f;
-  --text-secondary: #515154;
-  --text-tertiary: #6e6e73;
-  --text-muted: #86868b;
+  /* Text & Contrast - ULTRA CRISP & PROMINENT */
+  --text-primary: #0a0d14;       /* Deep rich obsidian black for 16:1 contrast */
+  --text-secondary: #272f3d;     /* Deep slate charcoal for 9:1 contrast, completely prominent */
+  --text-tertiary: #475569;      /* Crisp mid-slate for 6:1 contrast */
+  --text-muted: #57657a;         /* High-visibility muted slate, WCAG AA compliant (>4.8:1) */
+  --text-faint: #64748b;
   --text-inverse: #ffffff;
 
   /* Borders */
-  --border-subtle: rgba(0, 0, 0, 0.06);
-  --border-default: rgba(0, 0, 0, 0.1);
-  --border-strong: rgba(0, 0, 0, 0.18);
-  --border-glass: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-default: rgba(15, 23, 42, 0.14);
+  --border-medium: rgba(15, 23, 42, 0.18);
+  --border-strong: rgba(15, 23, 42, 0.28);
+  --border-glass: rgba(15, 23, 42, 0.12);
+  --border-glow: rgba(0, 102, 204, 0.25);
 
-  /* Accents (Apple Pro Blue & Violet) */
-  --accent: #0071e3;
-  --accent-hover: #0077ed;
-  --accent-muted: rgba(0, 113, 227, 0.1);
+  /* Accents */
+  --accent: #0066cc;             /* Deep vibrant accessible Apple blue */
+  --accent-hover: #0052a3;
+  --accent-light: #0071e3;       /* Explicit definition for light mode */
+  --accent-primary: #0066cc;     /* Alias for components using accent-primary */
+  --accent-muted: rgba(0, 102, 204, 0.12);
   --accent-foreground: #ffffff;
-  --accent-glow: rgba(0, 113, 227, 0.22);
+  --accent-glow: rgba(0, 102, 204, 0.25);
 
-  --accent-indigo: #5856d6;
-  --accent-cyan: #0891b2;
-  --accent-emerald: #107e3e;
+  --accent-indigo: #4f46e5;
+  --accent-cyan: #0284c7;
+  --cyan-primary: #0284c7;       /* Alias for components using cyan-primary */
+  --accent-emerald: #059669;
+  --emerald-primary: #059669;    /* Alias for components using emerald-primary */
 
   /* Status Tokens */
-  --success: #34c759;
-  --success-bg: rgba(52, 199, 89, 0.12);
-  --success-fg: #1d7335;
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.12);
+  --success-fg: #15803d;
 
-  --warning: #ff9500;
-  --warning-bg: rgba(255, 149, 0, 0.12);
-  --warning-fg: #945300;
+  --warning: #d97706;
+  --warning-bg: rgba(217, 119, 6, 0.12);
+  --warning-fg: #b45309;
 
-  --danger: #ff3b30;
-  --danger-bg: rgba(255, 59, 48, 0.12);
-  --danger-fg: #af1f18;
+  --danger: #dc2626;
+  --danger-bg: rgba(220, 38, 38, 0.12);
+  --danger-fg: #b91c1c;
 
-  --info: #0071e3;
-  --info-bg: rgba(0, 113, 227, 0.1);
-  --info-fg: #005bb5;
+  --info: #0284c7;
+  --info-bg: rgba(2, 132, 199, 0.12);
+  --info-fg: #0369a1;
 
   /* Shadows (Apple Smooth Diffusion) */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
-  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 14px 34px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
-  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-  --shadow-glow: 0 0 24px rgba(0, 113, 227, 0.24);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 14px 34px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-glass: 0 8px 32px 0 rgba(15, 23, 42, 0.08);
+  --shadow-glow: 0 0 24px rgba(0, 102, 204, 0.24);
 
   /* Focus Ring */
-  --focus-ring: 0 0 0 3px rgba(0, 113, 227, 0.4);
+  --focus-ring: 0 0 0 3px rgba(0, 102, 204, 0.4);
 }
 
 /* --------------------------------------------------------------------------
@@ -147,6 +165,12 @@
   --surface-glass: rgba(26, 26, 30, 0.72);
   --surface-glass-card: rgba(22, 22, 26, 0.82);
 
+  /* Surface Aliases for Compatibility */
+  --bg-surface: var(--surface-1);
+  --bg-raised: var(--surface-2);
+  --bg-glass-card: var(--surface-glass-card);
+  --bg-primary: #0f131a;
+
   /* Liquid Glass Material Tokens */
   --glass-bg: rgba(22, 22, 26, 0.76);
   --glass-border: rgba(255, 255, 255, 0.12);
@@ -155,28 +179,35 @@
   --glass-specular: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.01) 100%);
 
   /* Text & Contrast */
-  --text-primary: #f5f5f7;
-  --text-secondary: #a1a1a6;
-  --text-tertiary: #86868b;
-  --text-muted: #6e6e73;
-  --text-inverse: #1d1d1f;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-muted: #64748b;
+  --text-faint: #475569;
+  --text-inverse: #0a0d14;
 
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-default: rgba(255, 255, 255, 0.14);
+  --border-medium: rgba(255, 255, 255, 0.18);
   --border-strong: rgba(255, 255, 255, 0.24);
   --border-glass: rgba(255, 255, 255, 0.1);
+  --border-glow: rgba(41, 151, 255, 0.35);
 
   /* Accents */
   --accent: #2997ff;
   --accent-hover: #40a3ff;
+  --accent-light: #52aaff;
+  --accent-primary: #2997ff;
   --accent-muted: rgba(41, 151, 255, 0.16);
   --accent-foreground: #ffffff;
   --accent-glow: rgba(41, 151, 255, 0.32);
 
   --accent-indigo: #6366f1;
   --accent-cyan: #22d3ee;
+  --cyan-primary: #22d3ee;
   --accent-emerald: #34d399;
+  --emerald-primary: #34d399;
 
   /* Status Tokens */
   --success: #30d158;
