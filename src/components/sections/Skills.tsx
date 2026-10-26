@@ -5,11 +5,11 @@ import { TechCosmos3D } from '../3d/TechCosmos3D';
 
 export const Skills: React.FC = () => {
   const getGroupIcon = (label: string) => {
-    if (label.includes('AI')) return <Cpu size={18} color="var(--accent-light)" />;
+    if (label.includes('AI')) return <Cpu size={18} color="var(--accent)" />;
     if (label.includes('Automation')) return <Workflow size={18} color="#ec4899" />;
-    if (label.includes('Backend')) return <Terminal size={18} color="var(--emerald-primary)" />;
-    if (label.includes('Frontend')) return <Smartphone size={18} color="var(--cyan-primary)" />;
-    return <Database size={18} color="#f59e0b" />;
+    if (label.includes('Backend')) return <Terminal size={18} color="var(--accent-emerald)" />;
+    if (label.includes('Frontend')) return <Smartphone size={18} color="var(--accent-cyan)" />;
+    return <Database size={18} color="var(--warning-fg)" />;
   };
 
   return (
@@ -20,7 +20,7 @@ export const Skills: React.FC = () => {
           <h2 className="display-2" style={{ marginBottom: '12px' }}>
             Engineering Capabilities &amp; Stack
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 450, lineHeight: 1.65 }}>
             A battle-tested technology ecosystem spanning autonomous agent orchestrations, enterprise workflow automation, and distributed full-stack services.
           </p>
         </div>
@@ -50,14 +50,14 @@ export const Skills: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
                 <div
                   style={{
-                    width: '36px',
-                    height: '36px',
+                    width: '38px',
+                    height: '38px',
                     borderRadius: 'var(--radius-md)',
-                    backgroundColor: 'var(--bg-surface)',
+                    backgroundColor: 'var(--surface-2)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: '1px solid var(--border-subtle)'
+                    border: '1px solid var(--border-default)'
                   }}
                 >
                   {getGroupIcon(group.label)}
@@ -74,9 +74,11 @@ export const Skills: React.FC = () => {
                     className="badge"
                     style={{
                       fontSize: '0.8125rem',
+                      fontWeight: 600,
                       padding: '4px 10px',
-                      backgroundColor: 'var(--bg-raised)',
-                      color: 'var(--text-secondary)'
+                      backgroundColor: 'var(--surface-2)',
+                      color: 'var(--text-primary)',
+                      border: '1px solid var(--border-default)'
                     }}
                   >
                     {item}
