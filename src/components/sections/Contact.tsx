@@ -45,7 +45,7 @@ export const Contact: React.FC = () => {
           <h2 className="display-2" style={{ marginBottom: '12px' }}>
             {contact.heading}
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 450, lineHeight: 1.65 }}>
             {contact.body}
           </p>
         </div>
@@ -100,7 +100,7 @@ export const Contact: React.FC = () => {
               <p style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '6px', letterSpacing: '-0.01em' }}>
                 Rawalpindi, Pakistan
               </p>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 450, lineHeight: 1.65 }}>
                 Open to remote roles worldwide, on-site positions in Pakistan, and international relocation.
               </p>
             </div>
@@ -117,7 +117,7 @@ export const Contact: React.FC = () => {
               }}
             >
               <Sparkles size={20} color="var(--accent)" style={{ flexShrink: 0 }} />
-              <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 500, lineHeight: 1.55, margin: 0 }}>
                 Typically responding within 24 hours. Feel free to connect directly via LinkedIn or Telegram as well.
               </p>
             </div>
