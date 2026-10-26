@@ -60,7 +60,7 @@ export const Navbar: React.FC = () => {
               width: '36px',
               height: '36px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, var(--accent-primary), var(--cyan-primary))',
+              background: 'linear-gradient(135deg, var(--accent), var(--accent-cyan))',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -88,7 +88,7 @@ export const Navbar: React.FC = () => {
                 title="Available for AI Engineer & Automation projects"
               />
             </div>
-            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
               AI Engineer · 3D
             </span>
           </div>
@@ -106,7 +106,7 @@ export const Navbar: React.FC = () => {
               style={{
                 padding: '6px 12px',
                 fontSize: '0.875rem',
-                fontWeight: 500,
+                fontWeight: 600,
                 color: 'var(--text-secondary)',
                 borderRadius: 'var(--radius-full)',
                 display: 'inline-flex',
@@ -115,7 +115,7 @@ export const Navbar: React.FC = () => {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.color = 'var(--text-primary)';
-                e.currentTarget.style.backgroundColor = 'var(--bg-surface)';
+                e.currentTarget.style.backgroundColor = 'var(--surface-2)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.color = 'var(--text-secondary)';
@@ -128,8 +128,10 @@ export const Navbar: React.FC = () => {
                   style={{
                     fontSize: '0.65rem',
                     fontFamily: 'var(--font-mono)',
-                    backgroundColor: 'rgba(99, 102, 241, 0.15)',
-                    color: 'var(--accent-light)',
+                    fontWeight: 700,
+                    backgroundColor: 'var(--accent-muted)',
+                    color: 'var(--accent)',
+                    border: '1px solid rgba(0, 102, 204, 0.25)',
                     padding: '1px 6px',
                     borderRadius: 'var(--radius-full)'
                   }}
