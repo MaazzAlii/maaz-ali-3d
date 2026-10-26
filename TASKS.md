@@ -42,3 +42,10 @@
 - [x] Refine `Footer.tsx` with Apple HIG design tokens and social links
 - [x] Run full browser QA and responsive inspection across themes and 3D scenes
 - [x] Verified zero-regression production build (`npm run build`) in 4.5s
+
+### Next Session Execution (Trigger: "resume")
+- [ ] **Feature A (`HeroScene3D.tsx`)**: Constrain orbiting nodes to defined mathematical 3D orbit lines (elliptical/circular splines) around the central core instead of random motion.
+- [ ] **Feature A (`HeroScene3D.tsx`)**: Render luminous orbital guide lines and traveling pulse beads tracing exact node paths.
+- [ ] **Feature B (`TechCosmos3D.tsx` & `Skills.tsx`)**: Replace abstract graph with meaningful tech clusters (GHL, n8n, Agentic AI / LangGraph, Full-Stack / Backend).
+- [ ] **Feature B (`TechCosmos3D.tsx` & `Skills.tsx`)**: Wire side category buttons (GHL, n8n, etc.) to smoothly rotate and transition the 3D graph to show that stack's real tools and integrations.
+- [ ] **Feature B (`TechCosmos3D.tsx`)**: Display authentic tool labels written directly on 3D nodes with high contrast in both Light and Dark themes.
