@@ -453,7 +453,20 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
               AGENTIC NEURAL CORE
             </span>
           </div>
-          <span style={{ fontSize: '0.65rem', color: '#818cf8', fontFamily: 'var(--font-mono)' }}>
+          <span 
+            style={{ 
+              fontSize: '0.68rem', 
+              color: theme === 'dark' ? '#818cf8' : '#4f46e5', 
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 600,
+              background: theme === 'dark' ? 'rgba(10, 14, 23, 0.7)' : 'rgba(255, 255, 255, 0.92)',
+              padding: '2px 8px',
+              borderRadius: 'var(--radius-full)',
+              marginTop: '4px',
+              border: `1px solid ${theme === 'dark' ? 'rgba(99, 102, 241, 0.3)' : 'rgba(79, 70, 229, 0.25)'}`,
+              boxShadow: '0 2px 6px rgba(0,0,0,0.06)'
+            }}
+          >
             Orchestrating Autonomous Swarms
           </span>
         </div>
@@ -466,7 +479,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
 
         // Depth perspective calculation
         const scale = Math.max(0.78, Math.min(1.05, 1 - (pos.z - 0.5) * 0.3));
-        const opacity = Math.max(0.65, Math.min(1, 1 - (pos.z - 0.5) * 0.4));
+        const opacity = Math.max(0.75, Math.min(1, 1 - (pos.z - 0.5) * 0.4));
 
         return (
           <div
@@ -507,11 +520,16 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
             </div>
             <span
               style={{
-                fontSize: '0.65rem',
+                fontSize: '0.68rem',
                 fontFamily: 'var(--font-mono)',
-                color: node.color,
-                marginTop: '2px',
-                textShadow: '0 1px 3px rgba(0,0,0,0.8)'
+                fontWeight: 600,
+                color: theme === 'dark' ? node.color : '#0a0d14',
+                backgroundColor: theme === 'dark' ? 'rgba(14, 18, 27, 0.7)' : 'rgba(255, 255, 255, 0.95)',
+                padding: '2px 8px',
+                borderRadius: 'var(--radius-full)',
+                border: `1px solid ${node.color}60`,
+                marginTop: '4px',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.08)'
               }}
             >
               {node.role}
@@ -551,7 +569,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
               display: 'inline-block'
             }} 
           />
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-primary)', fontWeight: 600 }}>
             {activeTelemetry}
           </span>
         </div>
