@@ -152,12 +152,11 @@ export const About: React.FC = () => {
 
             {/* Quick Facts Code Card */}
             <div 
-              className="glass-card" 
+              className="liquid-card" 
               style={{ 
-                padding: '20px', 
+                padding: '24px', 
                 borderRadius: 'var(--radius-lg)', 
-                marginBottom: '28px',
-                border: '1px solid var(--border-subtle)'
+                marginBottom: '28px'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px', color: 'var(--text-muted)' }}>
