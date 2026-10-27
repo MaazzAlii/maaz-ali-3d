@@ -18,7 +18,7 @@ export const Channels: React.FC = () => {
   };
 
   return (
-    <section id="channels" style={{ padding: '80px 0', borderTop: '1px solid var(--border-subtle)' }}>
+    <section id="channels" style={{ padding: 'var(--section-spacing) 0', borderTop: '1px solid var(--border-subtle)' }}>
       <div className="container">
         <div style={{ maxWidth: '720px', marginBottom: '40px' }}>
           <span className="section-eyebrow">Building in Public</span>
@@ -33,7 +33,7 @@ export const Channels: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
             gap: '20px'
           }}
         >
@@ -45,7 +45,7 @@ export const Channels: React.FC = () => {
               rel="noopener noreferrer"
               className="liquid-card"
               style={{
-                padding: '28px 24px',
+                padding: 'clamp(20px, 3.5vw, 28px) clamp(16px, 3vw, 24px)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
