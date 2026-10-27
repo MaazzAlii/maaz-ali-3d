@@ -38,7 +38,7 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" style={{ padding: '80px 0', borderTop: '1px solid var(--border-subtle)', position: 'relative' }}>
+    <section id="contact" style={{ padding: 'var(--section-spacing) 0', borderTop: '1px solid var(--border-subtle)', position: 'relative' }}>
       <div className="container">
         <div style={{ maxWidth: '720px', marginBottom: '40px' }}>
           <span className="section-eyebrow">Get In Touch</span>
@@ -50,14 +50,14 @@ export const Contact: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '32px' }}>
           {/* Left Column: Direct Info Card */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {/* Email Copy Card */}
             <div
               className="liquid-card"
               style={{
-                padding: '28px 24px',
+                padding: 'clamp(20px, 3.5vw, 28px) clamp(16px, 3vw, 24px)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between'
@@ -88,7 +88,7 @@ export const Contact: React.FC = () => {
             <div
               className="liquid-card"
               style={{
-                padding: '28px 24px'
+                padding: 'clamp(20px, 3.5vw, 28px) clamp(16px, 3vw, 24px)'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-bronze)', marginBottom: '10px' }}>
@@ -127,7 +127,7 @@ export const Contact: React.FC = () => {
           <div
             className="liquid-card"
             style={{
-              padding: '36px 32px'
+              padding: 'clamp(24px, 4vw, 36px) clamp(18px, 3.5vw, 32px)'
             }}
           >
             {formSubmitted ? (
