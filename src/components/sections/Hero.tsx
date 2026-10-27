@@ -13,11 +13,11 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
       id="hero" 
       style={{
         position: 'relative',
-        minHeight: '100vh',
+        minHeight: 'calc(100vh - var(--nav-height))',
         display: 'flex',
         alignItems: 'center',
-        paddingTop: 'calc(var(--nav-height) + 30px)',
-        paddingBottom: '60px',
+        paddingTop: 'calc(var(--nav-height) + clamp(20px, 3.5vw, 40px))',
+        paddingBottom: 'clamp(40px, 5vw, 64px)',
         overflow: 'hidden'
       }}
     >
@@ -29,9 +29,9 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
         <div 
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
             alignItems: 'center',
-            gap: '40px'
+            gap: 'clamp(28px, 4vw, 48px)'
           }}
         >
           {/* Left Column: Headline & Value Prop */}
@@ -69,7 +69,7 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
             </p>
 
             {/* CTAs */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', marginBottom: '36px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
               <a href="#projects" className="btn btn-primary">
                 <span>View All 43 Projects</span>
                 <ArrowUpRight size={16} />
@@ -86,14 +86,11 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
               </a>
             </div>
 
-            {/* Metric Counters Bar */}
+            {/* Metric Counters Bar (Responsive 4-col desktop, 2-col mobile) */}
             <div 
-              className="liquid-card"
+              className="liquid-card hero-stats-grid"
               style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
-                gap: '12px',
-                padding: '18px 24px',
+                padding: 'clamp(14px, 2.5vw, 20px) clamp(16px, 3vw, 24px)',
                 borderRadius: 'var(--radius-lg)'
               }}
             >
@@ -140,7 +137,7 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
             style={{
               position: 'relative',
               width: '100%',
-              minHeight: '480px',
+              minHeight: 'clamp(360px, 48vh, 520px)',
               borderRadius: 'var(--radius-xl)',
               overflow: 'hidden',
               boxShadow: 'var(--shadow-lg)'
