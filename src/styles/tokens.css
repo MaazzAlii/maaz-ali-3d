@@ -65,6 +65,10 @@
    LIGHT MODE - Warm Ivory, Charcoal Typography, Restrained Lavender (#80658F)
    -------------------------------------------------------------------------- */
 :root,
+html[data-theme="light"],
+html.light,
+body[data-theme="light"],
+body.light,
 [data-theme="light"],
 .light {
   --bg-base: #F5F1E9;            /* Warm background */
@@ -140,6 +144,10 @@
 /* --------------------------------------------------------------------------
    DARK MODE - Charcoal (#111110), Warm Off-White (#F4EFE6), Signature Lavender (#B3A0C9), Bronze (#B58D68)
    -------------------------------------------------------------------------- */
+html[data-theme="dark"],
+html.dark,
+body[data-theme="dark"],
+body.dark,
 [data-theme="dark"],
 .dark {
   --bg-base: #111110;            /* Dark background */
