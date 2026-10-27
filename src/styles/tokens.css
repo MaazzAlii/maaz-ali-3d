@@ -49,16 +49,22 @@
   --radius-xl: 20px;
   --radius-full: 9999px;
 
-  /* Motion & Easings */
+  /* Motion & Transition Aliases */
   --duration-fast: 0.16s;
   --duration-base: 0.28s;
   --duration-slow: 0.44s;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: var(--duration-fast) var(--ease-standard);
+  --transition-normal: var(--duration-base) var(--ease-standard);
+  --transition-base: var(--duration-base) var(--ease-standard);
 
-  /* Layout */
+  /* Layout & Consistent Spacing Tokens */
   --max-width: 1220px;
   --nav-height: 72px;
+  --section-spacing: clamp(64px, 7vw, 96px);
+  --section-gap: clamp(32px, 5vw, 60px);
+  --grid-gap: clamp(16px, 3vw, 24px);
 }
 
 /* --------------------------------------------------------------------------
@@ -88,6 +94,11 @@ body.light,
   --bg-raised: var(--surface-2);
   --bg-glass-card: var(--surface-glass-card);
   --bg-primary: var(--surface-2);
+
+  /* Liquid Glass System Tokens */
+  --glass-bg: rgba(255, 252, 247, 0.90);
+  --glass-blur: 16px;
+  --glass-specular: rgba(255, 255, 255, 0.75);
 
   /* Typography Colors */
   --text-primary: #24211F;        /* Primary text on light */
@@ -167,6 +178,11 @@ body.dark,
   --bg-raised: var(--surface-2);
   --bg-glass-card: var(--surface-glass-card);
   --bg-primary: #151413;
+
+  /* Liquid Glass System Tokens */
+  --glass-bg: rgba(17, 17, 16, 0.88);
+  --glass-blur: 16px;
+  --glass-specular: rgba(255, 255, 255, 0.08);
 
   /* Typography Colors */
   --text-primary: #F4EFE6;        /* Primary text on dark */
