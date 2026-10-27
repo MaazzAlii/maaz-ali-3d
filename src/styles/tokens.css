@@ -1,21 +1,23 @@
 /* ==========================================================================
-   Apple Human Interface Guidelines & Liquid Glass Design Tokens
-   Light Mode (Default Base) + Cyber Dark ([data-theme="dark"])
+   FUTURISTIC LUXURY DESIGN TOKENS
+   Palette: Charcoal, Warm Ivory, Muted Lavender (#B3A0C9 / #80658F), Warm Bronze (#B58D68)
+   Typography: Sora (Headings) + Instrument Serif (Emphasis) + Inter (Body/UI) + JetBrains Mono (Tech)
    ========================================================================== */
 
 :root {
   /* --------------------------------------------------------------------------
-     Typography: Sora (Headings) + Inter (Body & UI) + Fira Code (Mono)
+     Typography Hierarchy
      -------------------------------------------------------------------------- */
   --font-display: 'Sora', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'Fira Code', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   /* Calibrated Fluid Type Scale */
-  --text-xs: 0.75rem;     /* 12px (Small metadata: 11-13px) */
+  --text-xs: 0.75rem;     /* 12px (Technical labels & metadata: 11-13px) */
   --text-sm: 0.8125rem;   /* 13px */
   --text-base: 0.9375rem; /* 15px (Navigation & Buttons: 14-16px) */
-  --text-body: 1.0625rem; /* 17px (Body text: 16-18px) */
+  --text-body: 1.0625rem; /* 17px (Desktop Body text: 16-18px) */
   --text-md: 1.125rem;    /* 18px */
   --text-lg: 1.25rem;     /* 20px */
   --text-xl: 1.5rem;      /* 24px */
@@ -39,203 +41,173 @@
   --space-16: 64px;
   --space-20: 80px;
 
-  /* Apple Corner Radii */
-  --radius-xs: 6px;
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  /* Restrained Architectural Corner Radii (Avoid excessively rounded cards) */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
 
   /* Motion & Easings */
   --duration-fast: 0.16s;
-  --duration-base: 0.26s;
-  --duration-slow: 0.42s;
+  --duration-base: 0.28s;
+  --duration-slow: 0.44s;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.12);
-
-  /* Transitions */
-  --transition-fast: 0.16s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 0.26s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.42s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Layout */
   --max-width: 1220px;
-  --nav-height: 68px;
+  --nav-height: 72px;
+}
 
-  /* --------------------------------------------------------------------------
-     LIGHT MODE (Default) - Crisp High-Contrast Editorial & Liquid Glass
-     -------------------------------------------------------------------------- */
-  --bg-base: #f6f8fa;
-  --bg-elevated: #ffffff;
-  --bg-sunken: #edf1f5;
-  --bg-overlay: rgba(15, 23, 42, 0.5);
+/* --------------------------------------------------------------------------
+   LIGHT MODE - Warm Ivory, Charcoal Typography, Restrained Lavender (#80658F)
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme="light"],
+.light {
+  --bg-base: #F5F1E9;            /* Warm background */
+  --bg-elevated: #FFFCF7;        /* Light surface */
+  --bg-sunken: #ECE5DA;
+  --bg-overlay: rgba(36, 33, 31, 0.6);
 
-  /* Surface Hierarchy */
-  --surface-1: #ffffff;
-  --surface-2: #f1f4f8;
-  --surface-3: #e6ebf2;
-  --surface-glass: rgba(255, 255, 255, 0.85);
-  --surface-glass-card: rgba(255, 255, 255, 0.92);
+  /* Surfaces */
+  --surface-1: #FFFCF7;          /* Primary Light surface */
+  --surface-2: #F0EAE0;
+  --surface-3: #E6DED2;
+  --surface-glass: rgba(255, 252, 247, 0.88);
+  --surface-glass-card: rgba(255, 252, 247, 0.94);
 
-  /* Surface Aliases for Compatibility */
+  /* Surface Aliases */
   --bg-surface: var(--surface-1);
   --bg-raised: var(--surface-2);
   --bg-glass-card: var(--surface-glass-card);
   --bg-primary: var(--surface-2);
 
-  /* Liquid Glass Material Tokens */
-  --glass-bg: rgba(255, 255, 255, 0.88);
-  --glass-border: rgba(15, 23, 42, 0.12);
-  --glass-highlight: rgba(255, 255, 255, 0.95);
-  --glass-blur: 24px;
-  --glass-specular: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.2) 100%);
-
-  /* Text & Contrast - ULTRA CRISP & PROMINENT */
-  --text-primary: #0a0d14;       /* Deep rich obsidian black for 16:1 contrast */
-  --text-secondary: #272f3d;     /* Deep slate charcoal for 9:1 contrast, completely prominent */
-  --text-tertiary: #475569;      /* Crisp mid-slate for 6:1 contrast */
-  --text-muted: #57657a;         /* High-visibility muted slate, WCAG AA compliant (>4.8:1) */
-  --text-faint: #64748b;
-  --text-inverse: #ffffff;
+  /* Typography Colors */
+  --text-primary: #24211F;        /* Primary text on light */
+  --text-secondary: #625C55;      /* Secondary text on light */
+  --text-tertiary: #7D756C;
+  --text-muted: #8E867C;
+  --text-faint: #A39B90;
+  --text-inverse: #F4EFE6;
 
   /* Borders */
-  --border-subtle: rgba(15, 23, 42, 0.08);
-  --border-default: rgba(15, 23, 42, 0.14);
-  --border-medium: rgba(15, 23, 42, 0.18);
-  --border-strong: rgba(15, 23, 42, 0.28);
-  --border-glass: rgba(15, 23, 42, 0.12);
-  --border-glow: rgba(0, 102, 204, 0.25);
+  --border-subtle: rgba(226, 218, 208, 0.55);
+  --border-default: #E2DAD0;      /* Light borders */
+  --border-medium: #D5CBC0;
+  --border-strong: #C4B9AD;
+  --border-glass: rgba(226, 218, 208, 0.65);
+  --border-glow: rgba(128, 101, 143, 0.28);
 
   /* Accents */
-  --accent: #0066cc;             /* Deep vibrant accessible Apple blue */
-  --accent-hover: #0052a3;
-  --accent-light: #0071e3;       /* Explicit definition for light mode */
-  --accent-primary: #0066cc;     /* Alias for components using accent-primary */
-  --accent-muted: rgba(0, 102, 204, 0.12);
-  --accent-foreground: #ffffff;
-  --accent-glow: rgba(0, 102, 204, 0.25);
+  --accent: #80658F;              /* Lavender for light surfaces (high contrast) */
+  --accent-hover: #6C527A;
+  --accent-light: #9B7FA9;
+  --accent-primary: #80658F;
+  --accent-muted: rgba(128, 101, 143, 0.12);
+  --accent-foreground: #FFFCF7;
+  --accent-glow: rgba(128, 101, 143, 0.25);
 
-  --accent-indigo: #4f46e5;
-  --accent-cyan: #0284c7;
-  --cyan-primary: #0284c7;       /* Alias for components using cyan-primary */
-  --accent-emerald: #059669;
-  --emerald-primary: #059669;    /* Alias for components using emerald-primary */
+  --accent-bronze: #B58D68;       /* Warm bronze accent */
+  --accent-bronze-muted: rgba(181, 141, 104, 0.14);
+  --accent-lavender: #80658F;
 
   /* Status Tokens */
-  --success: #16a34a;
-  --success-bg: rgba(22, 163, 74, 0.12);
-  --success-fg: #15803d;
+  --success: #52796F;
+  --success-bg: rgba(82, 121, 111, 0.12);
+  --success-fg: #354F52;
 
-  --warning: #d97706;
-  --warning-bg: rgba(217, 119, 6, 0.12);
-  --warning-fg: #b45309;
+  --warning: #B58D68;
+  --warning-bg: rgba(181, 141, 104, 0.14);
+  --warning-fg: #8C6542;
 
-  --danger: #dc2626;
-  --danger-bg: rgba(220, 38, 38, 0.12);
-  --danger-fg: #b91c1c;
+  --danger: #B05353;
+  --danger-bg: rgba(176, 83, 83, 0.12);
+  --danger-fg: #8C3737;
 
-  --info: #0284c7;
-  --info-bg: rgba(2, 132, 199, 0.12);
-  --info-fg: #0369a1;
-
-  /* Shadows (Apple Smooth Diffusion) */
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
-  --shadow-lg: 0 14px 34px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(15, 23, 42, 0.06);
-  --shadow-glass: 0 8px 32px 0 rgba(15, 23, 42, 0.08);
-  --shadow-glow: 0 0 24px rgba(0, 102, 204, 0.24);
+  /* Soft Architectural Shadows (No harsh neon blooms) */
+  --shadow-sm: 0 1px 3px rgba(36, 33, 31, 0.04), 0 1px 2px rgba(36, 33, 31, 0.03);
+  --shadow-md: 0 4px 16px rgba(36, 33, 31, 0.06), 0 1px 3px rgba(36, 33, 31, 0.04);
+  --shadow-lg: 0 12px 32px rgba(36, 33, 31, 0.08), 0 2px 6px rgba(36, 33, 31, 0.04);
+  --shadow-glass: 0 6px 24px rgba(36, 33, 31, 0.06);
 
   /* Focus Ring */
-  --focus-ring: 0 0 0 3px rgba(0, 102, 204, 0.4);
+  --focus-ring: 0 0 0 3px rgba(128, 101, 143, 0.35);
 }
 
 /* --------------------------------------------------------------------------
-   DARK MODE - Apple Pro Liquid Glass / Deep Space & Obsidian
+   DARK MODE - Charcoal (#111110), Warm Off-White (#F4EFE6), Signature Lavender (#B3A0C9), Bronze (#B58D68)
    -------------------------------------------------------------------------- */
 [data-theme="dark"],
 .dark {
-  --bg-base: #000000;
-  --bg-elevated: #161618;
-  --bg-sunken: #0b0b0c;
-  --bg-overlay: rgba(0, 0, 0, 0.78);
+  --bg-base: #111110;            /* Dark background */
+  --bg-elevated: #1B1A18;        /* Dark surface */
+  --bg-sunken: #0C0C0B;
+  --bg-overlay: rgba(17, 17, 16, 0.82);
 
-  /* Surface Hierarchy */
-  --surface-1: #161618;
-  --surface-2: #1e1e21;
-  --surface-3: #26262b;
-  --surface-glass: rgba(26, 26, 30, 0.72);
-  --surface-glass-card: rgba(22, 22, 26, 0.82);
+  /* Surfaces */
+  --surface-1: #1B1A18;          /* Primary Dark surface */
+  --surface-2: #242220;
+  --surface-3: #2C2A26;
+  --surface-glass: rgba(27, 26, 24, 0.82);
+  --surface-glass-card: rgba(27, 26, 24, 0.92);
 
-  /* Surface Aliases for Compatibility */
+  /* Surface Aliases */
   --bg-surface: var(--surface-1);
   --bg-raised: var(--surface-2);
   --bg-glass-card: var(--surface-glass-card);
-  --bg-primary: #0f131a;
+  --bg-primary: #151413;
 
-  /* Liquid Glass Material Tokens */
-  --glass-bg: rgba(22, 22, 26, 0.76);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-highlight: rgba(255, 255, 255, 0.16);
-  --glass-blur: 24px;
-  --glass-specular: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.01) 100%);
-
-  /* Text & Contrast */
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-tertiary: #94a3b8;
-  --text-muted: #64748b;
-  --text-faint: #475569;
-  --text-inverse: #0a0d14;
+  /* Typography Colors */
+  --text-primary: #F4EFE6;        /* Primary text on dark */
+  --text-secondary: #B9B2A8;      /* Secondary text on dark */
+  --text-tertiary: #8E877D;
+  --text-muted: #726B62;
+  --text-faint: #544E47;
+  --text-inverse: #24211F;
 
   /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-default: rgba(255, 255, 255, 0.14);
-  --border-medium: rgba(255, 255, 255, 0.18);
-  --border-strong: rgba(255, 255, 255, 0.24);
-  --border-glass: rgba(255, 255, 255, 0.1);
-  --border-glow: rgba(41, 151, 255, 0.35);
+  --border-subtle: rgba(53, 49, 46, 0.55);
+  --border-default: #35312E;      /* Dark borders */
+  --border-medium: #47423E;
+  --border-strong: #59534E;
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(179, 160, 201, 0.32);
 
   /* Accents */
-  --accent: #2997ff;
-  --accent-hover: #40a3ff;
-  --accent-light: #52aaff;
-  --accent-primary: #2997ff;
-  --accent-muted: rgba(41, 151, 255, 0.16);
-  --accent-foreground: #ffffff;
-  --accent-glow: rgba(41, 151, 255, 0.32);
+  --accent: #B3A0C9;              /* Signature muted lavender */
+  --accent-hover: #C5B5D9;
+  --accent-light: #D4C7E5;
+  --accent-primary: #B3A0C9;
+  --accent-muted: rgba(179, 160, 201, 0.15);
+  --accent-foreground: #111110;
+  --accent-glow: rgba(179, 160, 201, 0.28);
 
-  --accent-indigo: #6366f1;
-  --accent-cyan: #22d3ee;
-  --cyan-primary: #22d3ee;
-  --accent-emerald: #34d399;
-  --emerald-primary: #34d399;
+  --accent-bronze: #B58D68;       /* Warm bronze accent */
+  --accent-bronze-muted: rgba(181, 141, 104, 0.16);
+  --accent-lavender: #B3A0C9;
 
   /* Status Tokens */
-  --success: #30d158;
-  --success-bg: rgba(48, 209, 88, 0.15);
-  --success-fg: #30d158;
+  --success: #84A98C;
+  --success-bg: rgba(132, 169, 140, 0.15);
+  --success-fg: #A3C4AB;
 
-  --warning: #ffd60a;
-  --warning-bg: rgba(255, 214, 10, 0.15);
-  --warning-fg: #ffd60a;
+  --warning: #D4A373;
+  --warning-bg: rgba(212, 163, 115, 0.15);
+  --warning-fg: #FAEDCD;
 
-  --danger: #ff453a;
-  --danger-bg: rgba(255, 69, 58, 0.15);
-  --danger-fg: #ff453a;
+  --danger: #D97768;
+  --danger-bg: rgba(217, 119, 104, 0.15);
+  --danger-fg: #F4A261;
 
-  --info: #64d2ff;
-  --info-bg: rgba(100, 210, 255, 0.15);
-  --info-fg: #64d2ff;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 18px 45px rgba(0, 0, 0, 0.75);
-  --shadow-glass: 0 12px 40px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 28px rgba(41, 151, 255, 0.35);
+  /* Soft Studio Shadows (Restrained) */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 14px 36px rgba(0, 0, 0, 0.6);
+  --shadow-glass: 0 8px 28px rgba(0, 0, 0, 0.5);
 
   /* Focus Ring */
-  --focus-ring: 0 0 0 3px rgba(41, 151, 255, 0.45);
+  --focus-ring: 0 0 0 3px rgba(179, 160, 201, 0.4);
 }
