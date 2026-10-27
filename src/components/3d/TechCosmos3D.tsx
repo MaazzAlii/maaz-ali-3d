@@ -333,6 +333,23 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
   const [isRotating, setIsRotating] = useState<boolean>(true);
   const [screenNodes, setScreenNodes] = useState<Record<string, NodeScreenPosition>>({});
 
+  // Synchronize state to refs so the Three.js animate loop never suffers from stale closures
+  const activeClusterRef = useRef<TechClusterId>(activeCluster);
+  const selectedToolRef = useRef<TechTool>(selectedTool);
+  const isRotatingRef = useRef<boolean>(isRotating);
+
+  useEffect(() => {
+    activeClusterRef.current = activeCluster;
+  }, [activeCluster]);
+
+  useEffect(() => {
+    selectedToolRef.current = selectedTool;
+  }, [selectedTool]);
+
+  useEffect(() => {
+    isRotatingRef.current = isRotating;
+  }, [isRotating]);
+
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -544,8 +561,12 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
       camera.lookAt(currentLookAt.current);
 
       // Subtle ambient orbital drift when idling
-      if (isRotating && !isDragging.current && worldGroup) {
-        if (activeCluster === 'all') {
+      const currentCluster = activeClusterRef.current;
+      const currentSelectedTool = selectedToolRef.current;
+      const rotating = isRotatingRef.current;
+
+      if (rotating && !isDragging.current && worldGroup) {
+        if (currentCluster === 'all') {
           worldGroup.rotation.y = elapsedTime * 0.08;
           worldGroup.rotation.x = Math.sin(elapsedTime * 0.05) * 0.04;
         } else {
@@ -577,7 +598,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
 
       // Dynamic Focus: Dim inactive clusters, highlight active cluster
       (Object.keys(CLUSTERS) as ('ai' | 'n8n' | 'ghl' | 'backend')[]).forEach((cId) => {
-        const isClusterActive = activeCluster === 'all' || activeCluster === cId;
+        const isClusterActive = currentCluster === 'all' || currentCluster === cId;
         const targetOpacity = isClusterActive ? 0.95 : 0.18;
         const targetEmissive = isClusterActive ? 1.0 : 0.2;
 
@@ -600,7 +621,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
         TECH_TOOLS.filter((t) => t.clusterId === cId).forEach((tool) => {
           const tm = toolMeshes[tool.id];
           if (tm) {
-            const isSelected = selectedTool.id === tool.id;
+            const isSelected = currentSelectedTool.id === tool.id;
             const tOpacity = isClusterActive ? (isSelected ? 1.0 : 0.88) : 0.15;
             const tEmissive = isClusterActive ? (isSelected ? 1.6 : 0.75) : 0.15;
             tm.mat.opacity = THREE.MathUtils.lerp(tm.mat.opacity, tOpacity, 0.08);
@@ -625,7 +646,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
         const newScreenNodes: Record<string, NodeScreenPosition> = {};
 
         // If in 'all' overview, project 4 Hubs
-        if (activeCluster === 'all') {
+        if (currentCluster === 'all') {
           (Object.keys(CLUSTERS) as ('ai' | 'n8n' | 'ghl' | 'backend')[]).forEach((cId) => {
             const hub = hubMeshes[cId];
             if (hub) {
@@ -645,8 +666,25 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
             }
           });
         } else {
-          // In focused cluster: project all tools in that cluster + hub
-          const activeTools = TECH_TOOLS.filter((t) => t.clusterId === activeCluster);
+          // In focused cluster: project the active hub AND all satellite child tools!
+          const hub = hubMeshes[currentCluster];
+          if (hub) {
+            hub.mesh.getWorldPosition(tempVec);
+            tempVec.project(camera);
+            if (tempVec.z < 1.0) {
+              newScreenNodes[`hub-${currentCluster}`] = {
+                x: (tempVec.x * 0.5 + 0.5) * currentW,
+                y: (-(tempVec.y * 0.5) + 0.5) * currentH,
+                z: tempVec.z,
+                visible: true,
+                name: CLUSTERS[currentCluster].name,
+                clusterColor: CLUSTERS[currentCluster].color,
+                isHub: true
+              };
+            }
+          }
+
+          const activeTools = TECH_TOOLS.filter((t) => t.clusterId === currentCluster);
           activeTools.forEach((tool) => {
             const tm = toolMeshes[tool.id];
             if (tm) {
@@ -703,7 +741,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
           const clicked = TECH_TOOLS.find(t => t.id === hit.userData.toolId);
           if (clicked) {
             setSelectedTool(clicked);
-            if (activeCluster !== clicked.clusterId && activeCluster !== 'all') {
+            if (activeClusterRef.current !== clicked.clusterId && activeClusterRef.current !== 'all') {
               setActiveCluster(clicked.clusterId);
             }
           }
