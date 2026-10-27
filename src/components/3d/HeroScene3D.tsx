@@ -69,8 +69,8 @@ interface NodeScreenPos {
 
 export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
   const mountRef = useRef<HTMLDivElement>(null);
-  // Default is solid outer shell (isWireframe = false) as confirmed by user
-  const [isWireframe, setIsWireframe] = useState<boolean>(false);
+  // Default is wireframe borders (isWireframe = true) as requested by user
+  const [isWireframe, setIsWireframe] = useState<boolean>(true);
   const [isRotating, setIsRotating] = useState<boolean>(true);
   const [activeTelemetry, setActiveTelemetry] = useState<string>('Supervisor Orchestrating 4 Agents');
   const [nodePositions, setNodePositions] = useState<Record<string, NodeScreenPos>>({});
@@ -138,19 +138,23 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
     const coreGroup = new THREE.Group();
     scene.add(coreGroup);
 
-    // Outer Faceted Core Geometry (Solid Shell by default with architectural finish)
+    // Outer Faceted Core Geometry (Wireframe borders by default, solid shell on toggle)
     const outerGeo = new THREE.IcosahedronGeometry(1.4, 2);
     const outerMat = new THREE.MeshPhysicalMaterial({
-      color: theme === 'dark' ? 0x242220 : 0xeae3d7,
-      emissive: theme === 'dark' ? 0x1b1a18 : 0xdcd3c4,
-      emissiveIntensity: 0.28,
+      color: isWireframe
+        ? (theme === 'dark' ? 0xb58d68 : 0x35312e)
+        : (theme === 'dark' ? 0x242220 : 0xeae3d7),
+      emissive: isWireframe
+        ? (theme === 'dark' ? 0x6e5239 : 0x24211f)
+        : (theme === 'dark' ? 0x1b1a18 : 0xdcd3c4),
+      emissiveIntensity: isWireframe ? 0.45 : 0.28,
       wireframe: isWireframe,
       roughness: 0.22,
       metalness: 0.82,
-      transmission: 0.25,
+      transmission: isWireframe ? 0.0 : 0.25,
       thickness: 1.1,
       transparent: true,
-      opacity: isWireframe ? 0.72 : 0.94,
+      opacity: isWireframe ? 0.88 : 0.94,
       clearcoat: 0.88,
       clearcoatRoughness: 0.14
     });
@@ -654,16 +658,16 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
 
         {/* 3D Action Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {/* Wireframe toggle */}
+          {/* Wireframe / Solid toggle */}
           <button
             onClick={() => setIsWireframe(!isWireframe)}
             className={`badge ${isWireframe ? 'badge-primary' : ''}`}
             style={{ cursor: 'pointer', padding: '4px 10px', fontSize: '0.7rem' }}
-            title="Toggle Wireframe Shell"
-            aria-label="Toggle 3D Wireframe"
+            title={isWireframe ? "Switch to Solid Shell" : "Switch to Wireframe Borders"}
+            aria-label="Toggle 3D Outer Shell Style"
           >
             <Layers size={12} />
-            {isWireframe ? 'Solid Shell' : 'Wireframe'}
+            {isWireframe ? 'Solid Shell' : 'Wireframe Borders'}
           </button>
 
           {/* Spin Toggle */}
