@@ -19,9 +19,10 @@ body {
   background-color: var(--bg-base);
   color: var(--text-primary);
   min-height: 100vh;
-  line-height: 1.6;
+  line-height: 1.65;
   letter-spacing: -0.011em;
-  font-weight: 450;
+  font-weight: 400;
+  font-size: var(--text-body);
   overflow-x: hidden;
   position: relative;
   transition: background-color var(--duration-base) var(--ease-standard), 
@@ -30,8 +31,9 @@ body {
 
 p {
   color: var(--text-secondary);
-  font-weight: 450;
+  font-weight: 400;
   line-height: 1.65;
+  font-size: var(--text-body);
 }
 
 /* Custom Apple Diffusion Scrollbar */
@@ -69,7 +71,7 @@ a {
 }
 
 button {
-  font-family: inherit;
+  font-family: var(--font-body);
   cursor: pointer;
   border: none;
   background: none;
@@ -106,31 +108,31 @@ select:focus-visible {
 }
 
 /* --------------------------------------------------------------------------
-   Typography Hierarchy (Outfit & Inter Calibrated)
+   Typography Hierarchy (Sora Headings + Inter Body Calibrated)
    -------------------------------------------------------------------------- */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   color: var(--text-primary);
-  font-weight: 700;
+  font-weight: 650;
   letter-spacing: -0.025em;
-  line-height: 1.18;
+  line-height: 1.12;
 }
 
 .display-1 {
   font-family: var(--font-display);
   font-size: var(--text-hero);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.035em;
-  line-height: 1.08;
+  line-height: 1.02;
   color: var(--text-primary);
 }
 
 .display-2 {
   font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3.6vw, 2.75rem);
-  font-weight: 700;
+  font-size: var(--text-section);
+  font-weight: 650;
   letter-spacing: -0.025em;
-  line-height: 1.15;
+  line-height: 1.12;
   color: var(--text-primary);
 }
 
@@ -247,8 +249,9 @@ h1, h2, h3, h4, h5, h6 {
   gap: 0.5rem;
   min-height: 44px;
   padding: 0.65rem 1.4rem;
-  font-size: var(--text-sm);
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
   border-radius: var(--radius-full);
   letter-spacing: -0.01em;
   transition: all var(--duration-fast) var(--ease-emphasis);
