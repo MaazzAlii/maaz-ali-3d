@@ -47,10 +47,11 @@ This project is the official 3D interactive portfolio for **Maaz Ali** — AI En
 - **Accessibility (WCAG 2.1 AA)**:
   - All interactive elements must have semantic HTML tags, accessible names, visible focus outlines, and appropriate ARIA attributes.
   - Colors must meet 4.5:1 minimum contrast ratio in both Light and Dark themes.
-- **Git Commit Standards**:
-  - Every file must be committed individually with its own focused, clear commit message.
-  - Never stage and commit all files in a single generic bulk commit.
-  - Push individual commits so the Git history provides clean per-file change tracking.
+- **Git Commit Standards (Mandatory)**:
+  - Every file modified must be committed individually with its own focused, descriptive commit message.
+  - If 50 files are changed, there must be 50 separate commits.
+  - Never stage and commit multiple files in a single bulk commit (e.g. `git add .` is strictly forbidden).
+  - Push individual commits so the Git history preserves complete per-file change tracking.
 - **Versioned Repository Protocol**:
   - Whenever a distinct design or major 3D concept iteration is created (e.g., v1, v2, v3, v4):
     - Maintain a corresponding branch locally.
