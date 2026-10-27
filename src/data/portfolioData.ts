@@ -841,10 +841,10 @@ export type Certification = {
 
 export const certifications: Certification[] = [
   {
-    title: "Azure Fundamentals (AZ-900)",
+    title: "Azure Fundamentals (AZ-901)",
     provider: "Microsoft",
     date: "2025",
-    marks: "983 / 1000",
+    marks: "Score: 983 / 1000",
     status: "Completed",
     // credentialUrl: "https://www.linkedin.com/in/maazzalii/",  // Replace with actual certificate URL
   },
