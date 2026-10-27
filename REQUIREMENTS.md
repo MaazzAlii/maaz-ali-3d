@@ -11,7 +11,7 @@ This project is an immersive, high-performance 3D portfolio website for **Maaz A
 - **Location**: Rawalpindi, Pakistan (Open to relocation & remote globally)
 - **Education**: BS Computer Science, National University of Modern Languages (NUML) Islamabad (Graduating January 2027)
 - **Certifications**:
-  - Microsoft Certified: Azure Fundamentals (AZ-900) — Score: 983 / 1000 (2025)
+  - Microsoft Certified: Azure Fundamentals (AZ-901) — Score: 983 / 1000 (2025)
   - Cisco Networking Academy: Python Essentials 1 (2024)
   - NAVTTC: Artificial Intelligence Training (2024)
 - **Key Statistics**:
@@ -71,7 +71,7 @@ This project is an immersive, high-performance 3D portfolio website for **Maaz A
 - **Professional Timeline & Experience**:
   - Interactive career path highlighting LangGraph multi-agent engineering, FastAPI microservices, and n8n automations.
 - **Certifications & Education**:
-  - Detailed verification cards for Microsoft AZ-900 (983/1000), NAVTTC, Cisco, and NUML BS CS degree.
+  - Detailed verification cards for Microsoft AZ-901 (983/1000), NAVTTC, Cisco, and NUML BS CS degree.
 - **Channels & Social Hub**:
   - YouTube, Instagram, TikTok, Telegram community cards with subscriber/follower context.
 - **Contact & Booking Section**:
