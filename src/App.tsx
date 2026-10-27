@@ -40,7 +40,7 @@ export const App: React.FC = () => {
         {/* 6. Published Mobile Applications on Google Play */}
         <AppsShowcase />
 
-        {/* 7. Experience, Microsoft AZ-900 Certification & Degree */}
+        {/* 7. Experience, Microsoft AZ-901 Certification & Degree */}
         <Experience />
 
         {/* 8. YouTube & Community Content Channels */}
