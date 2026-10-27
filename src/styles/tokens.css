@@ -5,23 +5,26 @@
 
 :root {
   /* --------------------------------------------------------------------------
-     Typography: Outfit (Headings) + Inter (Body) + Fira Code (Mono)
+     Typography: Sora (Headings) + Inter (Body & UI) + Fira Code (Mono)
      -------------------------------------------------------------------------- */
-  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Sora', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'Fira Code', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  /* Type Scale */
-  --text-xs: 0.75rem;     /* 12px */
+  /* Calibrated Fluid Type Scale */
+  --text-xs: 0.75rem;     /* 12px (Small metadata: 11-13px) */
   --text-sm: 0.8125rem;   /* 13px */
-  --text-base: 0.9375rem; /* 15px */
-  --text-md: 1.0625rem;   /* 17px */
+  --text-base: 0.9375rem; /* 15px (Navigation & Buttons: 14-16px) */
+  --text-body: 1.0625rem; /* 17px (Body text: 16-18px) */
+  --text-md: 1.125rem;    /* 18px */
   --text-lg: 1.25rem;     /* 20px */
   --text-xl: 1.5rem;      /* 24px */
   --text-2xl: 1.875rem;   /* 30px */
   --text-3xl: 2.25rem;    /* 36px */
   --text-4xl: 3rem;       /* 48px */
-  --text-hero: clamp(2.5rem, 5.5vw, 4.25rem);
+  --text-project: clamp(1.75rem, 2.6vw, 2.5rem);   /* 28–40px Project title */
+  --text-section: clamp(2.25rem, 4.2vw, 3.75rem);  /* 44–64px Section heading */
+  --text-hero: clamp(2.75rem, 6.2vw, 5.5rem);      /* 76–104px Hero heading */
 
   /* Spacing Scale (4px base) */
   --space-1: 4px;
