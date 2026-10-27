@@ -3,7 +3,11 @@ import { Cpu, Terminal, Layers, Database, Smartphone, Workflow } from 'lucide-re
 import { skillGroups } from '../../data/portfolioData';
 import { TechCosmos3D } from '../3d/TechCosmos3D';
 
-export const Skills: React.FC = () => {
+interface SkillsProps {
+  theme?: 'dark' | 'light';
+}
+
+export const Skills: React.FC<SkillsProps> = ({ theme = 'dark' }) => {
   const getGroupIcon = (label: string) => {
     if (label.includes('AI')) return <Cpu size={18} color="var(--accent)" />;
     if (label.includes('Automation')) return <Workflow size={18} color="#ec4899" />;
@@ -21,13 +25,13 @@ export const Skills: React.FC = () => {
             Engineering Capabilities &amp; Stack
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 450, lineHeight: 1.65 }}>
-            A battle-tested technology ecosystem spanning autonomous agent orchestrations, enterprise workflow automation, and distributed full-stack services.
+            A battle-tested technology ecosystem spanning autonomous agent orchestrations, enterprise workflow automation (n8n &amp; GoHighLevel), and distributed full-stack services.
           </p>
         </div>
 
-        {/* 3D Tech Cosmos Integration */}
+        {/* 3D Dynamic Tech Cosmos Architecture Graph */}
         <div style={{ marginBottom: '40px' }}>
-          <TechCosmos3D />
+          <TechCosmos3D theme={theme} />
         </div>
 
         {/* Structured Category Skill Cards */}
