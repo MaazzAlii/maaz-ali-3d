@@ -22,7 +22,7 @@ const ORBIT_CONFIGS: OrbitConfig[] = [
     id: 'langgraph',
     name: 'LangGraph',
     role: 'Supervisor Agent Swarm',
-    color: '#6366f1',
+    color: '#B3A0C9',
     radius: 2.3,
     speed: 0.65,
     tilt: { x: 0.42, y: 0.26, z: -0.18 }, // ~24°, 15°, -10°
@@ -32,7 +32,7 @@ const ORBIT_CONFIGS: OrbitConfig[] = [
     id: 'chromadb',
     name: 'ChromaDB RAG',
     role: 'Vector Embeddings',
-    color: '#06b6d4',
+    color: '#B58D68',
     radius: 3.0,
     speed: 0.50,
     tilt: { x: -0.58, y: 0.52, z: 0.24 }, // ~-33°, 30°, 14°
@@ -42,7 +42,7 @@ const ORBIT_CONFIGS: OrbitConfig[] = [
     id: 'n8n',
     name: 'n8n Automations',
     role: 'Business Pipelines',
-    color: '#ec4899',
+    color: '#D4A373',
     radius: 3.7,
     speed: 0.38,
     tilt: { x: 0.72, y: -0.48, z: 0.36 }, // ~41°, -27°, 21°
@@ -52,7 +52,7 @@ const ORBIT_CONFIGS: OrbitConfig[] = [
     id: 'fastapi',
     name: 'FastAPI Backend',
     role: 'Async LLM Services',
-    color: '#10b981',
+    color: '#84A98C',
     radius: 4.4,
     speed: 0.30,
     tilt: { x: -0.35, y: -0.65, z: -0.32 }, // ~-20°, -37°, -18°
@@ -118,54 +118,54 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
 
     mount.appendChild(renderer.domElement);
 
-    // 2. Lighting setup
-    const ambientLight = new THREE.AmbientLight(0xffffff, theme === 'dark' ? 0.9 : 1.1);
+    // 2. Controlled Studio Lighting Setup (Warm studio key, lavender rim, bronze fill)
+    const ambientLight = new THREE.AmbientLight(0xfff8f0, theme === 'dark' ? 1.1 : 1.35);
     scene.add(ambientLight);
 
-    const pointLight1 = new THREE.PointLight(0x6366f1, 4.5, 30);
+    const pointLight1 = new THREE.PointLight(0xfff5ea, 3.8, 32);
     pointLight1.position.set(5, 5, 5);
     scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0x06b6d4, 3.5, 30);
+    const pointLight2 = new THREE.PointLight(0xb3a0c9, 2.8, 30);
     pointLight2.position.set(-5, -5, -2);
     scene.add(pointLight2);
 
-    const pointLight3 = new THREE.PointLight(0xec4899, 2.5, 25);
+    const pointLight3 = new THREE.PointLight(0xb58d68, 2.2, 28);
     pointLight3.position.set(0, -6, 4);
     scene.add(pointLight3);
 
-    // 3. Central Agentic Neural Core (Faceted Crystal Core)
+    // 3. Central Agentic Neural Core (Sculptural Faceted Core)
     const coreGroup = new THREE.Group();
     scene.add(coreGroup);
 
-    // Outer Faceted Core Geometry (Solid Shell by default)
+    // Outer Faceted Core Geometry (Solid Shell by default with architectural finish)
     const outerGeo = new THREE.IcosahedronGeometry(1.4, 2);
     const outerMat = new THREE.MeshPhysicalMaterial({
-      color: theme === 'dark' ? 0x4338ca : 0x4f46e5,
-      emissive: theme === 'dark' ? 0x2e1065 : 0x312e81,
-      emissiveIntensity: 0.38,
+      color: theme === 'dark' ? 0x242220 : 0xeae3d7,
+      emissive: theme === 'dark' ? 0x1b1a18 : 0xdcd3c4,
+      emissiveIntensity: 0.28,
       wireframe: isWireframe,
-      roughness: 0.15,
-      metalness: 0.35,
-      transmission: 0.32,
+      roughness: 0.22,
+      metalness: 0.82,
+      transmission: 0.25,
       thickness: 1.1,
       transparent: true,
-      opacity: isWireframe ? 0.72 : 0.92,
-      clearcoat: 0.85,
-      clearcoatRoughness: 0.12
+      opacity: isWireframe ? 0.72 : 0.94,
+      clearcoat: 0.88,
+      clearcoatRoughness: 0.14
     });
     const coreMesh = new THREE.Mesh(outerGeo, outerMat);
     coreGroup.add(coreMesh);
     coreMeshRef.current = coreMesh;
 
-    // Inner Glowing Crystal Octahedron
+    // Inner Glowing Crystal Octahedron (Warm bronze inner glow)
     const innerGeo = new THREE.OctahedronGeometry(0.75, 0);
     const innerMat = new THREE.MeshStandardMaterial({
       color: 0xffffff,
-      emissive: 0x818cf8,
-      emissiveIntensity: 1.35,
-      roughness: 0.12,
-      metalness: 0.9
+      emissive: theme === 'dark' ? 0xb58d68 : 0x80658f,
+      emissiveIntensity: 1.25,
+      roughness: 0.15,
+      metalness: 0.88
     });
     const innerMesh = new THREE.Mesh(innerGeo, innerMat);
     coreGroup.add(innerMesh);
@@ -265,7 +265,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
       particlePositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
       particlePositions[i * 3 + 2] = radius * Math.cos(phi);
 
-      const color = new THREE.Color(i % 2 === 0 ? 0x6366f1 : 0x06b6d4);
+      const color = new THREE.Color(i % 2 === 0 ? 0xb58d68 : 0xb3a0c9);
       particleColors[i * 3] = color.r;
       particleColors[i * 3 + 1] = color.g;
       particleColors[i * 3 + 2] = color.b;
@@ -276,10 +276,10 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
     particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      size: 0.038,
+      size: 0.028,
       vertexColors: true,
       transparent: true,
-      opacity: theme === 'dark' ? 0.65 : 0.45,
+      opacity: theme === 'dark' ? 0.55 : 0.38,
       blending: THREE.AdditiveBlending
     });
 
@@ -507,22 +507,22 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
             style={{
               padding: '5px 14px',
               borderRadius: 'var(--radius-full)',
-              background: theme === 'dark' ? 'rgba(7, 9, 14, 0.94)' : 'rgba(255, 255, 255, 0.96)',
+              background: theme === 'dark' ? 'rgba(27, 26, 24, 0.94)' : 'rgba(255, 252, 247, 0.96)',
               backdropFilter: 'blur(12px)',
-              border: theme === 'dark' ? '1.5px solid rgba(99, 102, 241, 0.6)' : '1.5px solid rgba(79, 70, 229, 0.65)',
-              boxShadow: theme === 'dark' ? '0 0 24px rgba(99, 102, 241, 0.5)' : '0 4px 20px rgba(0, 0, 0, 0.12), 0 0 15px rgba(79, 70, 229, 0.25)',
+              border: '1.5px solid var(--border-default)',
+              boxShadow: 'var(--shadow-md)',
               display: 'flex',
               alignItems: 'center',
               gap: '6px'
             }}
           >
-            <Cpu size={14} color={theme === 'dark' ? '#818cf8' : '#4f46e5'} />
+            <Cpu size={14} color="var(--accent)" />
             <span 
               style={{ 
                 fontFamily: 'var(--font-mono)', 
                 fontSize: '0.75rem', 
                 fontWeight: 700, 
-                color: theme === 'dark' ? '#f8fafc' : '#0a0d14', 
+                color: 'var(--text-primary)', 
                 letterSpacing: '0.06em' 
               }}
             >
@@ -532,15 +532,15 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
           <span 
             style={{ 
               fontSize: '0.68rem', 
-              color: theme === 'dark' ? '#818cf8' : '#4338ca', 
+              color: 'var(--accent)', 
               fontFamily: 'var(--font-mono)',
-              fontWeight: 700,
-              background: theme === 'dark' ? 'rgba(10, 14, 23, 0.85)' : 'rgba(241, 245, 249, 0.96)',
+              fontWeight: 600,
+              background: 'var(--surface-2)',
               padding: '2px 8px',
               borderRadius: 'var(--radius-full)',
               marginTop: '4px',
-              border: `1px solid ${theme === 'dark' ? 'rgba(99, 102, 241, 0.35)' : 'rgba(79, 70, 229, 0.3)'}`,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+              border: '1px solid var(--border-default)',
+              boxShadow: 'var(--shadow-sm)'
             }}
           >
             Orchestrating Autonomous Swarms
@@ -581,13 +581,13 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
                 gap: '6px',
                 padding: '4px 10px',
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: theme === 'dark' ? 'rgba(10, 14, 23, 0.94)' : 'rgba(255, 255, 255, 0.96)',
+                backgroundColor: theme === 'dark' ? 'rgba(27, 26, 24, 0.94)' : 'rgba(255, 252, 247, 0.96)',
                 backdropFilter: 'blur(10px)',
-                border: `2px solid ${node.color}`,
+                border: `1.5px solid ${node.color}`,
                 boxShadow: theme === 'dark' 
-                  ? `0 0 20px ${node.color}55, 0 4px 16px rgba(0, 0, 0, 0.5)`
-                  : `0 4px 16px rgba(0, 0, 0, 0.12), 0 0 12px ${node.color}35`,
-                color: theme === 'dark' ? '#ffffff' : '#0a0d14',
+                  ? '0 4px 18px rgba(0, 0, 0, 0.55)'
+                  : '0 4px 16px rgba(36, 33, 31, 0.08)',
+                color: 'var(--text-primary)',
                 fontSize: '0.75rem',
                 fontWeight: 700,
                 whiteSpace: 'nowrap'
@@ -600,14 +600,14 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
               style={{
                 fontSize: '0.68rem',
                 fontFamily: 'var(--font-mono)',
-                fontWeight: 700,
-                color: theme === 'dark' ? node.color : '#0a0d14',
-                backgroundColor: theme === 'dark' ? 'rgba(15, 23, 42, 0.88)' : 'rgba(241, 245, 249, 0.96)',
+                fontWeight: 600,
+                color: 'var(--text-secondary)',
+                backgroundColor: 'var(--surface-2)',
                 padding: '2px 8px',
                 borderRadius: 'var(--radius-full)',
-                border: `1px solid ${node.color}70`,
+                border: '1px solid var(--border-default)',
                 marginTop: '4px',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                boxShadow: 'var(--shadow-sm)'
               }}
             >
               {node.role}
