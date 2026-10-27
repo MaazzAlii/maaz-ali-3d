@@ -60,7 +60,7 @@ export const Navbar: React.FC = () => {
               width: '36px',
               height: '36px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, var(--accent), var(--accent-cyan))',
+              background: 'linear-gradient(135deg, var(--accent), var(--accent-bronze))',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -132,7 +132,7 @@ export const Navbar: React.FC = () => {
                     fontWeight: 700,
                     backgroundColor: 'var(--accent-muted)',
                     color: 'var(--accent)',
-                    border: '1px solid rgba(0, 102, 204, 0.25)',
+                    border: '1px solid var(--border-glow)',
                     padding: '1px 6px',
                     borderRadius: 'var(--radius-full)'
                   }}
