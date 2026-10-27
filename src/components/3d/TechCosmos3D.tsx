@@ -44,8 +44,8 @@ export const CLUSTERS: Record<'ai' | 'n8n' | 'ghl' | 'backend', ClusterInfo> = {
     id: 'ai',
     name: 'Agentic AI & Swarms',
     hubName: 'LangGraph Multi-Agent Core',
-    color: '#6366f1',
-    secondaryColor: '#818cf8',
+    color: '#B3A0C9',
+    secondaryColor: '#CBBCE0',
     center: [-2.9, 1.4, 0.3],
     summary: 'Cyclic stateful graphs, autonomous supervisor swarms, and self-correcting RAG systems.',
     productionImpact: 'Orchestrating autonomous code reviews, research pipelines, and enterprise knowledge agents.'
@@ -54,8 +54,8 @@ export const CLUSTERS: Record<'ai' | 'n8n' | 'ghl' | 'backend', ClusterInfo> = {
     id: 'n8n',
     name: 'n8n Automations',
     hubName: 'n8n Orchestration Core',
-    color: '#ec4899',
-    secondaryColor: '#f472b6',
+    color: '#B58D68',
+    secondaryColor: '#CCA582',
     center: [2.9, 1.4, -0.3],
     summary: 'Mission-critical webhook pipelines, multi-branch routing, and AI tool integrations.',
     productionImpact: 'Powering automated client onboarding, Telegram swarms, and multi-channel marketing engines.'
@@ -64,8 +64,8 @@ export const CLUSTERS: Record<'ai' | 'n8n' | 'ghl' | 'backend', ClusterInfo> = {
     id: 'ghl',
     name: 'GoHighLevel (GHL)',
     hubName: 'GHL CRM Architecture',
-    color: '#f59e0b',
-    secondaryColor: '#fbbf24',
+    color: '#C49A45',
+    secondaryColor: '#D8B062',
     center: [2.7, -1.8, 0.3],
     summary: 'Full-funnel client acquisition, two-way conversational AI bots, and automated pipeline ops.',
     productionImpact: 'Running complete dental clinic patient funnels, instant Twilio call routing, and automated calendar sync.'
@@ -74,8 +74,8 @@ export const CLUSTERS: Record<'ai' | 'n8n' | 'ghl' | 'backend', ClusterInfo> = {
     id: 'backend',
     name: 'Full-Stack & Backend',
     hubName: 'FastAPI Cloud Platform',
-    color: '#10b981',
-    secondaryColor: '#34d399',
+    color: '#7A9A8B',
+    secondaryColor: '#96B2A5',
     center: [-2.7, -1.8, -0.3],
     summary: 'High-throughput async Python microservices, TypeScript frontends, and containerized scale.',
     productionImpact: 'Serving sub-50ms vector embeddings, real-time WebSockets, and HIPAA-ready multi-tenant databases.'
@@ -409,7 +409,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
     dirLight1.position.set(5, 10, 7);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0x6366f1, 1.5);
+    const dirLight2 = new THREE.DirectionalLight(0xb58d68, 1.2);
     dirLight2.position.set(-6, -4, 4);
     scene.add(dirLight2);
 
@@ -517,9 +517,9 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
     const bridgeGeo = new THREE.BufferGeometry();
     bridgeGeo.setAttribute('position', new THREE.Float32BufferAttribute(bridgePositions, 3));
     const bridgeMat = new THREE.LineBasicMaterial({
-      color: 0x818cf8,
+      color: 0xb58d68,
       transparent: true,
-      opacity: 0.28
+      opacity: 0.25
     });
     const bridgeSegments = new THREE.LineSegments(bridgeGeo, bridgeMat);
     worldGroup.add(bridgeSegments);
@@ -904,8 +904,8 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
             overflow: 'hidden',
             border: '1px solid var(--border-default)',
             background: theme === 'dark' 
-              ? 'radial-gradient(circle at center, rgba(99, 102, 241, 0.12) 0%, rgba(10, 14, 23, 0.95) 75%)' 
-              : 'radial-gradient(circle at center, rgba(99, 102, 241, 0.08) 0%, rgba(248, 250, 252, 0.95) 75%)'
+              ? 'radial-gradient(circle at center, rgba(179, 160, 201, 0.08) 0%, #111110 80%)' 
+              : 'radial-gradient(circle at center, rgba(181, 141, 104, 0.08) 0%, #F5F1E9 80%)'
           }}
         >
           {/* Canvas */}
@@ -992,7 +992,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
               right: '12px',
               padding: '8px 14px',
               borderRadius: 'var(--radius-md)',
-              backgroundColor: theme === 'dark' ? 'rgba(10, 14, 23, 0.85)' : 'rgba(255, 255, 255, 0.88)',
+              backgroundColor: theme === 'dark' ? 'rgba(27, 26, 24, 0.92)' : 'rgba(255, 252, 247, 0.94)',
               backdropFilter: 'blur(8px)',
               border: '1px solid var(--border-default)',
               display: 'flex',
@@ -1009,7 +1009,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
                   width: '7px', 
                   height: '7px', 
                   borderRadius: '50%', 
-                  backgroundColor: activeClusterMeta ? activeClusterMeta.color : '#6366f1' 
+                  backgroundColor: activeClusterMeta ? activeClusterMeta.color : 'var(--accent)' 
                 }} 
               />
               <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-primary)' }}>
@@ -1116,7 +1116,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
               style={{ 
                 padding: '12px 14px', 
                 borderRadius: 'var(--radius-md)', 
-                backgroundColor: theme === 'dark' ? 'rgba(15, 23, 42, 0.6)' : 'rgba(241, 245, 249, 0.75)',
+                backgroundColor: 'var(--surface-2)',
                 border: '1px solid var(--border-subtle)',
                 marginBottom: '16px'
               }}
