@@ -36,7 +36,7 @@ export const Footer: React.FC = () => {
                   width: '32px',
                   height: '32px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, var(--accent), var(--accent-cyan))',
+                  background: 'linear-gradient(135deg, var(--accent), var(--accent-bronze))',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
