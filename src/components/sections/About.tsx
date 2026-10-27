@@ -178,7 +178,7 @@ export const About: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <Award size={18} color="var(--warning-fg)" style={{ flexShrink: 0 }} />
                   <span style={{ color: 'var(--text-secondary)', fontWeight: 450 }}>
-                    <strong style={{ color: 'var(--text-primary)' }}>Microsoft Certified AZ-900</strong>: Azure Fundamentals (Score: 983 / 1000)
+                    <strong style={{ color: 'var(--text-primary)' }}>Microsoft Certified AZ-901</strong>: Azure Fundamentals (Score: 983 / 1000)
                   </span>
                 </div>
 
