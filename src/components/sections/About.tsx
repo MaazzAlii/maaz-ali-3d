@@ -92,7 +92,7 @@ export const About: React.FC = () => {
                   style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to top, rgba(17, 17, 16, 0.85) 0%, transparent 60%)',
+                    background: 'linear-gradient(to top, var(--bg-overlay) 0%, transparent 60%)',
                     pointerEvents: 'none'
                   }} 
                 />
@@ -106,16 +106,18 @@ export const About: React.FC = () => {
                     right: '16px',
                     padding: '12px 16px',
                     borderRadius: 'var(--radius-md)',
-                    background: 'rgba(27, 26, 24, 0.88)',
+                    background: 'var(--surface-glass-card)',
                     backdropFilter: 'blur(10px)',
-                    border: '1px solid var(--border-subtle)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    border: '1px solid var(--border-default)',
+                    boxShadow: 'var(--shadow-sm)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between'
                   }}
                 >
                   <div>
-                    <p style={{ fontWeight: 700, fontSize: '0.9375rem', color: '#F4EFE6' }}>{profile.name}</p>
+                    <p style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text-primary)' }}>{profile.name}</p>
                     <p style={{ fontSize: '0.75rem', color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
                       BS CS · NUML Islamabad
                     </p>
