@@ -104,9 +104,10 @@ export const Navbar: React.FC = () => {
               key={link.label}
               href={link.href}
               style={{
-                padding: '6px 12px',
-                fontSize: '0.875rem',
-                fontWeight: 600,
+                padding: '6px 14px',
+                fontSize: '0.9375rem',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 500,
                 color: 'var(--text-secondary)',
                 borderRadius: 'var(--radius-full)',
                 display: 'inline-flex',
