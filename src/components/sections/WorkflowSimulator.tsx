@@ -260,13 +260,13 @@ export const WorkflowSimulator: React.FC = () => {
 
           {/* Execution Telemetry Terminal */}
           <div style={{
-            backgroundColor: '#0d1117',
+            backgroundColor: '#161514',
             borderRadius: 'var(--radius-md)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
+            border: '1px solid var(--border-default)',
             padding: '16px',
             fontFamily: 'var(--font-mono)',
             fontSize: '0.8125rem',
-            color: '#e6edf3',
+            color: 'var(--text-primary)',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
@@ -274,21 +274,21 @@ export const WorkflowSimulator: React.FC = () => {
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ef4444', display: 'inline-block' }} />
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#eab308', display: 'inline-block' }} />
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#22c55e', display: 'inline-block' }} />
-                <span style={{ marginLeft: '8px', fontSize: '0.75rem', color: '#8b949e', fontWeight: 600 }}>langgraph_telemetry.log</span>
+                <span style={{ marginLeft: '8px', fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>langgraph_telemetry.log</span>
               </div>
-              <span style={{ color: '#8b949e', fontSize: '0.75rem' }}>{logs.length} events logged</span>
+              <span style={{ color: 'var(--text-secondary)', fontSize: '0.75rem' }}>{logs.length} events logged</span>
             </div>
 
             <div style={{ minHeight: '80px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
               {logs.length === 0 ? (
-                <span style={{ color: '#8b949e' }}>
+                <span style={{ color: 'var(--text-secondary)' }}>
                   $ Ready. Click &quot;Run Simulation&quot; to inspect state graph traversal.
                 </span>
               ) : (
                 logs.map((log, i) => (
                   <div key={i} style={{ display: 'flex', gap: '10px' }}>
-                    <span style={{ color: '#58a6ff', fontWeight: 700 }}>&gt;</span>
-                    <span style={{ color: '#f0f6fc' }}>{log}</span>
+                    <span style={{ color: 'var(--accent)', fontWeight: 700 }}>&gt;</span>
+                    <span style={{ color: 'var(--text-primary)' }}>{log}</span>
                   </div>
                 ))
               )}
