@@ -4,7 +4,7 @@ import { experience, certifications } from '../../data/portfolioData';
 
 export const Experience: React.FC = () => {
   return (
-    <section id="experience" style={{ padding: '80px 0', borderTop: '1px solid var(--border-subtle)' }}>
+    <section id="experience" style={{ padding: 'var(--section-spacing) 0', borderTop: '1px solid var(--border-subtle)' }}>
       <div className="container">
         <div style={{ maxWidth: '720px', marginBottom: '40px' }}>
           <span className="section-eyebrow">Track Record</span>
@@ -16,7 +16,7 @@ export const Experience: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 'clamp(24px, 4vw, 40px)' }}>
           {/* Left Column: Work Experience Timeline */}
           <div>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -27,7 +27,7 @@ export const Experience: React.FC = () => {
             <div
               className="liquid-card"
               style={{
-                padding: '28px',
+                padding: 'clamp(18px, 3.5vw, 28px)',
                 borderRadius: 'var(--radius-xl)',
                 backgroundColor: 'var(--surface-1)',
                 border: '1px solid var(--border-default)'
