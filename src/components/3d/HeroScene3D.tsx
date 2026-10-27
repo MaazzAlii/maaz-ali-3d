@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Rotate3d, Layers, Bot, Database, Workflow, Terminal, Cpu } from 'lucide-react';
+import { Rotate3d, Layers, Bot, Database, Workflow, Terminal, Cpu, Play, Pause } from 'lucide-react';
 
 interface HeroScene3DProps {
   theme?: 'dark' | 'light';
@@ -72,6 +72,13 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
   // Default is wireframe borders (isWireframe = true) as requested by user
   const [isWireframe, setIsWireframe] = useState<boolean>(true);
   const [isRotating, setIsRotating] = useState<boolean>(true);
+  const isRotatingRef = useRef<boolean>(true);
+  const accumulatedOrbitTime = useRef<number>(0);
+
+  useEffect(() => {
+    isRotatingRef.current = isRotating;
+  }, [isRotating]);
+
   const [activeTelemetry, setActiveTelemetry] = useState<string>('Supervisor Orchestrating 4 Agents');
   const [nodePositions, setNodePositions] = useState<Record<string, NodeScreenPos>>({});
   const [centerPos, setCenterPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -300,36 +307,37 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
 
       if (!isVisibleRef.current) return;
 
-      const elapsedTime = clock.getElapsedTime();
+      const delta = clock.getDelta();
+
+      if (isRotatingRef.current) {
+        accumulatedOrbitTime.current += delta;
+      }
+      const orbitTime = accumulatedOrbitTime.current;
 
       // Smooth pointer parallax
       pointerPos.current.x += (pointerPos.current.targetX - pointerPos.current.x) * 0.05;
       pointerPos.current.y += (pointerPos.current.targetY - pointerPos.current.y) * 0.05;
 
       // Rotate Neural Core
-      if (isRotating && coreMeshRef.current && innerMeshRef.current) {
-        coreMeshRef.current.rotation.x = elapsedTime * 0.18 + pointerPos.current.y * 0.35;
-        coreMeshRef.current.rotation.y = elapsedTime * 0.22 + pointerPos.current.x * 0.35;
+      if (coreMeshRef.current && innerMeshRef.current) {
+        coreMeshRef.current.rotation.x = orbitTime * 0.18 + pointerPos.current.y * 0.35;
+        coreMeshRef.current.rotation.y = orbitTime * 0.22 + pointerPos.current.x * 0.35;
 
-        innerMeshRef.current.rotation.x = -elapsedTime * 0.32;
-        innerMeshRef.current.rotation.y = -elapsedTime * 0.42;
+        innerMeshRef.current.rotation.x = -orbitTime * 0.32;
+        innerMeshRef.current.rotation.y = -orbitTime * 0.42;
 
         // Subtle biological breathing pulse
-        const scale = 1 + Math.sin(elapsedTime * 2.2) * 0.045;
+        const scale = 1 + Math.sin(orbitTime * 2.2) * 0.045;
         coreMeshRef.current.scale.set(scale, scale, scale);
       }
 
       // Strict Parametric Position along Orbital Splines
       if (ringsGroupRef.current) {
         // Slow ambient orbital precession
-        if (isRotating) {
-          ringsGroupRef.current.rotation.y = elapsedTime * 0.04;
-        }
+        ringsGroupRef.current.rotation.y = orbitTime * 0.04;
 
         orbitNodes.forEach(({ nodeMesh, config, pulseBeads, beadOffsets }, idx) => {
-          const currentAngle = isRotating
-            ? elapsedTime * config.speed + idx * 1.57
-            : idx * 1.57;
+          const currentAngle = orbitTime * config.speed + idx * 1.57;
 
           // Main node strictly follows x = r * cos(t), z = r * sin(t) in the inclined plane
           nodeMesh.position.x = config.radius * Math.cos(currentAngle);
@@ -493,28 +501,36 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
       {/* Meaningful Central Core Label Overlay */}
       {centerPos.x > 0 && (
         <div
+          onClick={() => {
+            setActiveTelemetry('Agentic Neural Core: 4 Autonomous Sub-Agents Synchronized');
+          }}
           style={{
             position: 'absolute',
             left: `${centerPos.x}px`,
             top: `${centerPos.y}px`,
             transform: 'translate(-50%, -50%)',
-            pointerEvents: 'none',
+            pointerEvents: 'auto',
+            cursor: 'pointer',
             zIndex: 12,
             textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '3px'
+            gap: '3px',
+            transition: 'transform 0.2s ease, filter 0.2s ease'
           }}
+          title="Click to interact with Agentic Neural Core"
         >
           <div
             style={{
-              padding: '5px 14px',
+              padding: '6px 16px',
               borderRadius: 'var(--radius-full)',
               background: theme === 'dark' ? 'rgba(27, 26, 24, 0.94)' : 'rgba(255, 252, 247, 0.96)',
               backdropFilter: 'blur(12px)',
-              border: '1.5px solid var(--border-default)',
-              boxShadow: 'var(--shadow-md)',
+              border: '1.5px solid var(--accent)',
+              boxShadow: theme === 'dark' 
+                ? '0 0 20px rgba(179, 160, 201, 0.35), 0 4px 18px rgba(0, 0, 0, 0.55)'
+                : '0 4px 16px rgba(36, 33, 31, 0.12), 0 0 12px rgba(181, 141, 104, 0.25)',
               display: 'flex',
               alignItems: 'center',
               gap: '6px'
@@ -524,7 +540,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
             <span 
               style={{ 
                 fontFamily: 'var(--font-mono)', 
-                fontSize: '0.75rem', 
+                fontSize: '0.78rem', 
                 fontWeight: 700, 
                 color: 'var(--text-primary)', 
                 letterSpacing: '0.06em' 
@@ -681,16 +697,29 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
             {isWireframe ? 'Solid Shell' : 'Wireframe Borders'}
           </button>
 
-          {/* Spin Toggle */}
+          {/* Spin / Pause Toggle */}
           <button
-            onClick={() => setIsRotating(!isRotating)}
-            className="badge"
-            style={{ cursor: 'pointer', padding: '5px 12px', fontSize: '0.72rem', whiteSpace: 'nowrap' }}
-            title="Pause/Resume Orbit Rotation"
+            onClick={() => {
+              const nextState = !isRotating;
+              setIsRotating(nextState);
+              isRotatingRef.current = nextState;
+              setActiveTelemetry(nextState ? 'Active Orbit: Swarm Rotation Resumed' : 'Orbit Paused: Swarm Frozen in Space');
+            }}
+            className={`badge ${!isRotating ? 'badge-primary' : ''}`}
+            style={{ 
+              cursor: 'pointer', 
+              padding: '5px 12px', 
+              fontSize: '0.72rem', 
+              whiteSpace: 'nowrap',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+            title={isRotating ? "Click to Pause Orbit Rotation" : "Click to Resume Orbit Rotation"}
             aria-label="Toggle Orbit Rotation"
           >
-            <Rotate3d size={12} />
-            {isRotating ? 'Active Orbit' : 'Orbit Paused'}
+            {isRotating ? <Pause size={12} /> : <Play size={12} />}
+            {isRotating ? 'Pause Orbit' : 'Resume Orbit'}
           </button>
         </div>
       </div>
