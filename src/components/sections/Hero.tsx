@@ -123,10 +123,10 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
 
               <div>
                 <p style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--warning-fg)', lineHeight: 1 }}>
-                  983
+                  983<span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-secondary)' }}>/1000</span>
                 </p>
                 <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '5px', fontFamily: 'var(--font-mono)' }}>
-                  AZ-900 / 1000
+                  AZ-901 Azure Score
                 </p>
               </div>
             </div>
