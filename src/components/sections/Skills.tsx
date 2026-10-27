@@ -10,10 +10,10 @@ interface SkillsProps {
 export const Skills: React.FC<SkillsProps> = ({ theme = 'dark' }) => {
   const getGroupIcon = (label: string) => {
     if (label.includes('AI')) return <Cpu size={18} color="var(--accent)" />;
-    if (label.includes('Automation')) return <Workflow size={18} color="#ec4899" />;
-    if (label.includes('Backend')) return <Terminal size={18} color="var(--accent-emerald)" />;
-    if (label.includes('Frontend')) return <Smartphone size={18} color="var(--accent-cyan)" />;
-    return <Database size={18} color="var(--warning-fg)" />;
+    if (label.includes('Automation')) return <Workflow size={18} color="var(--accent-bronze)" />;
+    if (label.includes('Backend')) return <Terminal size={18} color="var(--success)" />;
+    if (label.includes('Frontend')) return <Smartphone size={18} color="var(--accent)" />;
+    return <Database size={18} color="var(--warning)" />;
   };
 
   return (
@@ -22,7 +22,7 @@ export const Skills: React.FC<SkillsProps> = ({ theme = 'dark' }) => {
         <div style={{ maxWidth: '720px', marginBottom: '36px' }}>
           <span className="section-eyebrow">Technical Mastery</span>
           <h2 className="display-2" style={{ marginBottom: '12px' }}>
-            Engineering Capabilities &amp; Stack
+            Engineering Capabilities &amp; <span className="serif-emphasis">Architecture</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 450, lineHeight: 1.65 }}>
             A battle-tested technology ecosystem spanning autonomous agent orchestrations, enterprise workflow automation (n8n &amp; GoHighLevel), and distributed full-stack services.
