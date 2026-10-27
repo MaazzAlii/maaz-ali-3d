@@ -60,7 +60,7 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
               style={{
                 fontSize: '1.125rem',
                 color: 'var(--text-secondary)',
-                fontWeight: 450,
+                fontWeight: 400,
                 lineHeight: 1.65,
                 marginBottom: '28px'
               }}
