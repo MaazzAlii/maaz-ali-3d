@@ -35,7 +35,7 @@ export const App: React.FC = () => {
         <WorkflowSimulator />
 
         {/* 5. 3D Technology Cosmos & Skills Matrix */}
-        <Skills />
+        <Skills theme={theme} />
 
         {/* 6. Published Mobile Applications on Google Play */}
         <AppsShowcase />
