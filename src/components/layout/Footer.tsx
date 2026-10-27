@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
       style={{
         borderTop: '1px solid var(--border-subtle)',
         backgroundColor: 'var(--surface-2)',
-        padding: '60px 0 32px 0',
+        padding: 'clamp(48px, 6vw, 64px) 0 32px 0',
         position: 'relative'
       }}
     >
