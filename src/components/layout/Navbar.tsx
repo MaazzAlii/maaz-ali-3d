@@ -221,18 +221,21 @@ export const Navbar: React.FC = () => {
       {/* Mobile Menu Dropdown Drawer */}
       {mobileMenuOpen && (
         <div
-          className="glass-panel"
+          className="liquid-card"
           style={{
             position: 'absolute',
-            top: 'var(--nav-height)',
+            top: 'calc(var(--nav-height) + 8px)',
             left: '12px',
             right: '12px',
             padding: '20px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '12px',
+            gap: '10px',
+            backgroundColor: 'var(--surface-1)',
+            border: '1px solid var(--border-strong)',
+            borderRadius: 'var(--radius-lg)',
             boxShadow: 'var(--shadow-lg)',
-            zIndex: 99
+            zIndex: 101
           }}
         >
           {navLinks.map((link) => (
