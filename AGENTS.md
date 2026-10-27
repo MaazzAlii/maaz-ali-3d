@@ -51,6 +51,12 @@ This project is the official 3D interactive portfolio for **Maaz Ali** — AI En
   - Every file must be committed individually with its own focused, clear commit message.
   - Never stage and commit all files in a single generic bulk commit.
   - Push individual commits so the Git history provides clean per-file change tracking.
+- **Versioned Repository Protocol**:
+  - Whenever a distinct design or major 3D concept iteration is created (e.g., v1, v2, v3):
+    - Maintain a corresponding branch locally.
+    - Create and maintain a dedicated standalone GitHub repository (`maaz-ali-3d-v1`, `maaz-ali-3d-v2`, `maaz-ali-3d-v3`, etc.) with `main` as its default branch.
+    - Mirror every individual commit so each repository preserves identical per-file Git history.
+    - This allows one-click Vercel deployments for each version independently without branch configuration.
 - **Prohibited Destructive Actions**:
   - Never fabricate fake user testimonials or client stats.
   - Never remove or overwrite Maaz Ali's real project metadata, certifications, or links.
