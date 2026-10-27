@@ -33,7 +33,7 @@ export const Projects: React.FC = () => {
   }, []);
 
   return (
-    <section id="projects" style={{ padding: '80px 0', borderTop: '1px solid var(--border-subtle)' }}>
+    <section id="projects" style={{ padding: 'var(--section-spacing) 0', borderTop: '1px solid var(--border-subtle)' }}>
       <div className="container">
         {/* Section Header */}
         <div style={{ maxWidth: '720px', marginBottom: '32px' }}>
@@ -154,7 +154,7 @@ export const Projects: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))',
             gap: '24px'
           }}
         >
