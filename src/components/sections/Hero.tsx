@@ -104,7 +104,7 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
           <h1
             style={{
               fontSize: 'clamp(2.75rem, 6.8vw, 5.5rem)',
-              fontWeight: 850,
+              fontWeight: 700,
               lineHeight: 1.02,
               letterSpacing: '-0.035em',
               color: '#ffffff',
@@ -161,7 +161,8 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
               style={{
                 backgroundColor: '#38bdf8',
                 color: '#06080c',
-                fontWeight: 750,
+                fontFamily: 'var(--font-body)',
+                fontWeight: 600,
                 fontSize: '0.9375rem',
                 padding: '14px 28px',
                 borderRadius: 'var(--radius-full)',
@@ -183,7 +184,8 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.06)',
                 color: '#ffffff',
-                fontWeight: 650,
+                fontFamily: 'var(--font-body)',
+                fontWeight: 500,
                 fontSize: '0.9375rem',
                 padding: '14px 26px',
                 borderRadius: 'var(--radius-full)',
@@ -206,7 +208,8 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
               style={{
                 backgroundColor: 'transparent',
                 color: '#94a3b8',
-                fontWeight: 550,
+                fontFamily: 'var(--font-body)',
+                fontWeight: 500,
                 fontSize: '0.875rem',
                 padding: '12px 18px',
                 borderRadius: 'var(--radius-full)',
