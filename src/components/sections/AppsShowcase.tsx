@@ -4,7 +4,7 @@ import { androidApps, AndroidApp } from '../../data/portfolioData';
 
 export const AppsShowcase: React.FC = () => {
   return (
-    <section id="apps" style={{ padding: '80px 0', borderTop: '1px solid var(--border-subtle)', position: 'relative' }}>
+    <section id="apps" style={{ padding: 'var(--section-spacing) 0', borderTop: '1px solid var(--border-subtle)', position: 'relative' }}>
       <div className="container">
         <div style={{ maxWidth: '720px', marginBottom: '40px' }}>
           <span className="section-eyebrow">Google Play Store</span>
@@ -19,7 +19,7 @@ export const AppsShowcase: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
             gap: '32px'
           }}
         >
@@ -80,7 +80,7 @@ export const AppsShowcase: React.FC = () => {
               </div>
 
               {/* App Content */}
-              <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ padding: 'clamp(16px, 3vw, 24px)', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                   <Smartphone size={18} color="var(--accent)" />
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)' }}>
