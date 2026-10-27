@@ -87,12 +87,12 @@ export const About: React.FC = () => {
                   loading="lazy"
                 />
 
-                {/* Cyber gradient overlay */}
+                {/* Gradient overlay */}
                 <div 
                   style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to top, rgba(7, 9, 14, 0.85) 0%, transparent 60%)',
+                    background: 'linear-gradient(to top, rgba(17, 17, 16, 0.85) 0%, transparent 60%)',
                     pointerEvents: 'none'
                   }} 
                 />
@@ -106,7 +106,7 @@ export const About: React.FC = () => {
                     right: '16px',
                     padding: '12px 16px',
                     borderRadius: 'var(--radius-md)',
-                    background: 'rgba(14, 18, 27, 0.85)',
+                    background: 'rgba(27, 26, 24, 0.88)',
                     backdropFilter: 'blur(10px)',
                     border: '1px solid var(--border-subtle)',
                     display: 'flex',
@@ -115,8 +115,8 @@ export const About: React.FC = () => {
                   }}
                 >
                   <div>
-                    <p style={{ fontWeight: 700, fontSize: '0.9375rem', color: '#ffffff' }}>{profile.name}</p>
-                    <p style={{ fontSize: '0.75rem', color: '#38bdf8', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
+                    <p style={{ fontWeight: 700, fontSize: '0.9375rem', color: '#F4EFE6' }}>{profile.name}</p>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--accent)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
                       BS CS · NUML Islamabad
                     </p>
                   </div>
@@ -181,7 +181,7 @@ export const About: React.FC = () => {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <MapPin size={18} color="var(--accent-cyan)" style={{ flexShrink: 0 }} />
+                  <MapPin size={18} color="var(--accent-bronze)" style={{ flexShrink: 0 }} />
                   <span style={{ color: 'var(--text-secondary)', fontWeight: 450 }}>
                     <strong style={{ color: 'var(--text-primary)' }}>Location</strong>: Rawalpindi, Pakistan (Open to Remote &amp; Worldwide Relocation)
                   </span>
