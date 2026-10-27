@@ -54,7 +54,7 @@ The application is structured as a client-side reactive Single Page Application 
 - `src/data/portfolioData.ts` holds all structured records:
   - Profile metadata (NUML BS CS, Rawalpindi, email, socials)
   - 43 detailed project entries categorized into 7 domains
-  - Educational background & Microsoft AZ-900 / NAVTTC / Cisco certifications
+  - Educational background & Microsoft AZ-901 / NAVTTC / Cisco certifications
   - Google Play published apps metadata
   - Career milestones & engineering achievements
 
