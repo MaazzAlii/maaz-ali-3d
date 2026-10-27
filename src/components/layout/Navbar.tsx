@@ -5,15 +5,34 @@ import { profile } from '../../data/portfolioData';
 
 export const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.scrollY > 10 || (window.location.hash !== '' && window.location.hash !== '#hero');
+    }
+    return false;
+  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const scrolled = window.scrollY > 10 || (window.location.hash !== '' && window.location.hash !== '#hero' && window.scrollY > 0);
+      setIsScrolled(scrolled);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Run immediately on mount
+    handleScroll();
+
+    // Check again after browser scroll restoration / hash positioning
+    const timer = setTimeout(handleScroll, 120);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('hashchange', handleScroll);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('hashchange', handleScroll);
+    };
   }, []);
 
   const navLinks = [
@@ -32,6 +51,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
+      className={`site-navbar ${isScrolled ? 'navbar-scrolled' : 'navbar-top'}`}
       style={{
         position: 'fixed',
         top: 0,
@@ -41,12 +61,16 @@ export const Navbar: React.FC = () => {
         height: 'var(--nav-height)',
         display: 'flex',
         alignItems: 'center',
-        transition: 'all var(--transition-normal)',
-        backgroundColor: isScrolled ? 'var(--glass-bg)' : 'transparent',
-        backdropFilter: isScrolled ? 'blur(var(--glass-blur)) saturate(180%)' : 'none',
-        WebkitBackdropFilter: isScrolled ? 'blur(var(--glass-blur)) saturate(180%)' : 'none',
+        transition: 'background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
+        backgroundColor: isScrolled 
+          ? (theme === 'dark' ? 'rgba(17, 17, 16, 0.96)' : 'rgba(255, 252, 247, 0.96)') 
+          : 'transparent',
+        backdropFilter: isScrolled ? 'blur(16px) saturate(180%)' : 'none',
+        WebkitBackdropFilter: isScrolled ? 'blur(16px) saturate(180%)' : 'none',
         borderBottom: isScrolled ? '1px solid var(--border-subtle)' : '1px solid transparent',
-        boxShadow: isScrolled ? 'var(--shadow-sm)' : 'none'
+        boxShadow: isScrolled 
+          ? (theme === 'dark' ? '0 4px 20px rgba(0, 0, 0, 0.45)' : '0 4px 20px rgba(36, 33, 31, 0.06)') 
+          : 'none'
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
