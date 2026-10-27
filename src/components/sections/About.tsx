@@ -37,13 +37,13 @@ export const About: React.FC = () => {
   };
 
   return (
-    <section id="about" style={{ padding: '80px 0', borderTop: '1px solid var(--border-subtle)', position: 'relative' }}>
+    <section id="about" style={{ padding: 'var(--section-spacing) 0', borderTop: '1px solid var(--border-subtle)', position: 'relative' }}>
       <div className="container">
         <div 
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '48px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+            gap: 'clamp(32px, 5vw, 48px)',
             alignItems: 'center'
           }}
         >
@@ -157,7 +157,7 @@ export const About: React.FC = () => {
             <div 
               className="liquid-card" 
               style={{ 
-                padding: '24px', 
+                padding: 'clamp(16px, 3vw, 24px)', 
                 borderRadius: 'var(--radius-lg)', 
                 marginBottom: '28px'
               }}
