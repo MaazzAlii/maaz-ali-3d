@@ -444,6 +444,13 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.portfolio-app {
+  min-height: 100vh;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  position: relative;
+}
+
 /* Ambient glow accents */
 .ambient-glow-1 {
   position: absolute;
@@ -469,6 +476,16 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
   z-index: 0;
   opacity: 0.35;
+}
+
+/* Dampen ambient glow in light mode to prevent washing out typographic contrast */
+html[data-theme="light"] .ambient-glow-1,
+html[data-theme="light"] .ambient-glow-2,
+html.light .ambient-glow-1,
+html.light .ambient-glow-2,
+body.light .ambient-glow-1,
+body.light .ambient-glow-2 {
+  opacity: 0.10;
 }
 
 /* Prefers Reduced Motion */
