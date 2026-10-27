@@ -12,7 +12,9 @@ import {
   CheckCircle2, 
   Rotate3d,
   ArrowRight,
-  Maximize2
+  Maximize2,
+  Play,
+  Pause
 } from 'lucide-react';
 
 export type TechClusterId = 'all' | 'ai' | 'n8n' | 'ghl' | 'backend';
@@ -324,12 +326,16 @@ interface NodeScreenPosition {
   name: string;
   clusterColor: string;
   isHub?: boolean;
+  clusterId?: TechClusterId;
+  clusterName?: string;
+  toolCount?: number;
 }
 
 export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const [activeCluster, setActiveCluster] = useState<TechClusterId>('all');
   const [selectedTool, setSelectedTool] = useState<TechTool>(TECH_TOOLS[0]);
+  const [selectedHub, setSelectedHub] = useState<'ai' | 'n8n' | 'ghl' | 'backend' | null>(null);
   const [isRotating, setIsRotating] = useState<boolean>(true);
   const [screenNodes, setScreenNodes] = useState<Record<string, NodeScreenPosition>>({});
 
@@ -337,6 +343,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
   const activeClusterRef = useRef<TechClusterId>(activeCluster);
   const selectedToolRef = useRef<TechTool>(selectedTool);
   const isRotatingRef = useRef<boolean>(isRotating);
+  const accumulatedDriftTime = useRef<number>(0);
 
   useEffect(() => {
     activeClusterRef.current = activeCluster;
@@ -356,11 +363,11 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
   const animFrameId = useRef<number | null>(null);
   const isVisibleRef = useRef<boolean>(true);
 
-  // Smooth Camera Target Lerp
-  const targetCamPos = useRef(new THREE.Vector3(0, 0.2, 8.4));
-  const targetLookAt = useRef(new THREE.Vector3(0, 0, 0));
-  const currentCamPos = useRef(new THREE.Vector3(0, 0.2, 8.4));
-  const currentLookAt = useRef(new THREE.Vector3(0, 0, 0));
+  // Smooth Camera Target Lerp (Default framed to capture all 4 clusters comfortably)
+  const targetCamPos = useRef(new THREE.Vector3(0, -0.15, 9.6));
+  const targetLookAt = useRef(new THREE.Vector3(0, -0.15, 0));
+  const currentCamPos = useRef(new THREE.Vector3(0, -0.15, 9.6));
+  const currentLookAt = useRef(new THREE.Vector3(0, -0.15, 0));
 
   // Meshes & Materials refs for dynamic opacity/highlighting
   const hubMeshesRef = useRef<Record<string, { mesh: THREE.Mesh; ring: THREE.Mesh; mat: THREE.MeshStandardMaterial }>>({});
@@ -373,18 +380,20 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
   const prevMouse = useRef({ x: 0, y: 0 });
   const orbitGroupRef = useRef<THREE.Group | null>(null);
 
-  // Sync camera targets when activeCluster changes
+  // Sync camera targets and default inspector when activeCluster changes
   useEffect(() => {
     if (activeCluster === 'all') {
-      targetCamPos.current.set(0, 0.2, 8.4);
-      targetLookAt.current.set(0, 0, 0);
+      targetCamPos.current.set(0, -0.15, 9.6);
+      targetLookAt.current.set(0, -0.15, 0);
+      setSelectedHub(null);
     } else {
       const c = CLUSTERS[activeCluster];
       targetLookAt.current.set(c.center[0], c.center[1], c.center[2]);
       // Zoom in directly to the cluster
       targetCamPos.current.set(c.center[0], c.center[1], 4.2);
 
-      // Default selected tool to first tool in this cluster
+      // Default to inspecting the Central Root Hub of this cluster
+      setSelectedHub(activeCluster);
       const firstInCluster = TECH_TOOLS.find(t => t.clusterId === activeCluster);
       if (firstInCluster) setSelectedTool(firstInCluster);
     }
@@ -402,7 +411,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
     sceneRef.current = scene;
 
     const camera = new THREE.PerspectiveCamera(46, width / height, 0.1, 100);
-    camera.position.set(0, 0.2, 8.4);
+    camera.position.set(0, -0.15, 9.6);
     cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({ 
@@ -552,7 +561,12 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
 
       if (!isVisibleRef.current) return;
 
-      const elapsedTime = clock.getElapsedTime();
+      const delta = clock.getDelta();
+
+      if (isRotatingRef.current) {
+        accumulatedDriftTime.current += delta;
+      }
+      const driftTime = accumulatedDriftTime.current;
 
       // Smooth Camera Lerping to Focus Target
       currentCamPos.current.lerp(targetCamPos.current, 0.055);
@@ -567,21 +581,21 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
 
       if (rotating && !isDragging.current && worldGroup) {
         if (currentCluster === 'all') {
-          worldGroup.rotation.y = elapsedTime * 0.08;
-          worldGroup.rotation.x = Math.sin(elapsedTime * 0.05) * 0.04;
+          worldGroup.rotation.y = driftTime * 0.08;
+          worldGroup.rotation.x = Math.sin(driftTime * 0.05) * 0.04;
         } else {
           // In focused cluster, gentle breathing movement
-          worldGroup.rotation.y = Math.sin(elapsedTime * 0.2) * 0.06;
-          worldGroup.rotation.x = Math.cos(elapsedTime * 0.18) * 0.04;
+          worldGroup.rotation.y = Math.sin(driftTime * 0.2) * 0.06;
+          worldGroup.rotation.x = Math.cos(driftTime * 0.18) * 0.04;
         }
       }
 
       // Rotate Hub Halo Rings
       Object.keys(hubMeshes).forEach((cId) => {
         const { ring, mesh } = hubMeshes[cId];
-        ring.rotation.z = elapsedTime * 0.5;
+        ring.rotation.z = driftTime * 0.5;
         // Pulse hub scale
-        const s = 1 + Math.sin(elapsedTime * 2.5 + (cId === 'ai' ? 0 : 1)) * 0.04;
+        const s = 1 + Math.sin(driftTime * 2.5 + (cId === 'ai' ? 0 : 1)) * 0.04;
         mesh.scale.set(s, s, s);
       });
 
@@ -589,8 +603,8 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
       TECH_TOOLS.forEach((tool, i) => {
         const tm = toolMeshes[tool.id];
         if (tm) {
-          const oscY = Math.sin(elapsedTime * 1.6 + i * 0.8) * 0.06;
-          const oscX = Math.cos(elapsedTime * 1.3 + i * 0.7) * 0.05;
+          const oscY = Math.sin(driftTime * 1.6 + i * 0.8) * 0.06;
+          const oscX = Math.cos(driftTime * 1.3 + i * 0.7) * 0.05;
           tm.mesh.position.y = tool.offset[1] + oscY;
           tm.mesh.position.x = tool.offset[0] + oscX;
         }
@@ -629,7 +643,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
 
             // Scale pulse on selected tool
             if (isSelected) {
-              const selScale = 1.25 + Math.sin(elapsedTime * 4) * 0.08;
+              const selScale = 1.25 + Math.sin(driftTime * 4) * 0.08;
               tm.mesh.scale.set(selScale, selScale, selScale);
             } else {
               tm.mesh.scale.set(1, 1, 1);
@@ -658,9 +672,12 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
                   y: (-(tempVec.y * 0.5) + 0.5) * currentH,
                   z: tempVec.z,
                   visible: true,
-                  name: CLUSTERS[cId].name,
+                  name: CLUSTERS[cId].hubName,
+                  clusterName: CLUSTERS[cId].name,
+                  clusterId: cId,
                   clusterColor: CLUSTERS[cId].color,
-                  isHub: true
+                  isHub: true,
+                  toolCount: TECH_TOOLS.filter(t => t.clusterId === cId).length
                 };
               }
             }
@@ -677,9 +694,12 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
                 y: (-(tempVec.y * 0.5) + 0.5) * currentH,
                 z: tempVec.z,
                 visible: true,
-                name: CLUSTERS[currentCluster].name,
+                name: CLUSTERS[currentCluster].hubName,
+                clusterName: CLUSTERS[currentCluster].name,
+                clusterId: currentCluster,
                 clusterColor: CLUSTERS[currentCluster].color,
-                isHub: true
+                isHub: true,
+                toolCount: TECH_TOOLS.filter(t => t.clusterId === currentCluster).length
               };
             }
           }
@@ -698,6 +718,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
                   visible: true,
                   name: tool.shortName,
                   clusterColor: CLUSTERS[tool.clusterId].color,
+                  clusterId: tool.clusterId,
                   isHub: false
                 };
               }
@@ -736,10 +757,13 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
       if (intersects.length > 0) {
         const hit = intersects[0].object;
         if (hit.userData.isHub && hit.userData.clusterId) {
-          setActiveCluster(hit.userData.clusterId as TechClusterId);
+          const cId = hit.userData.clusterId as 'ai' | 'n8n' | 'ghl' | 'backend';
+          setActiveCluster(cId);
+          setSelectedHub(cId);
         } else if (hit.userData.isTool && hit.userData.toolId) {
           const clicked = TECH_TOOLS.find(t => t.id === hit.userData.toolId);
           if (clicked) {
+            setSelectedHub(null);
             setSelectedTool(clicked);
             if (activeClusterRef.current !== clicked.clusterId && activeClusterRef.current !== 'all') {
               setActiveCluster(clicked.clusterId);
@@ -962,48 +986,137 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
           {/* 3D Projected Badges Directly Over Active Nodes */}
           {Object.entries(screenNodes).map(([nodeId, pos]) => {
             if (!pos.visible) return null;
-            const isHoveredOrSelected = selectedTool.id === nodeId || (pos.isHub && activeCluster === nodeId.replace('hub-', ''));
+            const cId = (pos.clusterId || nodeId.replace('hub-', '')) as 'ai' | 'n8n' | 'ghl' | 'backend';
+            const isHubSelected = pos.isHub && (selectedHub === cId || (activeCluster === cId && selectedHub === null));
+            const isToolSelected = !pos.isHub && selectedTool.id === nodeId && selectedHub === null;
+            const isProminent = isHubSelected || isToolSelected;
 
+            if (pos.isHub) {
+              return (
+                <div
+                  key={nodeId}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (activeCluster !== cId) {
+                      setActiveCluster(cId);
+                    }
+                    setSelectedHub(cId);
+                  }}
+                  style={{
+                    position: 'absolute',
+                    left: `${pos.x}px`,
+                    top: `${pos.y - 24}px`,
+                    transform: isHubSelected ? 'translate(-50%, -100%) scale(1.08)' : 'translate(-50%, -100%) scale(1)',
+                    pointerEvents: 'auto',
+                    cursor: 'pointer',
+                    zIndex: isHubSelected ? 26 : 14,
+                    transition: 'transform 0.15s ease, box-shadow 0.2s ease',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                  title={`Click to focus and inspect ${pos.name} Root Architecture`}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '7px',
+                      padding: '6px 14px',
+                      borderRadius: 'var(--radius-full)',
+                      backgroundColor: theme === 'dark' ? 'rgba(15, 18, 28, 0.96)' : 'rgba(255, 255, 255, 0.97)',
+                      backdropFilter: 'blur(10px)',
+                      border: `2px solid ${pos.clusterColor}`,
+                      boxShadow: theme === 'dark'
+                        ? (isHubSelected
+                            ? `0 0 28px ${pos.clusterColor}99, 0 6px 20px rgba(0,0,0,0.6)`
+                            : `0 0 16px ${pos.clusterColor}55, 0 4px 12px rgba(0,0,0,0.45)`)
+                        : (isHubSelected
+                            ? `0 6px 22px rgba(0,0,0,0.16), 0 0 16px ${pos.clusterColor}66`
+                            : `0 4px 14px rgba(0,0,0,0.1), 0 0 10px ${pos.clusterColor}35`),
+                      color: theme === 'dark' ? '#ffffff' : '#0f172a',
+                      fontSize: '0.82rem',
+                      fontWeight: 800,
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    <span 
+                      style={{ 
+                        width: '8px', 
+                        height: '8px', 
+                        borderRadius: '50%', 
+                        backgroundColor: pos.clusterColor,
+                        boxShadow: `0 0 10px ${pos.clusterColor}`,
+                        display: 'inline-block',
+                        flexShrink: 0
+                      }} 
+                    />
+                    <span>{pos.name}</span>
+                  </div>
+
+                  {/* Prominent Subtitle Badge for Root Hub */}
+                  <span
+                    style={{
+                      fontSize: '0.67rem',
+                      fontFamily: 'var(--font-mono)',
+                      fontWeight: 700,
+                      color: pos.clusterColor,
+                      backgroundColor: theme === 'dark' ? 'rgba(20, 24, 38, 0.92)' : 'rgba(245, 242, 235, 0.95)',
+                      padding: '2px 9px',
+                      borderRadius: 'var(--radius-full)',
+                      border: `1px solid ${pos.clusterColor}60`,
+                      boxShadow: 'var(--shadow-sm)',
+                      whiteSpace: 'nowrap',
+                      letterSpacing: '0.04em'
+                    }}
+                  >
+                    ★ ROOT ARCHITECTURE HUB • {pos.clusterName || 'CORE'}
+                  </span>
+                </div>
+              );
+            }
+
+            // Satellite Subnode Tool Badge
             return (
               <div
                 key={nodeId}
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (pos.isHub) {
-                    const cId = nodeId.replace('hub-', '') as TechClusterId;
-                    setActiveCluster(cId);
-                  } else {
-                    const t = TECH_TOOLS.find(item => item.id === nodeId);
-                    if (t) setSelectedTool(t);
+                  const t = TECH_TOOLS.find(item => item.id === nodeId);
+                  if (t) {
+                    setSelectedHub(null);
+                    setSelectedTool(t);
                   }
                 }}
                 style={{
                   position: 'absolute',
                   left: `${pos.x}px`,
-                  top: `${pos.y - 20}px`,
-                  transform: 'translate(-50%, -100%)',
+                  top: `${pos.y - 18}px`,
+                  transform: isToolSelected ? 'translate(-50%, -100%) scale(1.05)' : 'translate(-50%, -100%)',
                   pointerEvents: 'auto',
                   cursor: 'pointer',
-                  zIndex: isHoveredOrSelected ? 20 : 10,
-                  transition: 'transform 0.08s ease, box-shadow 0.15s ease'
+                  zIndex: isToolSelected ? 20 : 10,
+                  transition: 'transform 0.1s ease, box-shadow 0.15s ease'
                 }}
+                title={`Click to inspect ${pos.name}`}
               >
                 <div
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '5px',
-                    padding: pos.isHub ? '5px 12px' : '3px 9px',
+                    padding: '4px 10px',
                     borderRadius: 'var(--radius-full)',
                     backgroundColor: theme === 'dark' ? 'rgba(11, 15, 25, 0.94)' : 'rgba(255, 255, 255, 0.96)',
                     backdropFilter: 'blur(8px)',
-                    border: `1.5px solid ${pos.clusterColor}`,
+                    border: `1.5px solid ${isToolSelected ? pos.clusterColor : `${pos.clusterColor}88`}`,
                     boxShadow: theme === 'dark'
-                      ? `0 0 16px ${pos.clusterColor}66, 0 4px 12px rgba(0,0,0,0.4)`
-                      : `0 4px 14px rgba(0,0,0,0.12), 0 0 10px ${pos.clusterColor}35`,
+                      ? (isToolSelected ? `0 0 18px ${pos.clusterColor}77, 0 4px 14px rgba(0,0,0,0.5)` : `0 2px 8px rgba(0,0,0,0.3)`)
+                      : (isToolSelected ? `0 4px 14px rgba(0,0,0,0.12), 0 0 12px ${pos.clusterColor}40` : `0 2px 6px rgba(0,0,0,0.06)`),
                     color: theme === 'dark' ? '#f8fafc' : '#0f172a',
-                    fontSize: pos.isHub ? '0.78rem' : '0.72rem',
-                    fontWeight: 700,
+                    fontSize: '0.73rem',
+                    fontWeight: isToolSelected ? 700 : 600,
                     whiteSpace: 'nowrap'
                   }}
                 >
@@ -1062,7 +1175,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
                 <button
                   onClick={() => setActiveCluster('all')}
                   className="badge"
-                  style={{ cursor: 'pointer', padding: '3px 8px', fontSize: '0.68rem' }}
+                  style={{ cursor: 'pointer', padding: '3px 8px', fontSize: '0.68rem', display: 'flex', alignItems: 'center', gap: '5px' }}
                   title="Reset to all constellation"
                 >
                   <Maximize2 size={11} />
@@ -1071,178 +1184,254 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
               )}
 
               <button
-                onClick={() => setIsRotating(!isRotating)}
-                className="badge"
-                style={{ cursor: 'pointer', padding: '3px 8px', fontSize: '0.68rem' }}
-                title="Toggle scene drift"
+                onClick={() => {
+                  const nextState = !isRotating;
+                  setIsRotating(nextState);
+                  isRotatingRef.current = nextState;
+                }}
+                className={`badge ${!isRotating ? 'badge-primary' : ''}`}
+                style={{ cursor: 'pointer', padding: '3px 8px', fontSize: '0.68rem', display: 'flex', alignItems: 'center', gap: '5px' }}
+                title={isRotating ? "Click to Pause Drift" : "Click to Resume Drift"}
               >
-                <Rotate3d size={11} />
-                {isRotating ? 'Drift Active' : 'Drift Paused'}
+                {isRotating ? <Pause size={11} /> : <Play size={11} />}
+                {isRotating ? 'Pause Drift' : 'Resume Drift'}
               </button>
             </div>
           </div>
         </div>
 
         {/* Selected Technology Inspector Card */}
-        <div 
-          className="liquid-card" 
-          style={{ 
-            padding: '24px', 
-            borderRadius: 'var(--radius-lg)', 
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            border: `1px solid ${CLUSTERS[selectedTool.clusterId].color}50`
-          }}
-        >
-          <div>
-            {/* Header / Active Cluster Badge */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span 
-                  className="badge" 
-                  style={{ 
-                    backgroundColor: `${CLUSTERS[selectedTool.clusterId].color}20`, 
-                    color: CLUSTERS[selectedTool.clusterId].color,
-                    borderColor: `${CLUSTERS[selectedTool.clusterId].color}60`,
-                    fontWeight: 700,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px'
-                  }}
-                >
-                  {getClusterIcon(selectedTool.clusterId)}
-                  {CLUSTERS[selectedTool.clusterId].name}
-                </span>
-              </div>
-              <span 
-                style={{ 
-                  fontSize: '0.7rem', 
-                  fontFamily: 'var(--font-mono)', 
-                  color: 'var(--text-tertiary)',
-                  fontWeight: 600
-                }}
-              >
-                SELECTED NODE
-              </span>
-            </div>
+        {(() => {
+          type ClusterKey = 'ai' | 'n8n' | 'ghl' | 'backend';
+          const isInspectingHub = selectedHub !== null;
+          const currentHubCluster = selectedHub ? CLUSTERS[selectedHub] : null;
+          const activeClusterId: ClusterKey = (selectedHub || selectedTool.clusterId) as ClusterKey;
+          const activeMeta = CLUSTERS[activeClusterId];
 
-            {/* Tool Name */}
-            <h4 
-              style={{ 
-                fontSize: '1.45rem', 
-                fontWeight: 800, 
-                color: 'var(--text-primary)', 
-                marginBottom: '8px' 
-              }}
-            >
-              {selectedTool.name}
-            </h4>
-
-            {/* Architectural Role */}
-            <div style={{ marginBottom: '14px' }}>
-              <p style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '3px' }}>
-                Architecture &amp; Mechanism
-              </p>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 450, lineHeight: 1.55 }}>
-                {selectedTool.role}
-              </p>
-            </div>
-
-            {/* Authentic Production Use-Case */}
+          return (
             <div 
+              className="liquid-card" 
               style={{ 
-                padding: '12px 14px', 
-                borderRadius: 'var(--radius-md)', 
-                backgroundColor: 'var(--surface-2)',
-                border: '1px solid var(--border-subtle)',
-                marginBottom: '16px'
+                padding: '24px', 
+                borderRadius: 'var(--radius-lg)', 
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                border: `1.5px solid ${activeMeta.color}60`,
+                boxShadow: theme === 'dark' 
+                  ? `0 0 24px ${activeMeta.color}15, 0 8px 32px rgba(0,0,0,0.4)` 
+                  : `0 8px 28px rgba(0,0,0,0.06), 0 0 16px ${activeMeta.color}15`
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                <CheckCircle2 size={13} color={CLUSTERS[selectedTool.clusterId].color} />
-                <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: CLUSTERS[selectedTool.clusterId].color }}>
-                  PRODUCTION USE-CASE
-                </span>
-              </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 500, lineHeight: 1.5 }}>
-                {selectedTool.productionUseCase}
-              </p>
-            </div>
-
-            {/* Connected Tools Bridge */}
-            {selectedTool.connectedTo && selectedTool.connectedTo.length > 0 && (
-              <div style={{ marginBottom: '16px' }}>
-                <p style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }}>
-                  Connected Architecture Links:
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                  {selectedTool.connectedTo.map((link) => (
-                    <span
-                      key={link}
-                      style={{
-                        padding: '3px 8px',
-                        fontSize: '0.72rem',
-                        fontFamily: 'var(--font-mono)',
-                        borderRadius: 'var(--radius-sm)',
-                        backgroundColor: 'var(--surface-2)',
-                        color: 'var(--text-primary)',
-                        border: '1px solid var(--border-subtle)'
+              <div>
+                {/* Header / Active Cluster Badge */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span 
+                      className="badge" 
+                      style={{ 
+                        backgroundColor: `${activeMeta.color}20`, 
+                        color: activeMeta.color,
+                        borderColor: `${activeMeta.color}60`,
+                        fontWeight: 700,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '5px'
                       }}
                     >
-                      {link}
+                      {getClusterIcon(activeClusterId)}
+                      {activeMeta.name}
                     </span>
-                  ))}
+                  </div>
+                  <span 
+                    style={{ 
+                      fontSize: '0.7rem', 
+                      fontFamily: 'var(--font-mono)', 
+                      color: isInspectingHub ? activeMeta.color : 'var(--text-tertiary)',
+                      fontWeight: 700,
+                      letterSpacing: '0.04em'
+                    }}
+                  >
+                    {isInspectingHub ? '★ ROOT ARCHITECTURE HUB' : 'SELECTED TOOL NODE'}
+                  </span>
                 </div>
+
+                {/* Node Title */}
+                <h4 
+                  style={{ 
+                    fontSize: '1.45rem', 
+                    fontWeight: 800, 
+                    color: 'var(--text-primary)', 
+                    marginBottom: '8px' 
+                  }}
+                >
+                  {isInspectingHub ? currentHubCluster!.hubName : selectedTool.name}
+                </h4>
+
+                {/* Architectural Role / System Core */}
+                <div style={{ marginBottom: '14px' }}>
+                  <p style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '3px' }}>
+                    Architecture &amp; Mechanism
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 450, lineHeight: 1.55 }}>
+                    {isInspectingHub ? currentHubCluster!.summary : selectedTool.role}
+                  </p>
+                </div>
+
+                {/* Authentic Production Use-Case / Impact */}
+                <div 
+                  style={{ 
+                    padding: '12px 14px', 
+                    borderRadius: 'var(--radius-md)', 
+                    backgroundColor: 'var(--surface-2)',
+                    border: '1px solid var(--border-subtle)',
+                    marginBottom: '16px'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                    <CheckCircle2 size={13} color={activeMeta.color} />
+                    <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: activeMeta.color }}>
+                      {isInspectingHub ? 'PRODUCTION ARCHITECTURE IMPACT' : 'PRODUCTION USE-CASE'}
+                    </span>
+                  </div>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 500, lineHeight: 1.5 }}>
+                    {isInspectingHub ? currentHubCluster!.productionImpact : selectedTool.productionUseCase}
+                  </p>
+                </div>
+
+                {/* Connected Tools Bridge (If inspecting tool) or Ecosystem Subnodes (If inspecting hub) */}
+                {isInspectingHub ? (
+                  <div style={{ marginBottom: '16px' }}>
+                    <p style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }}>
+                      Integrated Ecosystem Sub-Nodes:
+                    </p>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                      {TECH_TOOLS.filter(t => t.clusterId === selectedHub).map((tool) => (
+                        <button
+                          key={tool.id}
+                          onClick={() => {
+                            setSelectedHub(null);
+                            setSelectedTool(tool);
+                          }}
+                          style={{
+                            padding: '3px 8px',
+                            fontSize: '0.72rem',
+                            fontFamily: 'var(--font-mono)',
+                            borderRadius: 'var(--radius-sm)',
+                            backgroundColor: 'var(--surface-2)',
+                            color: 'var(--text-primary)',
+                            border: `1px solid ${activeMeta.color}40`,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px'
+                          }}
+                        >
+                          <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: activeMeta.color }} />
+                          {tool.shortName}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  selectedTool.connectedTo && selectedTool.connectedTo.length > 0 && (
+                    <div style={{ marginBottom: '16px' }}>
+                      <p style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }}>
+                        Connected Architecture Links:
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                        {selectedTool.connectedTo.map((link) => (
+                          <span
+                            key={link}
+                            style={{
+                              padding: '3px 8px',
+                              fontSize: '0.72rem',
+                              fontFamily: 'var(--font-mono)',
+                              borderRadius: 'var(--radius-sm)',
+                              backgroundColor: 'var(--surface-2)',
+                              color: 'var(--text-primary)',
+                              border: '1px solid var(--border-subtle)'
+                            }}
+                          >
+                            {link}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )
+                )}
               </div>
-            )}
-          </div>
 
-          {/* Quick Tool Switcher Buttons */}
-          <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '14px', marginTop: '10px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <p style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-primary)' }}>
-                {activeCluster === 'all' ? 'ALL STACK TOOLS:' : `${CLUSTERS[activeCluster].name} TOOLS:`}
-              </p>
-              <span style={{ fontSize: '0.68rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>
-                {displayedTools.length} tools
-              </span>
-            </div>
+              {/* Quick Tool Switcher Buttons */}
+              <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '14px', marginTop: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <p style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-primary)' }}>
+                    {activeCluster === 'all' ? 'EXPLORE STACK TOOLS:' : `${CLUSTERS[activeCluster].name} NODES:`}
+                  </p>
+                  <span style={{ fontSize: '0.68rem', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>
+                    {displayedTools.length} tools
+                  </span>
+                </div>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', maxHeight: '115px', overflowY: 'auto' }}>
-              {displayedTools.map((t) => {
-                const isSelected = selectedTool.id === t.id;
-                const cColor = CLUSTERS[t.clusterId].color;
-
-                return (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', maxHeight: '115px', overflowY: 'auto' }}>
+                  {/* Root Hub Switcher Button */}
                   <button
-                    key={t.id}
                     onClick={() => {
-                      setSelectedTool(t);
-                      if (activeCluster !== t.clusterId && activeCluster !== 'all') {
-                        setActiveCluster(t.clusterId);
-                      }
+                      const targetCluster = (activeCluster !== 'all' ? activeCluster : selectedTool.clusterId) as ClusterKey;
+                      setSelectedHub(targetCluster);
                     }}
                     style={{
                       padding: '4px 10px',
                       fontSize: '0.73rem',
                       fontFamily: 'var(--font-mono)',
-                      fontWeight: isSelected ? 700 : 500,
+                      fontWeight: isInspectingHub ? 700 : 500,
                       borderRadius: 'var(--radius-sm)',
-                      backgroundColor: isSelected ? cColor : 'var(--surface-2)',
-                      color: isSelected ? '#ffffff' : 'var(--text-primary)',
-                      border: `1px solid ${isSelected ? cColor : 'var(--border-default)'}`,
+                      backgroundColor: isInspectingHub ? activeMeta.color : 'var(--surface-2)',
+                      color: isInspectingHub ? '#ffffff' : 'var(--text-primary)',
+                      border: `1px solid ${isInspectingHub ? activeMeta.color : 'var(--border-default)'}`,
                       cursor: 'pointer',
                       transition: 'all 0.15s ease'
                     }}
                   >
-                    {t.shortName}
+                    ★ Root Hub
                   </button>
-                );
-              })}
+
+                  {displayedTools.map((t) => {
+                    const isSelected = !isInspectingHub && selectedTool.id === t.id;
+                    const cColor = CLUSTERS[t.clusterId].color;
+
+                    return (
+                      <button
+                        key={t.id}
+                        onClick={() => {
+                          setSelectedHub(null);
+                          setSelectedTool(t);
+                          if (activeCluster !== t.clusterId && activeCluster !== 'all') {
+                            setActiveCluster(t.clusterId);
+                          }
+                        }}
+                        style={{
+                          padding: '4px 10px',
+                          fontSize: '0.73rem',
+                          fontFamily: 'var(--font-mono)',
+                          fontWeight: isSelected ? 700 : 500,
+                          borderRadius: 'var(--radius-sm)',
+                          backgroundColor: isSelected ? cColor : 'var(--surface-2)',
+                          color: isSelected ? '#ffffff' : 'var(--text-primary)',
+                          border: `1px solid ${isSelected ? cColor : 'var(--border-default)'}`,
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease'
+                        }}
+                      >
+                        {t.shortName}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          );
+        })()}
       </div>
     </div>
   );
