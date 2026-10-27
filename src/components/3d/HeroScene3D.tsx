@@ -620,7 +620,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
         );
       })}
 
-      {/* Floating 3D Control Bar */}
+      {/* Floating 3D Control Bar (Permanent Single-Row Layout) */}
       <div 
         className="glass-panel"
         style={{
@@ -630,7 +630,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
           right: '16px',
           padding: '10px 16px',
           display: 'flex',
-          flexWrap: 'wrap',
+          flexWrap: 'nowrap',
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: '12px',
@@ -640,7 +640,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
         }}
       >
         {/* Live Swarm Telemetry */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1, overflow: 'hidden' }}>
           <span 
             style={{ 
               width: '8px', 
@@ -648,21 +648,32 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
               borderRadius: '50%', 
               backgroundColor: '#10b981',
               boxShadow: '0 0 10px #10b981',
-              display: 'inline-block'
+              display: 'inline-block',
+              flexShrink: 0
             }} 
           />
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-primary)', fontWeight: 600 }}>
+          <span 
+            style={{ 
+              fontFamily: 'var(--font-mono)', 
+              fontSize: '0.75rem', 
+              color: 'var(--text-primary)', 
+              fontWeight: 600,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}
+          >
             {activeTelemetry}
           </span>
         </div>
 
-        {/* 3D Action Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        {/* 3D Action Controls (Permanently anchored on the right) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           {/* Wireframe / Solid toggle */}
           <button
             onClick={() => setIsWireframe(!isWireframe)}
             className={`badge ${isWireframe ? 'badge-primary' : ''}`}
-            style={{ cursor: 'pointer', padding: '4px 10px', fontSize: '0.7rem' }}
+            style={{ cursor: 'pointer', padding: '5px 12px', fontSize: '0.72rem', whiteSpace: 'nowrap' }}
             title={isWireframe ? "Switch to Solid Shell" : "Switch to Wireframe Borders"}
             aria-label="Toggle 3D Outer Shell Style"
           >
@@ -674,7 +685,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
           <button
             onClick={() => setIsRotating(!isRotating)}
             className="badge"
-            style={{ cursor: 'pointer', padding: '4px 10px', fontSize: '0.7rem' }}
+            style={{ cursor: 'pointer', padding: '5px 12px', fontSize: '0.72rem', whiteSpace: 'nowrap' }}
             title="Pause/Resume Orbit Rotation"
             aria-label="Toggle Orbit Rotation"
           >
