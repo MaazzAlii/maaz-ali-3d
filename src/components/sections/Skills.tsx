@@ -17,7 +17,7 @@ export const Skills: React.FC<SkillsProps> = ({ theme = 'dark' }) => {
   };
 
   return (
-    <section id="skills" style={{ padding: '80px 0', borderTop: '1px solid var(--border-subtle)' }}>
+    <section id="skills" style={{ padding: 'var(--section-spacing) 0', borderTop: '1px solid var(--border-subtle)' }}>
       <div className="container">
         <div style={{ maxWidth: '720px', marginBottom: '36px' }}>
           <span className="section-eyebrow">Technical Mastery</span>
@@ -38,7 +38,7 @@ export const Skills: React.FC<SkillsProps> = ({ theme = 'dark' }) => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
             gap: '20px'
           }}
         >
@@ -47,7 +47,7 @@ export const Skills: React.FC<SkillsProps> = ({ theme = 'dark' }) => {
               key={group.label}
               className="liquid-card"
               style={{
-                padding: '24px',
+                padding: 'clamp(16px, 3vw, 24px)',
                 borderRadius: 'var(--radius-lg)'
               }}
             >
