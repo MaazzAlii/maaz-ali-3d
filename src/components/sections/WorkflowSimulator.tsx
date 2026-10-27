@@ -260,14 +260,14 @@ export const WorkflowSimulator: React.FC = () => {
 
           {/* Execution Telemetry Terminal */}
           <div style={{
-            backgroundColor: '#161514',
+            backgroundColor: 'var(--surface-2)',
             borderRadius: 'var(--radius-md)',
             border: '1px solid var(--border-default)',
             padding: '16px',
             fontFamily: 'var(--font-mono)',
             fontSize: '0.8125rem',
             color: 'var(--text-primary)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25)'
+            boxShadow: 'var(--shadow-sm)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
