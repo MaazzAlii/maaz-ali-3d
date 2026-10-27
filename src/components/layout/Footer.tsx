@@ -33,19 +33,28 @@ export const Footer: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
               <div
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '34px',
+                  height: '34px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, var(--accent), var(--accent-bronze))',
+                  overflow: 'hidden',
+                  border: '2px solid var(--border-glow)',
+                  boxShadow: '0 0 10px var(--accent-glow)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#ffffff',
-                  fontWeight: 800,
-                  fontSize: '0.875rem'
+                  flexShrink: 0
                 }}
               >
-                M
+                <img
+                  src={profile.photo}
+                  alt={profile.name}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                />
               </div>
               <span style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
                 {profile.name}
