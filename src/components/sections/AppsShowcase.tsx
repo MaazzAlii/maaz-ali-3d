@@ -95,7 +95,7 @@ export const AppsShowcase: React.FC = () => {
                 {/* Key feature tags */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
                   {app.metrics?.map((m: string) => (
-                    <span key={m} className="badge badge-cyan" style={{ fontSize: '0.75rem', fontWeight: 600 }}>
+                    <span key={m} className="badge badge-bronze" style={{ fontSize: '0.75rem', fontWeight: 600 }}>
                       {m}
                     </span>
                   ))}
