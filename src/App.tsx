@@ -16,7 +16,7 @@ export const App: React.FC = () => {
   const { theme } = useTheme();
 
   return (
-    <div className="portfolio-app" data-theme={theme}>
+    <div className="portfolio-app">
       {/* Sticky Top Navigation */}
       <Navbar />
 
