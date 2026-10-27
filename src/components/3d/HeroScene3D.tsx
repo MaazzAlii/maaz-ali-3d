@@ -6,24 +6,26 @@ interface HeroScene3DProps {
   theme?: 'dark' | 'light';
 }
 
-interface OrbitNodeData {
+interface OrbitConfig {
   id: string;
   name: string;
   role: string;
   color: string;
   radius: number;
   speed: number;
+  tilt: { x: number; y: number; z: number };
   icon: 'bot' | 'db' | 'workflow' | 'terminal';
 }
 
-const ORBIT_NODES: OrbitNodeData[] = [
+const ORBIT_CONFIGS: OrbitConfig[] = [
   {
     id: 'langgraph',
     name: 'LangGraph',
     role: 'Supervisor Agent Swarm',
     color: '#6366f1',
-    radius: 2.2,
-    speed: 0.7,
+    radius: 2.3,
+    speed: 0.65,
+    tilt: { x: 0.42, y: 0.26, z: -0.18 }, // ~24°, 15°, -10°
     icon: 'bot'
   },
   {
@@ -31,8 +33,9 @@ const ORBIT_NODES: OrbitNodeData[] = [
     name: 'ChromaDB RAG',
     role: 'Vector Embeddings',
     color: '#06b6d4',
-    radius: 2.9,
-    speed: 0.5,
+    radius: 3.0,
+    speed: 0.50,
+    tilt: { x: -0.58, y: 0.52, z: 0.24 }, // ~-33°, 30°, 14°
     icon: 'db'
   },
   {
@@ -40,8 +43,9 @@ const ORBIT_NODES: OrbitNodeData[] = [
     name: 'n8n Automations',
     role: 'Business Pipelines',
     color: '#ec4899',
-    radius: 3.5,
-    speed: 0.4,
+    radius: 3.7,
+    speed: 0.38,
+    tilt: { x: 0.72, y: -0.48, z: 0.36 }, // ~41°, -27°, 21°
     icon: 'workflow'
   },
   {
@@ -49,8 +53,9 @@ const ORBIT_NODES: OrbitNodeData[] = [
     name: 'FastAPI Backend',
     role: 'Async LLM Services',
     color: '#10b981',
-    radius: 4.1,
-    speed: 0.3,
+    radius: 4.4,
+    speed: 0.30,
+    tilt: { x: -0.35, y: -0.65, z: -0.32 }, // ~-20°, -37°, -18°
     icon: 'terminal'
   }
 ];
@@ -64,9 +69,9 @@ interface NodeScreenPos {
 
 export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
   const mountRef = useRef<HTMLDivElement>(null);
+  // Default is solid outer shell (isWireframe = false) as confirmed by user
   const [isWireframe, setIsWireframe] = useState<boolean>(false);
   const [isRotating, setIsRotating] = useState<boolean>(true);
-  const [activeColor, setActiveColor] = useState<string>('#6366f1');
   const [activeTelemetry, setActiveTelemetry] = useState<string>('Supervisor Orchestrating 4 Agents');
   const [nodePositions, setNodePositions] = useState<Record<string, NodeScreenPos>>({});
   const [centerPos, setCenterPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -74,8 +79,13 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const coreMeshRef = useRef<THREE.Mesh | null>(null);
   const innerMeshRef = useRef<THREE.Mesh | null>(null);
-  const ringsRef = useRef<THREE.Group | null>(null);
-  const agentMeshesRef = useRef<THREE.Mesh[]>([]);
+  const ringsGroupRef = useRef<THREE.Group | null>(null);
+  const orbitNodesRef = useRef<{
+    nodeMesh: THREE.Mesh;
+    config: OrbitConfig;
+    pulseBeads: THREE.Mesh[];
+    beadOffsets: number[];
+  }[]>([]);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const animFrameId = useRef<number | null>(null);
   const isVisibleRef = useRef<boolean>(true);
@@ -97,44 +107,52 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
     sceneRef.current = scene;
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 0, 7.8);
+    camera.position.set(0, 0, 8.2);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.3;
+    renderer.toneMappingExposure = 1.35;
     rendererRef.current = renderer;
 
     mount.appendChild(renderer.domElement);
 
-    // 2. Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+    // 2. Lighting setup
+    const ambientLight = new THREE.AmbientLight(0xffffff, theme === 'dark' ? 0.9 : 1.1);
     scene.add(ambientLight);
 
-    const pointLight1 = new THREE.PointLight(0x6366f1, 4, 25);
+    const pointLight1 = new THREE.PointLight(0x6366f1, 4.5, 30);
     pointLight1.position.set(5, 5, 5);
     scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0x06b6d4, 3, 25);
+    const pointLight2 = new THREE.PointLight(0x06b6d4, 3.5, 30);
     pointLight2.position.set(-5, -5, -2);
     scene.add(pointLight2);
 
-    // 3. Central Agentic Neural Core (Holographic Wireframe & Core)
+    const pointLight3 = new THREE.PointLight(0xec4899, 2.5, 25);
+    pointLight3.position.set(0, -6, 4);
+    scene.add(pointLight3);
+
+    // 3. Central Agentic Neural Core (Faceted Crystal Core)
     const coreGroup = new THREE.Group();
     scene.add(coreGroup);
 
-    // Outer Faceted Core Geometry
+    // Outer Faceted Core Geometry (Solid Shell by default)
     const outerGeo = new THREE.IcosahedronGeometry(1.4, 2);
-    const outerMat = new THREE.MeshStandardMaterial({
-      color: 0x4f46e5,
-      emissive: 0x312e81,
-      emissiveIntensity: 0.5,
+    const outerMat = new THREE.MeshPhysicalMaterial({
+      color: theme === 'dark' ? 0x4338ca : 0x4f46e5,
+      emissive: theme === 'dark' ? 0x2e1065 : 0x312e81,
+      emissiveIntensity: 0.38,
       wireframe: isWireframe,
       roughness: 0.15,
-      metalness: 0.85,
+      metalness: 0.35,
+      transmission: 0.32,
+      thickness: 1.1,
       transparent: true,
-      opacity: 0.75
+      opacity: isWireframe ? 0.72 : 0.92,
+      clearcoat: 0.85,
+      clearcoatRoughness: 0.12
     });
     const coreMesh = new THREE.Mesh(outerGeo, outerMat);
     coreGroup.add(coreMesh);
@@ -144,64 +162,102 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
     const innerGeo = new THREE.OctahedronGeometry(0.75, 0);
     const innerMat = new THREE.MeshStandardMaterial({
       color: 0xffffff,
-      emissive: 0x6366f1,
-      emissiveIntensity: 1.2,
-      roughness: 0.1,
+      emissive: 0x818cf8,
+      emissiveIntensity: 1.35,
+      roughness: 0.12,
       metalness: 0.9
     });
     const innerMesh = new THREE.Mesh(innerGeo, innerMat);
     coreGroup.add(innerMesh);
     innerMeshRef.current = innerMesh;
 
-    // 4. Multi-Agent Orbital Rings & Nodes
+    // 4. Strict Parametric Orbital Groups & Visible Paths
     const ringsGroup = new THREE.Group();
     scene.add(ringsGroup);
-    ringsRef.current = ringsGroup;
+    ringsGroupRef.current = ringsGroup;
 
-    const ringAngles = [
-      { x: Math.PI / 4, y: Math.PI / 6, z: 0 },
-      { x: -Math.PI / 3.5, y: Math.PI / 4, z: Math.PI / 10 },
-      { x: Math.PI / 6, y: -Math.PI / 3, z: Math.PI / 5 },
-      { x: -Math.PI / 5, y: -Math.PI / 5, z: Math.PI / 3 }
-    ];
+    const orbitNodes: {
+      nodeMesh: THREE.Mesh;
+      config: OrbitConfig;
+      pulseBeads: THREE.Mesh[];
+      beadOffsets: number[];
+    }[] = [];
 
-    const agentMeshes: THREE.Mesh[] = [];
+    // Sphere geometry shared
+    const sphereGeo = new THREE.SphereGeometry(0.18, 24, 24);
 
-    ORBIT_NODES.forEach((node, i) => {
-      // Orbital Ring Tube
-      const ringGeo = new THREE.RingGeometry(node.radius - 0.015, node.radius + 0.015, 64);
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(node.color),
-        side: THREE.DoubleSide,
+    ORBIT_CONFIGS.forEach((config) => {
+      // Create dedicated orbital plane group with exact Euler tilt
+      const orbitPlane = new THREE.Group();
+      orbitPlane.rotation.set(config.tilt.x, config.tilt.y, config.tilt.z);
+      ringsGroup.add(orbitPlane);
+
+      // (A) Smooth Continuous Orbital Guide Line Loop
+      const lineSegments = 128;
+      const ringPoints: THREE.Vector3[] = [];
+      for (let s = 0; s <= lineSegments; s++) {
+        const theta = (s / lineSegments) * Math.PI * 2;
+        ringPoints.push(new THREE.Vector3(
+          config.radius * Math.cos(theta),
+          0,
+          config.radius * Math.sin(theta)
+        ));
+      }
+      const ringGeo = new THREE.BufferGeometry().setFromPoints(ringPoints);
+      const ringMat = new THREE.LineBasicMaterial({
+        color: new THREE.Color(config.color),
         transparent: true,
-        opacity: 0.35
+        opacity: theme === 'dark' ? 0.42 : 0.52
       });
-      const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-      ringMesh.rotation.set(ringAngles[i].x, ringAngles[i].y, ringAngles[i].z);
-      ringsGroup.add(ringMesh);
+      const ringLine = new THREE.LineLoop(ringGeo, ringMat);
+      orbitPlane.add(ringLine);
 
-      // Orbiting Sphere
-      const sphereGeo = new THREE.SphereGeometry(0.18, 20, 20);
+      // (B) Main Orbiting Node Sphere (locked to the orbitPlane local space)
       const sphereMat = new THREE.MeshStandardMaterial({
-        color: new THREE.Color(node.color),
-        emissive: new THREE.Color(node.color),
-        emissiveIntensity: 0.9,
-        roughness: 0.1
+        color: new THREE.Color(config.color),
+        emissive: new THREE.Color(config.color),
+        emissiveIntensity: 1.1,
+        roughness: 0.15,
+        metalness: 0.5
       });
-      const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
-      sphereMesh.userData = { id: node.id };
-      ringsGroup.add(sphereMesh);
-      agentMeshes.push(sphereMesh);
+      const nodeMesh = new THREE.Mesh(sphereGeo, sphereMat);
+      nodeMesh.userData = { id: config.id };
+      orbitPlane.add(nodeMesh);
+
+      // (C) Glowing Orbital Traveling Pulse Beads (Tracer Pulses)
+      const beadOffsets = [-0.32, -0.62, 0.38];
+      const beadSizes = [0.065, 0.05, 0.055];
+      const pulseBeads: THREE.Mesh[] = [];
+
+      beadOffsets.forEach((_, bIdx) => {
+        const beadGeo = new THREE.SphereGeometry(beadSizes[bIdx], 12, 12);
+        const beadMat = new THREE.MeshBasicMaterial({
+          color: new THREE.Color(config.color),
+          transparent: true,
+          opacity: 0.85 - bIdx * 0.2
+        });
+        const beadMesh = new THREE.Mesh(beadGeo, beadMat);
+        orbitPlane.add(beadMesh);
+        pulseBeads.push(beadMesh);
+      });
+
+      orbitNodes.push({
+        nodeMesh,
+        config,
+        pulseBeads,
+        beadOffsets
+      });
     });
-    agentMeshesRef.current = agentMeshes;
+
+    orbitNodesRef.current = orbitNodes;
 
     // 5. Surrounding Quantum Neural Particle Cloud
-    const particleCount = 1000;
+    const particleCount = 950;
     const particlePositions = new Float32Array(particleCount * 3);
     const particleColors = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount; i++) {
-      const radius = 2.4 + Math.random() * 4.2;
+      const radius = 2.4 + Math.random() * 4.4;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(Math.random() * 2 - 1);
 
@@ -220,10 +276,10 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
     particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      size: 0.04,
+      size: 0.038,
       vertexColors: true,
       transparent: true,
-      opacity: 0.65,
+      opacity: theme === 'dark' ? 0.65 : 0.45,
       blending: THREE.AdditiveBlending
     });
 
@@ -232,7 +288,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
 
     // 6. Vector conversion for 2D Screen Anchors
     const tempVec = new THREE.Vector3();
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
     let lastUiUpdate = 0;
 
     const animate = () => {
@@ -246,32 +302,43 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
       pointerPos.current.x += (pointerPos.current.targetX - pointerPos.current.x) * 0.05;
       pointerPos.current.y += (pointerPos.current.targetY - pointerPos.current.y) * 0.05;
 
-      // Rotate Core
+      // Rotate Neural Core
       if (isRotating && coreMeshRef.current && innerMeshRef.current) {
-        coreMeshRef.current.rotation.x = elapsedTime * 0.2 + pointerPos.current.y * 0.4;
-        coreMeshRef.current.rotation.y = elapsedTime * 0.25 + pointerPos.current.x * 0.4;
+        coreMeshRef.current.rotation.x = elapsedTime * 0.18 + pointerPos.current.y * 0.35;
+        coreMeshRef.current.rotation.y = elapsedTime * 0.22 + pointerPos.current.x * 0.35;
 
-        innerMeshRef.current.rotation.x = -elapsedTime * 0.35;
-        innerMeshRef.current.rotation.y = -elapsedTime * 0.45;
+        innerMeshRef.current.rotation.x = -elapsedTime * 0.32;
+        innerMeshRef.current.rotation.y = -elapsedTime * 0.42;
 
-        // Subtle breathing scale pulse
-        const scale = 1 + Math.sin(elapsedTime * 2.2) * 0.05;
+        // Subtle biological breathing pulse
+        const scale = 1 + Math.sin(elapsedTime * 2.2) * 0.045;
         coreMeshRef.current.scale.set(scale, scale, scale);
       }
 
-      // Rotate Rings and position agent nodes along their orbit
-      if (ringsRef.current) {
-        ringsRef.current.rotation.y = elapsedTime * 0.08;
+      // Strict Parametric Position along Orbital Splines
+      if (ringsGroupRef.current) {
+        // Slow ambient orbital precession
+        if (isRotating) {
+          ringsGroupRef.current.rotation.y = elapsedTime * 0.04;
+        }
 
-        agentMeshes.forEach((mesh, idx) => {
-          const node = ORBIT_NODES[idx];
-          const angle = elapsedTime * node.speed + (idx * Math.PI * 2) / agentMeshes.length;
-          const r = node.radius;
+        orbitNodes.forEach(({ nodeMesh, config, pulseBeads, beadOffsets }, idx) => {
+          const currentAngle = isRotating
+            ? elapsedTime * config.speed + idx * 1.57
+            : idx * 1.57;
 
-          // Compute 3D coordinate along tilted orbital planes
-          mesh.position.x = Math.cos(angle) * r;
-          mesh.position.z = Math.sin(angle) * r;
-          mesh.position.y = Math.sin(angle * 1.4) * 0.8;
+          // Main node strictly follows x = r * cos(t), z = r * sin(t) in the inclined plane
+          nodeMesh.position.x = config.radius * Math.cos(currentAngle);
+          nodeMesh.position.y = 0;
+          nodeMesh.position.z = config.radius * Math.sin(currentAngle);
+
+          // Pulse beads travel along the exact same path
+          pulseBeads.forEach((bead, bIdx) => {
+            const beadAngle = currentAngle + beadOffsets[bIdx];
+            bead.position.x = config.radius * Math.cos(beadAngle);
+            bead.position.y = 0;
+            bead.position.z = config.radius * Math.sin(beadAngle);
+          });
         });
       }
 
@@ -291,12 +358,12 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
 
         // Orbiting nodes screen positions
         const newPositions: Record<string, NodeScreenPos> = {};
-        agentMeshes.forEach((mesh, idx) => {
-          mesh.getWorldPosition(tempVec);
+        orbitNodes.forEach(({ nodeMesh, config }) => {
+          nodeMesh.getWorldPosition(tempVec);
           tempVec.project(camera);
 
           const isFront = tempVec.z < 1.0;
-          newPositions[ORBIT_NODES[idx].id] = {
+          newPositions[config.id] = {
             x: (tempVec.x * 0.5 + 0.5) * currentW,
             y: (-(tempVec.y * 0.5) + 0.5) * currentH,
             z: tempVec.z,
@@ -384,6 +451,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
       outerMat.dispose();
       innerGeo.dispose();
       innerMat.dispose();
+      sphereGeo.dispose();
       particleGeo.dispose();
       particleMat.dispose();
       renderer.dispose();
@@ -392,7 +460,7 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
         mount.removeChild(renderer.domElement);
       }
     };
-  }, [isWireframe]);
+  }, [isWireframe, theme]);
 
   const getNodeIcon = (icon: 'bot' | 'db' | 'workflow' | 'terminal') => {
     switch (icon) {
@@ -437,34 +505,42 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
         >
           <div
             style={{
-              padding: '4px 12px',
+              padding: '5px 14px',
               borderRadius: 'var(--radius-full)',
-              background: 'rgba(7, 9, 14, 0.88)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(99, 102, 241, 0.5)',
-              boxShadow: '0 0 20px rgba(99, 102, 241, 0.45)',
+              background: theme === 'dark' ? 'rgba(7, 9, 14, 0.94)' : 'rgba(255, 255, 255, 0.96)',
+              backdropFilter: 'blur(12px)',
+              border: theme === 'dark' ? '1.5px solid rgba(99, 102, 241, 0.6)' : '1.5px solid rgba(79, 70, 229, 0.65)',
+              boxShadow: theme === 'dark' ? '0 0 24px rgba(99, 102, 241, 0.5)' : '0 4px 20px rgba(0, 0, 0, 0.12), 0 0 15px rgba(79, 70, 229, 0.25)',
               display: 'flex',
               alignItems: 'center',
               gap: '6px'
             }}
           >
-            <Cpu size={14} color="#818cf8" />
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, color: '#f8fafc', letterSpacing: '0.06em' }}>
+            <Cpu size={14} color={theme === 'dark' ? '#818cf8' : '#4f46e5'} />
+            <span 
+              style={{ 
+                fontFamily: 'var(--font-mono)', 
+                fontSize: '0.75rem', 
+                fontWeight: 700, 
+                color: theme === 'dark' ? '#f8fafc' : '#0a0d14', 
+                letterSpacing: '0.06em' 
+              }}
+            >
               AGENTIC NEURAL CORE
             </span>
           </div>
           <span 
             style={{ 
               fontSize: '0.68rem', 
-              color: theme === 'dark' ? '#818cf8' : '#4f46e5', 
+              color: theme === 'dark' ? '#818cf8' : '#4338ca', 
               fontFamily: 'var(--font-mono)',
-              fontWeight: 600,
-              background: theme === 'dark' ? 'rgba(10, 14, 23, 0.7)' : 'rgba(255, 255, 255, 0.92)',
+              fontWeight: 700,
+              background: theme === 'dark' ? 'rgba(10, 14, 23, 0.85)' : 'rgba(241, 245, 249, 0.96)',
               padding: '2px 8px',
               borderRadius: 'var(--radius-full)',
               marginTop: '4px',
-              border: `1px solid ${theme === 'dark' ? 'rgba(99, 102, 241, 0.3)' : 'rgba(79, 70, 229, 0.25)'}`,
-              boxShadow: '0 2px 6px rgba(0,0,0,0.06)'
+              border: `1px solid ${theme === 'dark' ? 'rgba(99, 102, 241, 0.35)' : 'rgba(79, 70, 229, 0.3)'}`,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
             }}
           >
             Orchestrating Autonomous Swarms
@@ -473,13 +549,13 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
       )}
 
       {/* Orbiting Tech Labels Overlay (Projected 3D to 2D) */}
-      {ORBIT_NODES.map((node) => {
+      {ORBIT_CONFIGS.map((node) => {
         const pos = nodePositions[node.id];
         if (!pos || !pos.visible) return null;
 
         // Depth perspective calculation
         const scale = Math.max(0.78, Math.min(1.05, 1 - (pos.z - 0.5) * 0.3));
-        const opacity = Math.max(0.75, Math.min(1, 1 - (pos.z - 0.5) * 0.4));
+        const opacity = Math.max(0.72, Math.min(1, 1 - (pos.z - 0.5) * 0.45));
 
         return (
           <div
@@ -505,11 +581,13 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
                 gap: '6px',
                 padding: '4px 10px',
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: 'rgba(14, 18, 27, 0.92)',
-                backdropFilter: 'blur(8px)',
-                border: `1.5px solid ${node.color}`,
-                boxShadow: `0 0 16px ${node.color}55`,
-                color: '#ffffff',
+                backgroundColor: theme === 'dark' ? 'rgba(10, 14, 23, 0.94)' : 'rgba(255, 255, 255, 0.96)',
+                backdropFilter: 'blur(10px)',
+                border: `2px solid ${node.color}`,
+                boxShadow: theme === 'dark' 
+                  ? `0 0 20px ${node.color}55, 0 4px 16px rgba(0, 0, 0, 0.5)`
+                  : `0 4px 16px rgba(0, 0, 0, 0.12), 0 0 12px ${node.color}35`,
+                color: theme === 'dark' ? '#ffffff' : '#0a0d14',
                 fontSize: '0.75rem',
                 fontWeight: 700,
                 whiteSpace: 'nowrap'
@@ -522,14 +600,14 @@ export const HeroScene3D: React.FC<HeroScene3DProps> = ({ theme = 'dark' }) => {
               style={{
                 fontSize: '0.68rem',
                 fontFamily: 'var(--font-mono)',
-                fontWeight: 600,
+                fontWeight: 700,
                 color: theme === 'dark' ? node.color : '#0a0d14',
-                backgroundColor: theme === 'dark' ? 'rgba(14, 18, 27, 0.7)' : 'rgba(255, 255, 255, 0.95)',
+                backgroundColor: theme === 'dark' ? 'rgba(15, 23, 42, 0.88)' : 'rgba(241, 245, 249, 0.96)',
                 padding: '2px 8px',
                 borderRadius: 'var(--radius-full)',
-                border: `1px solid ${node.color}60`,
+                border: `1px solid ${node.color}70`,
                 marginTop: '4px',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.08)'
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
               }}
             >
               {node.role}
