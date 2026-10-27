@@ -91,7 +91,7 @@ export const WorkflowSimulator: React.FC = () => {
   };
 
   return (
-    <section id="workflow" style={{ padding: '60px 0', borderTop: '1px solid var(--border-subtle)' }}>
+    <section id="workflow" style={{ padding: 'var(--section-spacing) 0', borderTop: '1px solid var(--border-subtle)' }}>
       <div className="container">
         <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 40px auto' }}>
           <span className="section-eyebrow">Production Agentic Architecture</span>
@@ -129,7 +129,7 @@ export const WorkflowSimulator: React.FC = () => {
         </div>
 
         {/* Interactive Pipeline Board */}
-        <div className="glass-panel" style={{ padding: '32px' }}>
+        <div className="glass-panel" style={{ padding: 'clamp(18px, 3.5vw, 32px)' }}>
           {/* Controls Bar */}
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '32px' }}>
             <div>
@@ -167,7 +167,7 @@ export const WorkflowSimulator: React.FC = () => {
           {/* Graph Nodes Visual Flow */}
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 150px), 1fr))', 
             gap: '16px',
             alignItems: 'center',
             marginBottom: '32px'
