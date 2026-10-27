@@ -788,7 +788,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
     <div 
       className="glass-panel" 
       style={{ 
-        padding: '24px', 
+        padding: 'clamp(16px, 3.5vw, 24px)', 
         position: 'relative', 
         overflow: 'hidden',
         borderRadius: 'var(--radius-xl)'
@@ -889,7 +889,7 @@ export const TechCosmos3D: React.FC<TechCosmos3DProps> = ({ theme = 'dark' }) =>
       <div 
         style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', 
           gap: '20px', 
           alignItems: 'stretch' 
         }}
