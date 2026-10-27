@@ -173,7 +173,7 @@ export const Projects: React.FC = () => {
               <div
                 style={{
                   height: '140px',
-                  background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%)',
+                  background: 'linear-gradient(135deg, var(--accent-muted) 0%, var(--accent-bronze-muted) 100%)',
                   borderBottom: '1px solid var(--border-subtle)',
                   padding: '16px',
                   display: 'flex',
