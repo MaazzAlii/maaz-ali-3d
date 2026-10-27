@@ -5,6 +5,10 @@ export type Theme = 'light' | 'dark';
 // Global single source of truth across all components
 let currentTheme: Theme = (() => {
   try {
+    if (typeof document !== 'undefined') {
+      const fromDoc = document.documentElement.getAttribute('data-theme');
+      if (fromDoc === 'light' || fromDoc === 'dark') return fromDoc;
+    }
     const saved = localStorage.getItem('theme');
     if (saved === 'light' || saved === 'dark') return saved;
     if (typeof window !== 'undefined' && window.matchMedia) {
@@ -24,13 +28,24 @@ const listeners = new Set<(theme: Theme) => void>();
 function applyThemeToDOM(theme: Theme) {
   if (typeof document === 'undefined') return;
   const root = document.documentElement;
+  const body = document.body;
   root.setAttribute('data-theme', theme);
   if (theme === 'dark') {
     root.classList.add('dark');
     root.classList.remove('light');
+    if (body) {
+      body.setAttribute('data-theme', 'dark');
+      body.classList.add('dark');
+      body.classList.remove('light');
+    }
   } else {
     root.classList.add('light');
     root.classList.remove('dark');
+    if (body) {
+      body.setAttribute('data-theme', 'light');
+      body.classList.add('light');
+      body.classList.remove('dark');
+    }
   }
   try {
     localStorage.setItem('theme', theme);
