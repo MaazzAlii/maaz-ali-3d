@@ -13,7 +13,7 @@ Featuring real-time WebGL 3D graphics (Three.js), modern glassmorphism, responsi
 - **Visual Agentic Workflow Simulator**: Live interactive demonstration of LangGraph state machine execution (Trigger → Supervisor Agent → Tool Execution → Output).
 - **All 43 Shipped Projects**: Grouped into 7 domains with instant category switching, real-time keyword search, and detailed modal case studies (Overview, Architecture, Results).
 - **Google Play Apps Showcase**: Dedicated interactive cards for published Flutter applications: *Prayer Times, Azan & Qibla Finder* and *Pakistani GPA & CGPA Calculator*.
-- **Verified Credentials & Certifications**: Microsoft Certified Azure Fundamentals (AZ-900, Score 983/1000), Cisco Python Essentials 1, and NAVTTC AI Training.
+- **Verified Credentials & Certifications**: Microsoft Certified Azure Fundamentals (AZ-901, Score 983/1000), Cisco Python Essentials 1, and NAVTTC AI Training.
 - **Dual Cyber Themes**: Seamless switching between **Cyber Dark** and **Pure Light** modes with smooth transitions and persistent storage.
 - **High Performance & Accessible**: Built strictly with semantic HTML5, WCAG 2.1 AA contrast compliance, zero-dependency CSS tokens, and off-screen 3D throttling.
 
