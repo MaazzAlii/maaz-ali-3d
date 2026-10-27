@@ -91,7 +91,7 @@ export const Contact: React.FC = () => {
                 padding: '28px 24px'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-cyan)', marginBottom: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-bronze)', marginBottom: '10px' }}>
                 <MapPin size={18} />
                 <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
                   Location &amp; Relocation
