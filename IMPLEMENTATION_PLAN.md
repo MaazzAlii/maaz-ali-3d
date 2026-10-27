@@ -30,13 +30,13 @@
 
 ### Milestone 5: Core UI Sections & Feature Modules
 - [x] **Navbar**: Sticky glassmorphic bar with section indicators, mobile drawer, resume download button, and theme switcher.
-- [x] **Hero Section**: 3D scene backdrop, headline, stats counter (43 projects, 10+ client engagements, 2 published apps, 983 AZ-900), CTAs.
+- [x] **Hero Section**: 3D scene backdrop, headline, stats counter (43 projects, 10+ client engagements, 2 published apps, 983/1000 AZ-901), CTAs.
 - [x] **About Section**: Portrait with 3D glowing tilt frame, NUML BS CS details, `quick_facts.json` card, and social links.
 - [x] **Projects Section**: 7 Category filters + live search bar + 43 project cards + interactive detail modal with 3 tabs.
 - [x] **Workflow Simulator**: Visual interactive LangGraph pipeline with step progression and real-time execution logs.
 - [x] **Play Store Apps Section**: Dedicated showcase for Prayer Times & Azan Finder and Pakistani GPA Calculator.
 - [x] **Skills & Workflows**: 3D Tech Cosmos + grouped technology pills.
-- [x] **Experience & Certifications**: Microsoft AZ-900 (983/1000 score), Cisco, NAVTTC, and career milestones.
+- [x] **Experience & Certifications**: Microsoft AZ-901 (983/1000 score), Cisco, NAVTTC, and career milestones.
 - [x] **Channels**: Community hub for YouTube, Instagram, TikTok, Telegram.
 - [x] **Contact Section**: Interactive form with validation, copy email button, direct mailto fallback, and celebration confetti.
 - [x] **Footer**: Semantic footer with copyright, quick links, and back-to-top button.
