@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Sun, Moon, Menu, X, FileDown, Sparkles, Send } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
+import { profile } from '../../data/portfolioData';
 
 export const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -57,20 +58,28 @@ export const Navbar: React.FC = () => {
         >
           <div 
             style={{
-              width: '36px',
-              height: '36px',
+              width: '38px',
+              height: '38px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, var(--accent), var(--accent-bronze))',
+              overflow: 'hidden',
+              border: '2px solid var(--border-glow)',
+              boxShadow: '0 0 12px var(--accent-glow)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#ffffff',
-              fontWeight: 800,
-              fontSize: '1rem',
-              boxShadow: '0 0 16px var(--accent-glow)'
+              flexShrink: 0
             }}
           >
-            M
+            <img
+              src={profile.photo}
+              alt="Maaz Ali"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block'
+              }}
+            />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
