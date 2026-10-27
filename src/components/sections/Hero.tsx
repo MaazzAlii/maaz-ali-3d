@@ -51,7 +51,7 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
             {/* Main Title */}
             <h1 className="display-1" style={{ marginBottom: '20px' }}>
               AI Engineer building{' '}
-              <span className="text-gradient">agentic systems</span>{' '}
+              <span className="serif-emphasis text-gradient">agentic systems</span>{' '}
               and automating businesses end-to-end.
             </h1>
 
@@ -116,7 +116,7 @@ export const Hero: React.FC<HeroProps> = ({ theme = 'dark' }) => {
               </div>
 
               <div>
-                <p style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--accent-cyan)', lineHeight: 1 }}>
+                <p style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--accent-bronze)', lineHeight: 1 }}>
                   2
                 </p>
                 <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '5px', fontFamily: 'var(--font-mono)' }}>
